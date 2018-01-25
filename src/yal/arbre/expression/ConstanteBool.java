@@ -28,8 +28,14 @@ public class ConstanteBool extends Constante {
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return cste;
+		StringBuilder string = new StringBuilder("");
+		if(cste.equals("vrai")){
+			string.append("\tli $v0, 1");
+		}
+		if(cste.equals("faux")){
+			string.append("\tli $v0, 0");
+		}
+		return string.toString();
 	}
 
 	

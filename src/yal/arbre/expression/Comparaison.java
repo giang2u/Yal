@@ -17,7 +17,6 @@ public abstract class Comparaison extends Binaire {
     
 	@Override
 	public void verifier() {
-		
 		gauche.verifier();
     	droite.verifier();
 		if(!this.gauche.getType().equals(this.droite.getType())){

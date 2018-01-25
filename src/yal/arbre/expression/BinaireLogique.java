@@ -26,12 +26,17 @@ public abstract class BinaireLogique extends Binaire {
      */
     public void verifier() {
     	gauche.verifier();
-    	droite.verifier();
+    	droite.verifier();/*
     	if(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool")){
     		this.setType("bool");
     	} else {
 			throw new AnalyseSemantiqueException("Operation logique avec entier impossible"); 
-    	}		
+    	}		*/
+    	
+    	if(!(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool"))){
+    		throw new AnalyseSemantiqueException("Operation logique "  + operateur() + " avec: " + gauche.getType() + " - " + droite.getType() +  " impossible");
+    	} 
+    	
     }
     
     
