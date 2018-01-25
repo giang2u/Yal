@@ -43,7 +43,12 @@ public class BlocDInstructions extends ArbreAbstrait {
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return null;
+		String s = null;
+		
+		for (ArbreAbstrait a: expr) {
+			s += a.toMIPS();
+		}
+		return s;
 	}
 
 }
