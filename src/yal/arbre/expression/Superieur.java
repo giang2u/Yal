@@ -25,12 +25,6 @@ public class Superieur extends Comparaison {
 
 
 	@Override
-	public void verifier() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int getValue() {
 		// TODO Auto-generated method stub
 		return 0;
