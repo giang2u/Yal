@@ -10,7 +10,7 @@ public abstract class ArbreAbstrait {
     
     // numéro de ligne du début de l'instruction
     protected int noLigne ;
-    protected static int compteCondition;
+    public static int compteCondition;
     
     protected ArbreAbstrait(int no) {
         noLigne = no ;
