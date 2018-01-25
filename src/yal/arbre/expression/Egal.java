@@ -30,6 +30,8 @@ public class Egal extends Comparaison {
 		// TODO Auto-generated method stub
 		return "bool";
 	}
+	
+
 
 
 	@Override
