@@ -29,4 +29,6 @@ public abstract class Expression extends ArbreAbstrait {
     	return type;
     }
     public abstract int getValue();
+    
+   
 }

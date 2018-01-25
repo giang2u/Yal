@@ -20,7 +20,7 @@ public class ConstanteEntiere extends Constante {
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.cste;
 	}
 
 	
