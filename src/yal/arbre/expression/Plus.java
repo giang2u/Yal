@@ -38,28 +38,27 @@ public class Plus extends BinaireArithmetique {
 		String sbd = droite.toMIPS() ;
 		
 		sb.append("# initialiser s7 avec sp\n");
-		sb.append("move $s7, $sp\n");
+		sb.append("\tmove $s7, $sp\n");
 		
 		sb.append("# Reservation de l'espace pour gauche droite et res\n");
-		sb.append("addi $sp, $sp, -12\n");
+		sb.append("\taddi $sp, $sp, -12\n");
 		
-		sb.append("li $v0," + sbg + "\n");
-		sb.append("sw $v0, 0($s7)\n");
+		sb.append("\tli $v0," + sbg + "\n");
 		
-		sb.append("sw $v0, 0($sp)\n");
+		sb.append("\tsw $v0, 0($sp)\n");
 		
-		sb.append("add $sp, $sp, -4 \n");
-		
+		sb.append("\tadd $sp, $sp, -4 \n");
 		
 		
-		sb.append("li $v0,"+ sbd + "\n");
-		sb.append("add $sp, $sp,4 \n");
-		sb.append("lw $t8, ($sp) \n");
+		
+		sb.append("\tli $v0,"+ sbd + "\n");
+		sb.append("\tadd $sp, $sp,4 \n");
+		sb.append("\tlw $t8, ($sp) \n");
 		
 		
 		sb.append("# Resultat addition \n");
-		sb.append("add $v0, $t8, $v0\n");
-		sb.append("sw $v0, 12($s7) \n");
+		sb.append("\tadd $v0, $t8, $v0\n");
+		sb.append("\tsw $v0, 12($s7) \n");
 		
 		
 		return sb.toString();
