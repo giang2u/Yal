@@ -18,6 +18,13 @@ public class NonLogique extends Unaire {
     public String operateur() {
         return " non " ;
     }
+    
+    @Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "bool";
+	}
+
 
 	@Override
 	public void verifier() {

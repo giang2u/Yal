@@ -24,6 +24,13 @@ public class Moins extends BinaireArithmetique {
 		return 0;
 	}
 
+	
+	@Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "entier";
+	}
+
 	@Override
 	public String toMIPS() {
 StringBuilder sb = new StringBuilder();

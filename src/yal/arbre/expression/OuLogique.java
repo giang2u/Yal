@@ -23,6 +23,13 @@ public class OuLogique extends BinaireLogique {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "bool";
+	}
+
 
 	@Override
 	public String toMIPS() {

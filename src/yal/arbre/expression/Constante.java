@@ -16,11 +16,6 @@ public abstract class Constante extends Expression {
         valeur=Integer.parseInt(texte);
     }
     
-    protected Constante(String texte, int n, String s) {
-        super(n,s) ;
-        cste = texte ;
-    }
-
     @Override 
     public void verifier() {
     	

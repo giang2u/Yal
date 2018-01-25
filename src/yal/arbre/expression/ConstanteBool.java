@@ -10,7 +10,7 @@ public class ConstanteBool extends Constante {
     
 	private int bool;
     public ConstanteBool(String texte, int n) {
-        super(texte, n, "bool") ;
+        super(texte, n) ;
         this.bool = (texte.equals("vrai") ? 1 : 0); 
     }
     
@@ -20,13 +20,17 @@ public class ConstanteBool extends Constante {
 	public int getValue() {
 		return valeur;
 	}
+	
+	public String getType() {
+		return "bool";
+	}
 
 
 
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return Integer.toString(valeur);
+		return cste;
 	}
 
 	

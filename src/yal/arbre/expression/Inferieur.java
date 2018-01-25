@@ -18,6 +18,13 @@ public class Inferieur extends Comparaison {
     public String operateur() {
         return " < ";
     }
+    
+    @Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "bool";
+	}
+
 
 	@Override
 	public int getValue() {

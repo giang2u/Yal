@@ -20,14 +20,9 @@ public abstract class Expression extends ArbreAbstrait {
 	protected Expression(int n) {
         super(n) ;
     }
-	protected Expression(int n,String type) {
-        super(n) ;
-        this.type = type;
-    }
-
-    protected String getType(){
-    	return type;
-    }
+	
+    protected abstract String getType();
+    
     public abstract int getValue();
     
    

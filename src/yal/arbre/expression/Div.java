@@ -26,6 +26,13 @@ public class Div extends BinaireArithmetique {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "entier";
+	}
+
 
 	@Override
 	public String toMIPS() {

@@ -16,6 +16,13 @@ public class EtLogique extends BinaireLogique {
     public String operateur() {
         return " et " ;
     }
+    
+    @Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "bool";
+	}
+
 
 
 	@Override

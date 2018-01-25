@@ -17,6 +17,12 @@ public class Mult extends BinaireArithmetique {
         return " * ";
     }
 
+    @Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "entier";
+	}
+
 	
 
 	@Override

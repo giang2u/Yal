@@ -18,6 +18,12 @@ public class Plus extends BinaireArithmetique {
     }
 
 
+    @Override
+	protected String getType() {
+		// TODO Auto-generated method stub
+		return "entier";
+	}
+
 
 	@Override
 	public int getValue() {
