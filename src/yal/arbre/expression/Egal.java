@@ -29,7 +29,7 @@ public class Egal extends Comparaison {
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
 		
-		string.append("si:	");
+		string.append("si"+ compteCondition+":	");
 		string.append(gauche.toMIPS() + "\n");
 		string.append("\tsw $v0,0($sp) \n");
 		string.append("\tadd $sp, $sp, -4 \n");
@@ -38,14 +38,15 @@ public class Egal extends Comparaison {
 		string.append("\tadd $sp, $sp, 4 \n");
 		string.append("\tlw $t8,($sp) \n");
 		string.append("\tsub $v0, $v0, $t8 \n");
-		string.append("\tbeqz $v0, sinon \n");
-		string.append("alors:\n");
-		string.append("\tli, $v0, 1\n");
-		string.append("\tj finsi\n");
-		string.append("sinon:\n");
-		string.append("\tli, $v0, 0\n");
+		string.append("\tbeqz $v0, sinon"+compteCondition+"\n");
+		string.append("alors"+compteCondition+":\n");
+		string.append("\tli $v0, 0\n");
+		string.append("\tj finsi"+compteCondition+"\n");
+		string.append("sinon"+compteCondition+":\n");
+		string.append("\tli $v0, 1\n");
+		string.append("finsi"+compteCondition+": \n");
 		
-		
+		compteCondition++;
 		return string.toString();
 	}
 
