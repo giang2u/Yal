@@ -17,11 +17,6 @@ public class Moins extends BinaireArithmetique {
         return " - ";
     }
 
-	@Override
-	public void verifier() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getValue() {
@@ -51,7 +46,7 @@ StringBuilder sb = new StringBuilder();
 		sb.append("\tlw $t8, ($sp) \n");
 		
 		
-		sb.append("# Resultat addition \n");
+		sb.append("# Resultat soustraction \n");
 		sb.append("\tsub $v0, $t8, $v0\n");
 		
 		return sb.toString();
