@@ -24,6 +24,9 @@ public abstract class BinaireArithmetique extends Binaire {
 			throw new AnalyseSemantiqueException(" une ou plusieurs expressions" +
 					" ne sont pas de type entier");
 		}
+		else {
+			setType("entier");
+		}
 	}
  
 

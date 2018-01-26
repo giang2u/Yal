@@ -11,6 +11,7 @@ public class ConstanteBool extends Constante {
 	private int bool;
     public ConstanteBool(String texte, int n) {
         super(texte, n) ;
+        this.bool=(texte.equals("vrai") ? 1: 0);
     }
     
 
@@ -25,16 +26,11 @@ public class ConstanteBool extends Constante {
 	}
 
 
-
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
-		if(cste.equals("vrai")){
-			string.append("\tli $v0, 1");
-		}
-		if(cste.equals("faux")){
-			string.append("\tli $v0, 0");
-		}
+		string.append("\tli $v0,"+bool);
+		
 		return string.toString();
 	}
 

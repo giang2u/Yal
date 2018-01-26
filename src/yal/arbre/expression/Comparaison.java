@@ -23,7 +23,6 @@ public abstract class Comparaison extends Binaire {
 			&& this.gauche.getType().equals("entier")	)){
 			throw new AnalyseSemantiqueException(" Comparaison operateur "+ operateur() + " incorrect entre " + this.gauche.getType() + " & " + this.droite.getType());
 		}
-
 	}
 
 }

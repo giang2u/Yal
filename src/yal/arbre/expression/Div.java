@@ -29,7 +29,6 @@ public class Div extends BinaireArithmetique {
 	
 	@Override
 	protected String getType() {
-		// TODO Auto-generated method stub
 		return "entier";
 	}
 
