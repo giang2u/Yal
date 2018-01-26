@@ -13,6 +13,7 @@ public class ConstanteBool extends Constante {
         super(texte, n) ;
         this.bool=(texte.equals("vrai") ? 1: 0);
         this.type="bool";
+        this.valeur=this.bool;
     }
     
 
@@ -29,7 +30,7 @@ public class ConstanteBool extends Constante {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
-		string.append("\tli $v0,"+bool);
+		string.append("\tli $v0,"+this.bool);
 		
 		return string.toString();
 	}

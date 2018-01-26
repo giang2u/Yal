@@ -25,8 +25,12 @@ public class Yal {
             
             // à écrire pour yal0
                arbre.verifier() ; 
-               
+               System.out.println(".text\nmain:\n");
                System.out.println(arbre.toMIPS());
+               System.out.println("end :\n" +
+         "move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de plic0\n" +
+         "li $v0, 10               # retour au système\n" +
+         "syscall");
          
         } 
         catch (FileNotFoundException ex) {

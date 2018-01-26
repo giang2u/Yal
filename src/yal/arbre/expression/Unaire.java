@@ -13,7 +13,7 @@ public abstract class Unaire extends Expression {
     protected Unaire(Expression expr) {
         super(expr.getNoLigne());
         expression = expr ;
-        valeur = expr.getValue();
+
     }
     
     public abstract String operateur() ;

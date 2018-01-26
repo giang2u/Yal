@@ -25,6 +25,7 @@ public abstract class BinaireLogique extends Binaire {
      * @see AnalyseSemantiqueException 
      */
     public void verifier() {
+    	
     	gauche.verifier();
     	droite.verifier();/*
     	if(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool")){
@@ -32,7 +33,7 @@ public abstract class BinaireLogique extends Binaire {
     	} else {
 			throw new AnalyseSemantiqueException("Operation logique avec entier impossible"); 
     	}		*/
-    	
+
     	if(!(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool"))){
     		throw new AnalyseSemantiqueException(this.noLigne +": Operation logique "  + operateur() + " avec: " + gauche.getType() + " - " + droite.getType() +  " impossible");
     	} 

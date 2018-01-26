@@ -19,18 +19,16 @@ public class NonLogique extends Unaire {
         return " non " ;
     }
     
-    @Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "bool";
-	}
+ 
 
 
 	@Override
 	public void verifier() {
-		if (expression.getType()!="bool") {
+		expression.verifier();
+
+		if (!expression.getType().equals("bool")) {
 			throw new AnalyseSemantiqueException(" l operande pour le non logique n est pas de type "
-					+ " type Bool");
+					+ " Bool");
 		}
 		else {
 			setType("bool");

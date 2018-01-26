@@ -12,6 +12,8 @@ public class MoinsUnaire extends Unaire {
     
     public MoinsUnaire(Expression expr) {
         super(expr);
+        System.out.println(expr);
+        //expression.setType(expr.getType());
     }
 
     @Override
@@ -21,7 +23,8 @@ public class MoinsUnaire extends Unaire {
 
 	@Override
 	public void verifier() {
-		if(expression.getType()!="entier") {
+		expression.verifier();
+		if(!expression.getType().equals("entier")) {
 			throw new AnalyseSemantiqueException("l operande pour le Non logique n�est pas de type entier");
 		}
 		else {

@@ -42,6 +42,7 @@ StringBuilder sb = new StringBuilder();
 		
 		sb.append("# Resultat Division \n");
 		sb.append("\tdiv $t8, $v0\n");
+		sb.append("\tmflo $v0\n");
 		
 		return sb.toString();
 	}
