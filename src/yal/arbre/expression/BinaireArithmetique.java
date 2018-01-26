@@ -22,7 +22,7 @@ public abstract class BinaireArithmetique extends Binaire {
     	
 		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 			
-			throw new AnalyseSemantiqueException(" une ou plusieurs expressions" +
+			throw new AnalyseSemantiqueException(this.noLigne +": une ou plusieurs expressions" +
 					" ne sont pas de type entier");
 		}
 		else {

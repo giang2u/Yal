@@ -34,7 +34,7 @@ public abstract class BinaireLogique extends Binaire {
     	}		*/
     	
     	if(!(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool"))){
-    		throw new AnalyseSemantiqueException("Operation logique "  + operateur() + " avec: " + gauche.getType() + " - " + droite.getType() +  " impossible");
+    		throw new AnalyseSemantiqueException(this.noLigne +": Operation logique "  + operateur() + " avec: " + gauche.getType() + " - " + droite.getType() +  " impossible");
     	} 
     	else {
     		setType("bool");
