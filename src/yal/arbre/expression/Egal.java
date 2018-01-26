@@ -30,7 +30,6 @@ public class Egal extends Comparaison {
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
 		
-		string.append("si"+ compteCondition+":	");
 		string.append(gauche.toMIPS() + "\n");
 		string.append("\tsw $v0,0($sp) \n");
 		string.append("\tadd $sp, $sp, -4 \n");

@@ -29,8 +29,7 @@ public class Different extends Comparaison {
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
 		
-		string.append("si"+compteCondition+":	");
-		string.append(gauche.toMIPS() + "\n");
+		string.append(gauche.toMIPS());
 		string.append("\tsw $v0,0($sp) \n");
 		string.append("\tadd $sp, $sp, -4 \n");
 
@@ -39,10 +38,10 @@ public class Different extends Comparaison {
 		string.append("\tlw $t8,($sp) \n");
 		string.append("\tbne $v0,$t8 sinon"+compteCondition+"\n");
 		string.append("alors"+compteCondition+":\n");
-		string.append("\tli $v0, 1\n");
+		string.append("\tli $v0, 0\n");
 		string.append("\tj finsi"+compteCondition+"\n");
 		string.append("sinon"+compteCondition+":\n");
-		string.append("\tli $v0, 0\n");
+		string.append("\tli $v0, 1\n");
 		string.append("finsi"+compteCondition+": \n");
 		
 		compteCondition++;
