@@ -41,7 +41,6 @@ public class OuLogique extends BinaireLogique {
 		string.append("\tadd $sp, $sp, 4 \n");
 		string.append("\tlw $t8,($sp) \n");
 		string.append("\tor $v0,$v0,$t8 \n");
-		string.append("\tsw $v0,4($s7)\n");
 		return string.toString();
 	}
 

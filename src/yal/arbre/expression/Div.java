@@ -43,7 +43,7 @@ StringBuilder sb = new StringBuilder();
 		String sbd = droite.toMIPS() ;
 		
 		
-		sb.append("\t"+ sbg +"\n");
+		sb.append(sbg);
 		
 		sb.append("\tsw $v0, 0($sp)\n");
 		
@@ -51,7 +51,7 @@ StringBuilder sb = new StringBuilder();
 		
 		
 		
-		sb.append("\t"+ sbd + "\n");
+		sb.append(sbd);
 		sb.append("\tadd $sp, $sp,4 \n");
 		sb.append("\tlw $t8, ($sp) \n");
 		

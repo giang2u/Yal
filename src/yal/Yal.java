@@ -25,6 +25,7 @@ public class Yal {
             
             // à écrire pour yal0
                arbre.verifier() ; 
+               
                System.out.println(arbre.toMIPS());
          
         } 

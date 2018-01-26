@@ -17,7 +17,8 @@ public abstract class BinaireArithmetique extends Binaire {
     @Override
 	public void verifier() {
     	
-    	System.out.println( gauche.getType() + "     " + droite.getType());
+    	gauche.verifier();
+    	droite.verifier();
     	
 		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 			
