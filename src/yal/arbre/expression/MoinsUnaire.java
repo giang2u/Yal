@@ -28,23 +28,44 @@ public class MoinsUnaire extends Unaire {
 			setType("entier");
 		}
 	}
+	
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return valeur;
+	}
 
 	@Override
 	protected String getType() {
 		// TODO Auto-generated method stub
-		return "bool";
-	}
-
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return "entier";
 	}
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder string = new StringBuilder("");
+		//string.append("li $v0,-"+ this.valeur);
+		
+
+
+		string.append("\tli $v0,0\n");
+		
+		string.append("\tsw $v0, 0($sp)\n");
+		
+		string.append("\tadd $sp, $sp, -4 \n");
+		
+		
+		
+		string.append(expression.toMIPS());
+		string.append("\tadd $sp, $sp,4 \n");
+		string.append("\tlw $t8, ($sp) \n");
+		
+		
+		string.append("# Resultat soustraction \n");
+		string.append("\tsub $v0, $t8, $v0\n");
+		return string.toString();
 	}
+
+
 
 }
