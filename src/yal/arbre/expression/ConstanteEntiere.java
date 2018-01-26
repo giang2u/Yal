@@ -10,6 +10,9 @@ public class ConstanteEntiere extends Constante {
     
     public ConstanteEntiere(String texte, int n) {
         super(texte, n) ;
+        this.type="entier";
+        this.valeur=Integer.parseInt(cste);
+
     }
 
 	@Override
@@ -18,7 +21,7 @@ public class ConstanteEntiere extends Constante {
 	}
 	
 	public String getType() {
-		return "entier";
+		return type;
 	}
 
 	@Override

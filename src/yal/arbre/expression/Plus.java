@@ -18,19 +18,6 @@ public class Plus extends BinaireArithmetique {
     }
 
 
-    @Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "entier";
-	}
-
-
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
 	public String toMIPS() {
 		StringBuilder sb = new StringBuilder();

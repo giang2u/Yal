@@ -12,9 +12,9 @@ public class ConstanteBool extends Constante {
     public ConstanteBool(String texte, int n) {
         super(texte, n) ;
         this.bool=(texte.equals("vrai") ? 1: 0);
+        this.type="bool";
     }
     
-
 
 	@Override
 	public int getValue() {
@@ -22,7 +22,7 @@ public class ConstanteBool extends Constante {
 	}
 	
 	public String getType() {
-		return "bool";
+		return type;
 	}
 
 
