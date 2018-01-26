@@ -19,7 +19,6 @@ public class EtLogique extends BinaireLogique {
     
     @Override
 	protected String getType() {
-		// TODO Auto-generated method stub
 		return "bool";
 	}
 

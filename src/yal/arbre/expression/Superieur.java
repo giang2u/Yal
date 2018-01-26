@@ -17,13 +17,7 @@ public class Superieur extends Comparaison {
         return " > ";
     }
     
-    @Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "bool";
-	}
-
-
+ 
 	@Override
 	public int getValue() {
 		// TODO Auto-generated method stub

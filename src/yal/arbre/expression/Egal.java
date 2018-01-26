@@ -25,14 +25,6 @@ public class Egal extends Comparaison {
 		return 0;
 	}
 	
-	@Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "bool";
-	}
-	
-
-
 
 	@Override
 	public String toMIPS() {
