@@ -49,12 +49,6 @@ public class Different extends Comparaison {
 		return string.toString();
 	}
 
-	@Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "entier";
-	}
 
-	
   
 }

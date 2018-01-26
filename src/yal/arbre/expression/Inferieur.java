@@ -19,13 +19,6 @@ public class Inferieur extends Comparaison {
         return " < ";
     }
     
-    @Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "bool";
-	}
-
-
 	@Override
 	public int getValue() {
 		return 0;
