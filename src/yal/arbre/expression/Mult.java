@@ -17,19 +17,6 @@ public class Mult extends BinaireArithmetique {
         return " * ";
     }
 
-    @Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "entier";
-	}
-
-	
-
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public String toMIPS() {

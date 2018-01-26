@@ -1,6 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
 
 /**
  * 3 déc. 2015
@@ -18,21 +17,7 @@ public class Div extends BinaireArithmetique {
     public String operateur() {
         return " / ";
     }
-
-	
-
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	@Override
-	protected String getType() {
-		return "entier";
-	}
-
-
+ 
 	@Override
 	public String toMIPS() {
 StringBuilder sb = new StringBuilder();

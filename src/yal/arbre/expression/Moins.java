@@ -18,18 +18,6 @@ public class Moins extends BinaireArithmetique {
     }
 
 
-	@Override
-	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	@Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "entier";
-	}
 
 	@Override
 	public String toMIPS() {
