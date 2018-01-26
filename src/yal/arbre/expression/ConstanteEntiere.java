@@ -27,7 +27,8 @@ public class ConstanteEntiere extends Constante {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
-		string.append("li $v0," + this.cste);
+		
+		string.append("\tli $v0," + this.cste + "\n");
 		return string.toString();
 	}
 

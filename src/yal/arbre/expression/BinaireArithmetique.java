@@ -37,11 +37,7 @@ public abstract class BinaireArithmetique extends Binaire {
 	public void verifier() {
     	gauche.verifier();
     	droite.verifier();
-    	/*System.out.println( gauche.getValue() + "     " + droite.getValue());
-    	
-    	System.out.println( gauche.getType() + "     " + droite.getType());
-    	*/
-    	
+
 		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 			
 			throw new AnalyseSemantiqueException(" une ou plusieurs expressions" +
