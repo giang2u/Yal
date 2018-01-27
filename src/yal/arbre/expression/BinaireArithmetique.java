@@ -32,7 +32,14 @@ public abstract class BinaireArithmetique extends Binaire {
 			return -1;
     	}
     }
-    
+    /**
+     * 
+     * verifier si les operandes sont de meme types
+     * verifier si on a une division par 0 
+     *@throws AnalyseSemantiqueException une exeption d analyse 
+     *@throws ExecutionException une ERREUR de type d´EXECUTION 
+     *@see AnalyseSemantiqueException
+     */
     @Override
 	public void verifier() {
     	gauche.verifier();
@@ -48,7 +55,7 @@ public abstract class BinaireArithmetique extends Binaire {
 			if(operateur().equals(" / ")) {
 
 				if(droite.getValue()==0) {
-					 throw new ExecutionException(" vous avez une division par 0 est impossible");
+					 throw new ExecutionException(" vous avez une division par 0 ");
 				}
 				else {
 					setType("entier");
@@ -59,6 +66,8 @@ public abstract class BinaireArithmetique extends Binaire {
 			}
 		}
 	}
- 
+    
+    
+
 
 }

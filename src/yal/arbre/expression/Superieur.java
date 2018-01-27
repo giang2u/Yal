@@ -26,6 +26,8 @@ public class Superieur extends Comparaison {
 
 	@Override
 	public String toMIPS() {
+		return super.toMips();
+		/*
 		StringBuilder string = new StringBuilder("");
 		
 		string.append("si"+ compteCondition+":	");
@@ -43,6 +45,24 @@ public class Superieur extends Comparaison {
 		string.append("\tj finsi"+compteCondition+"\n");
 		string.append("sinon"+compteCondition+":\n");
 		string.append("\tli $v0, 1\n");
+		string.append("finsi"+compteCondition+": \n");
+		
+		compteCondition++;
+		return string.toString();
+	*/}
+
+	@Override
+	public String mipsOperation() {
+		StringBuilder string=new StringBuilder();
+		string.append("si"+ compteCondition+":	");
+
+		string.append("\tsub $v0, $v0, $t8 \n");
+		string.append("\tbgtz $v0, sinon"+compteCondition+"\n");
+		string.append("alors"+compteCondition+":\n");
+		string.append("\tli $v0, 1\n");
+		string.append("\tj finsi"+compteCondition+"\n");
+		string.append("sinon"+compteCondition+":\n");
+		string.append("\tli $v0, 0\n");
 		string.append("finsi"+compteCondition+": \n");
 		
 		compteCondition++;

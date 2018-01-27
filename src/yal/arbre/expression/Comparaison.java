@@ -26,8 +26,8 @@ public abstract class Comparaison extends Binaire {
     	if(operateur().equals(" < ") || operateur().equals(" > ") ) {
 			if (!(this.gauche.getType().equals(this.droite.getType()) 
 				&& this.gauche.getType().equals("entier")	)){
-				throw new AnalyseSemantiqueException(this.noLigne +": " +
-						"Comparaison operateur "+ operateur() + " incorrect entre " +
+				throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +
+						" Comparaison operateur "+ operateur() + " incorrect entre " +
 								"" + this.gauche.getType() + " & " + this.droite.getType());
 			}
 			else {
@@ -36,8 +36,8 @@ public abstract class Comparaison extends Binaire {
     	}
     	else if(operateur().equals(" == ") || operateur().equals(" != ")) {
     		if(!(this.gauche.getType().equals(this.droite.getType()))){
-				throw new AnalyseSemantiqueException(" nÂ° ligne d'erreur " + this.noLigne + "" +
-						": Comparaison operateur "+ operateur() + " incorrect entre " +
+				throw new AnalyseSemantiqueException(" numero ligne d'erreur " + this.noLigne + 
+						" Comparaison operateur "+ operateur() + " incorrect entre " +
 								"" + this.gauche.getType() + " & " + this.droite.getType());
 
     		}

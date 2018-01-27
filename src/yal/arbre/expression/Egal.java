@@ -1,6 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
 
 /**
  * 3 déc. 2015
@@ -28,6 +27,8 @@ public class Egal extends Comparaison {
 
 	@Override
 	public String toMIPS() {
+		return super.toMips();
+		/*
 		StringBuilder string = new StringBuilder("");
 		
 		string.append("si"+ compteCondition+":	");
@@ -48,7 +49,24 @@ public class Egal extends Comparaison {
 		string.append("finsi"+compteCondition+": \n");
 		
 		compteCondition++;
+		return string.toString();*/
+	}
+
+	@Override
+	public String mipsOperation() {
+		StringBuilder string=new StringBuilder();
+		string.append("\tsub $v0, $v0, $t8 \n");
+		string.append("\tbeqz $v0, sinon"+compteCondition+"\n");
+		string.append("alors"+compteCondition+":\n");
+		string.append("\tli $v0, 0\n");
+		string.append("\tj finsi"+compteCondition+"\n");
+		string.append("sinon"+compteCondition+":\n");
+		string.append("\tli $v0, 1\n");
+		string.append("finsi"+compteCondition+": \n");
+		
+		compteCondition++;
 		return string.toString();
+
 	}
 
 

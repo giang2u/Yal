@@ -30,7 +30,7 @@ public class ConstanteBool extends Constante {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
-		string.append("\tli $v0,"+this.bool);
+		string.append("\tli $v0,"+this.bool+"\n");
 		
 		return string.toString();
 	}

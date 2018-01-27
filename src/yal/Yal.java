@@ -1,7 +1,11 @@
 package yal ;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import yal.analyse.AnalyseurLexical;
@@ -21,16 +25,12 @@ public class Yal {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-            System.err.println("expression stockée dans l'arbre : " + arbre);
-            
-            // à écrire pour yal0
-               arbre.verifier() ; 
-               System.out.println(".text\nmain:\n");
-               System.out.println(arbre.toMIPS());
-               System.out.println("end :\n" +
-         "move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de plic0\n" +
-         "li $v0, 10               # retour au système\n" +
-         "syscall");
+            //System.err.println("expression stockée dans l'arbre : " + arbre);
+            arbre.verifier() ; 
+            //System.out.println(arbre.toMIPS());
+            ecrire(arbre.toMIPS(), fichier);
+            System.out.println("COMPILATION OK !"); 
+
          
         } 
         catch (FileNotFoundException ex) {
@@ -43,6 +43,26 @@ public class Yal {
             Logger.getLogger(Yal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private void ecrire(String expr, String filename){
+	 //Creation de  File
+	   filename = filename.substring(0, filename.length() - 5)+".mips";
+	   File f = new File(filename);
+	    
+		// Creation du "Buffer"
+		BufferedWriter ecrireFichier;
+		
+		try{
+			// Instanciation de l'objet ecrireFichier qui va �crire dans fichierTexte.txt
+			ecrireFichier = new BufferedWriter(new FileWriter(f)) ;			
+			ecrireFichier.write(expr);
+			ecrireFichier.close();
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+   }
 
     public static void main(String[] args) {
         if (args.length != 1) {

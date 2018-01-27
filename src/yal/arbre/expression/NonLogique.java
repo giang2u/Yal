@@ -1,6 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
 
 /**
  * 3 déc. 2015
@@ -20,21 +19,6 @@ public class NonLogique extends Unaire {
     }
     
  
-
-
-	@Override
-	public void verifier() {
-		expression.verifier();
-
-		if (!expression.getType().equals("bool")) {
-			throw new AnalyseSemantiqueException(" l operande pour le non logique n est pas de type "
-					+ " Bool");
-		}
-		else {
-			setType("bool");
-		}
-		
-	}
 
 	@Override
 	public int getValue() {

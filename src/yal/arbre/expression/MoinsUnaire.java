@@ -1,6 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
 
 /**
  * 3 déc. 2015
@@ -12,7 +11,6 @@ public class MoinsUnaire extends Unaire {
     
     public MoinsUnaire(Expression expr) {
         super(expr);
-        System.out.println(expr);
         //expression.setType(expr.getType());
     }
 
@@ -21,28 +19,14 @@ public class MoinsUnaire extends Unaire {
         return "- " ;
     }
 
-	@Override
-	public void verifier() {
-		expression.verifier();
-		if(!expression.getType().equals("entier")) {
-			throw new AnalyseSemantiqueException("l operande pour le Non logique n�est pas de type entier");
-		}
-		else {
-			setType("entier");
-		}
-	}
-	
+
 	@Override
 	public int getValue() {
 		// TODO Auto-generated method stub
 		return valeur;
 	}
 
-	@Override
-	protected String getType() {
-		// TODO Auto-generated method stub
-		return "entier";
-	}
+	
 
 	@Override
 	public String toMIPS() {

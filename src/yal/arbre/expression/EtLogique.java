@@ -19,7 +19,7 @@ public class EtLogique extends BinaireLogique {
     
     @Override
 	protected String getType() {
-		return "bool";
+		return this.type;
 	}
 
 
@@ -31,13 +31,12 @@ public class EtLogique extends BinaireLogique {
 
 	@Override
 	public String toMIPS() {
-		StringBuilder string = new StringBuilder("");
-		string.append(gauche.toMIPS() + "\n");
-		string.append("\tsw $v0,0($sp) \n");
-		string.append("\tadd $sp, $sp, -4 \n");
-		string.append(droite.toMIPS() + "\n");
-		string.append("\tadd $sp, $sp, 4 \n");
-		string.append("\tlw $t8,($sp) \n");
+		return super.toMips();
+	}
+
+	@Override
+	public String mipsOperation() {
+		StringBuilder string=new StringBuilder();
 		string.append("\tand $v0,$v0,$t8 \n");
 		return string.toString();
 	}
