@@ -16,7 +16,12 @@ public abstract class BinaireArithmetique extends Binaire {
     }
     
     
-    
+    /**
+     * getter 
+     * la valeur du resultat de l operation arithmetique
+     * selon l operateur
+     * 
+     */
     @Override 
     public int getValue() {
     	switch (operateur()) {
@@ -35,10 +40,10 @@ public abstract class BinaireArithmetique extends Binaire {
     /**
      * 
      * verifier si les operandes sont de meme types
-     * verifier si on a une division par 0 
+     * verifier aussi si on a une division par 0 
      *@throws AnalyseSemantiqueException une exeption d analyse 
-     *@throws ExecutionException une ERREUR de type d´EXECUTION 
-     *@see AnalyseSemantiqueException
+     *@throws ExecutionException une ERREUR d´EXECUTION 
+     *@see AnalyseSemantiqueException une Erreur de semaantique
      */
     @Override
 	public void verifier() {
@@ -47,7 +52,7 @@ public abstract class BinaireArithmetique extends Binaire {
 
 		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 			
-			throw new AnalyseSemantiqueException(this.noLigne +": une ou plusieurs expressions" +
+			throw new AnalyseSemantiqueException(this.noLigne +" une ou plusieurs expressions" +
 					" ne sont pas de type entier");
 		}
 		else {
@@ -55,7 +60,7 @@ public abstract class BinaireArithmetique extends Binaire {
 			if(operateur().equals(" / ")) {
 
 				if(droite.getValue()==0) {
-					 throw new ExecutionException(" vous avez une division par 0 ");
+					 throw new ExecutionException("numero de ligne "+this.noLigne +" vous avez une division par 0 ");
 				}
 				else {
 					setType("entier");

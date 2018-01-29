@@ -17,12 +17,6 @@ public class EtLogique extends BinaireLogique {
         return " et " ;
     }
     
-    @Override
-	protected String getType() {
-		return this.type;
-	}
-
-
 
 	@Override
 	public int getValue() {
