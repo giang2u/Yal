@@ -46,14 +46,14 @@ public class Yal {
 
     private void ecrire(String expr, String filename){
 	 //Creation de  File
-	   filename = filename.substring(0, filename.length() - 5)+".mips";
+	   filename = filename.substring(0, filename.length() - 4)+".mips";
 	   File f = new File(filename);
 	    
 		// Creation du "Buffer"
 		BufferedWriter ecrireFichier;
 		
 		try{
-			// Instanciation de l'objet ecrireFichier qui va écrire dans fichierTexte.txt
+			// Instanciation de l'objet ecrireFichier qui va ï¿½crire dans fichierTexte.txt
 			ecrireFichier = new BufferedWriter(new FileWriter(f)) ;			
 			ecrireFichier.write(expr);
 			ecrireFichier.close();
