@@ -22,8 +22,7 @@ public class MoinsUnaire extends Unaire {
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
-		return valeur;
+		return -(expression.getValue());
 	}
 
 	
@@ -36,18 +35,11 @@ public class MoinsUnaire extends Unaire {
 
 
 		string.append("\tli $v0,0\n");
-		
 		string.append("\tsw $v0, 0($sp)\n");
-		
 		string.append("\tadd $sp, $sp, -4 \n");
-		
-		
-		
 		string.append(expression.toMIPS());
 		string.append("\tadd $sp, $sp,4 \n");
 		string.append("\tlw $t8, ($sp) \n");
-		
-		
 		string.append("# Resultat soustraction \n");
 		string.append("\tsub $v0, $t8, $v0\n");
 		return string.toString();
