@@ -2,15 +2,15 @@ package yal.analyse ;
 
 import java_cup.runtime.*;
 import yal.exceptions.AnalyseLexicaleException;
-      
+
 %%
-   
+
 %class AnalyseurLexical
 %public
 
 %line
 %column
-    
+
 %type Symbol
 %eofval{
         return symbol(CodesLexicaux.EOF) ;
@@ -27,14 +27,19 @@ import yal.exceptions.AnalyseLexicaleException;
 	return new Symbol(type, yyline, yycolumn, value) ;
   }
 %}
+%state commentaire
 
 csteE = [0-9]+
 csteB = "vrai" | "faux"
 
 finDeLigne = \r|\n
 espace = {finDeLigne}  | [ \t\f]
+commentaireSlashSlash = [/][/].*
+commentaireSlashEtoile = [/][*]
+commentaireEtoileSlash = [*][/]
 
 %%
+<YYINITIAL>{
 
 "+"                	{ return symbol(CodesLexicaux.PLUS); }
 "-"                	{ return symbol(CodesLexicaux.MOINS); }
@@ -55,7 +60,17 @@ espace = {finDeLigne}  | [ \t\f]
 
 {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
 {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
-
+{commentaireSlashSlash} {}
+{commentaireSlashEtoile} { yybegin(commentaire); }
 {espace}                { }
 
 .                       { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }
+
+}
+
+<commentaire> {
+	{commentaireEtoileSlash} { yybegin(YYINITIAL); }
+	.                       {}
+	\n                      {}
+	\r						{}
+}

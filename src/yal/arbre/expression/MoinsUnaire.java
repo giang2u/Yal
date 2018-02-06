@@ -44,7 +44,6 @@ public class MoinsUnaire extends Unaire {
 		string.append("\tadd $sp, $sp,4 \n");
 		string.append("\tlw $t8, ($sp) \n");
 		
-		
 		string.append("# Resultat soustraction \n");
 		string.append("\tsub $v0, $t8, $v0\n");
 		return string.toString();
