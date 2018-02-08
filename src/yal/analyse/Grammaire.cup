@@ -117,10 +117,14 @@ LISTDECLARATION::= LISTDECLARATION DECLARATION:decl
 
 DECLARATION::=DECL_VAR:dv
                 {:
+                  Tds tds=Tds.getInstance();
                   RESULT=dv;
                 :};
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
+          	Symbole s=new Symbole(4);
+          	s.setDeplacement(4);
+          	tds.ajouter(idf,s);
             RESULT=new Idf(idf);
           :}
           |
