@@ -11,22 +11,20 @@ public class Tds {
 	
 	public Tds(){
 		hashmap = new HashMap<Entree , Symbole >();
-		System.out.println("constructeur tds");
 	}
 	
 	public static Tds getInstance() {
 		return tds;
 	}
 	public void ajouter(Entree e,Symbole s) {
-		
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		while(lesentrees.hasNext()) {
 			if(e.toString().equals(lesentrees.next().toString())) {
 				throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
 			}
 		}
-		System.out.println("hello");
 		hashmap.put(e,s);
+		System.out.println(s.getType());
 		
 	}
 	public Symbole identifier(Entree e) {

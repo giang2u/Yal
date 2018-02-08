@@ -114,9 +114,10 @@ start with PROG ;
                 
                 ;*/                
                 
-PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d  FIN
-				{: RESULT=d;/*RESULT=i*/; :};	
-​
+PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:i FIN
+				{: RESULT=d; :}
+				;	
+				
         
 LISTDECLARATION   ::=   LISTDECLARATION DECLARATION:decl
                 {:
@@ -158,11 +159,15 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           
 LINST	::= LINST:li INSTRUCTION:i      
 					{: arbre.ajouter(i);
-						RESULT=li ; :};
+						RESULT=li ; :}
+			| INSTRUCTION:i
+				{: arbre.ajouter(i);
+					RESULT=arbre; :}
+				;
 						   
 INSTRUCTION   ::=   AFFECT:a   
 				{:
-                  RESULT=arbre;
+                  RESULT=a;
                 :};
 
 AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE 
