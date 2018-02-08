@@ -14,7 +14,6 @@ public class Idf extends Expression {
 	public Idf(String idf) {
 		super(0);
 		nom=idf;
-		s = new SymboleVariable(4);
 	}
 
 	@Override
@@ -25,13 +24,7 @@ public class Idf extends Expression {
 
 	@Override
 	public void verifier() {
-		
-		EntreeVariable entre = new EntreeVariable(this.nom);
-		Tds.getInstance().identifier(entre);
-		if(!s.getType().equals("entier")){
-			throw new AnalyseSemantiqueException("Le type de la varialbe doit etre un entier");
-		}
-		
+		s=Tds.getInstance().identifier(new EntreeVariable(nom));		
 	}
 	public String toString() {
 		return nom;

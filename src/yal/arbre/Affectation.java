@@ -7,7 +7,7 @@ import yal.tds.Tds;
 import yal.arbre.expression.Expression;
 import yal.exceptions.AnalyseSemantiqueException;
 
-public class Affectation extends ArbreAbstrait {
+public class Affectation extends Instruction {
 
 	private Expression expression;
 	private String idf;
@@ -18,17 +18,15 @@ public class Affectation extends ArbreAbstrait {
 		super(no);
 		this.idf=idf;
 		expression=e; 
-		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 	}
 
 	@Override
 	public void verifier() {
-		EntreeVariable e = new EntreeVariable(idf);
-		System.out.println("aeara       "+e);
-		// verifie que la variable existe
-		Tds.getInstance().identifier(e);
+		expression.verifier();
+		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 		// verifie que les types du symbole et de l'expression
-		if (s.getType().equals(expression.getType()) ) {
+		
+		if (!s.getType().equals(expression.getType()) ) {
 			throw new AnalyseSemantiqueException(" numero ligne d erreur "+this.noLigne +""
 					+ " le type de l'idf et de l'expression ne son pas compatibles");
 		}
@@ -42,6 +40,9 @@ public class Affectation extends ArbreAbstrait {
 		
 		
 		return "la methode affect a faire";
+	}
+	public String toString() {
+		return idf+" = "+expression.toString();
 	}
 
 }

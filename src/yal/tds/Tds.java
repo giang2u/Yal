@@ -7,9 +7,11 @@ import yal.exceptions.AnalyseSemantiqueException;
 public class Tds {
 	private HashMap<Entree , Symbole > hashmap;
 	private static Tds tds=new Tds();
+	private int deplacement;
 	
 	
-	public Tds(){
+	private Tds(){
+		deplacement=0;
 		hashmap = new HashMap<Entree , Symbole >();
 	}
 	
@@ -23,15 +25,17 @@ public class Tds {
 				throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
 			}
 		}
+		deplacement++;
+		s.setDeplacement(deplacement);
 		hashmap.put(e,s);
-		System.out.println(s.getType());
 		
 	}
 	public Symbole identifier(Entree e) {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		while(lesentrees.hasNext()) {
-			if(e.toString().equals(lesentrees.next().toString())) {
-				return hashmap.get(e);
+			Entree entree=lesentrees.next();
+			if(e.getIdf().equals(entree.getIdf())) {
+				return hashmap.get(entree);
 			}
 		}
 		throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");

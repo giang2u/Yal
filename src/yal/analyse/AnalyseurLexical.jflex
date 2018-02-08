@@ -41,7 +41,7 @@ espace = {finDeLigne}  | [ \t\f]
 commentaireSlashSlash = [/][/].*
 commentaireSlashEtoile = [/][*]
 commentaireEtoileSlash = [*][/]
-
+csteChaine = [\"]([^\"]|\n)*[\"]
 %%
 <YYINITIAL>{
 ";"                 { return symbol(CodesLexicaux.POINTVIRGULE); }
@@ -62,7 +62,8 @@ commentaireEtoileSlash = [*][/]
 
 "("                	{ return symbol(CodesLexicaux.PAROUV); }
 ")"                	{ return symbol(CodesLexicaux.PARFER); }
-
+"ecrire"            { return symbol(CodesLexicaux.ECRIRE,yytext());}
+{csteChaine}        { return symbol(CodesLexicaux.CSTECHAINE,yytext());}
 {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
 {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
 {type}      	        { return symbol(CodesLexicaux.TYPE, yytext()); }
@@ -73,7 +74,6 @@ commentaireEtoileSlash = [*][/]
 {commentaireSlashSlash} {}
 {commentaireSlashEtoile} { yybegin(commentaire); }
 {espace}                { }
-
 .                       { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }
 
 }
