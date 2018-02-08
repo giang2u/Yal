@@ -1,13 +1,16 @@
 package yal.arbre.expression;
 
-import com.sun.java_cup.internal.runtime.Symbol;
+
+import tds.Symbole;
 
 public class Idf extends Expression {
 	
-	protected String nom;
+	private String nom;
+	private Symbole s;
 	
-	protected Idf(int n) {
-		super(n);
+	public Idf(String idf) {
+		super(0);
+		nom=idf;
 	}
 
 	@Override
@@ -21,11 +24,13 @@ public class Idf extends Expression {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public String toString() {
+		return nom;
+	}
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return null;
+		return "je vais la commencer";
 	}
 
 }
