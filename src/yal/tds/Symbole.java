@@ -1,4 +1,4 @@
-package tds;
+package yal.tds;
 
 public abstract class Symbole {
 	

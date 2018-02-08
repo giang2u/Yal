@@ -1,7 +1,10 @@
 package yal.arbre.expression;
 
-
-import tds.Symbole;
+import yal.tds.EntreeVariable;
+import yal.tds.Symbole;
+import yal.tds.SymboleVariable;
+import yal.tds.Tds;
+import yal.exceptions.AnalyseSemantiqueException;
 
 public class Idf extends Expression {
 	
@@ -11,6 +14,7 @@ public class Idf extends Expression {
 	public Idf(String idf) {
 		super(0);
 		nom=idf;
+		s = new SymboleVariable(4);
 	}
 
 	@Override
@@ -21,7 +25,12 @@ public class Idf extends Expression {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
+		
+		EntreeVariable entre = new EntreeVariable("i");
+		Tds.getInstance().identifier(entre);
+		if(!s.getType().equals("entier")){
+			throw new AnalyseSemantiqueException("Le type de la varialbe doit etre un entier");
+		}
 		
 	}
 	public String toString() {
