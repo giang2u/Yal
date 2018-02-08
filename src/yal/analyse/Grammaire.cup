@@ -122,9 +122,9 @@ DECLARATION::=DECL_VAR:dv
                 :};
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
-          	Symbole s=new Symbole(4);
-          	s.setDeplacement(4);
-          	tds.ajouter(idf,s);
+          	SymboleVariable s=new SymboleVariable(4);
+          	EntreVariable entre = new EntreVarible(idf);
+          	tds.ajouter(entre,s);
             RESULT=new Idf(idf);
           :}
           |

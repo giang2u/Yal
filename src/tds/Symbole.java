@@ -18,10 +18,14 @@ public abstract class Symbole {
 		return this.type;
 	}
 	
+	public void setType(String s){
+		this.type = s;
+	}
+	
 	/**
 	 * 
 	 * @param deplacement
-	 * Mise à jour du déplacment
+	 * Mise ï¿½ jour du dï¿½placment
 	 */
 	public void setDeplacement(int deplacement) {
 		this.nombre_deplacement = -4*deplacement; 

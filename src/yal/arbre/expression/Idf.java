@@ -1,7 +1,11 @@
 package yal.arbre.expression;
 
 
+import tds.EntreeVariable;
 import tds.Symbole;
+import tds.SymboleVariable;
+import tds.Tds;
+import yal.exceptions.AnalyseSemantiqueException;
 
 public class Idf extends Expression {
 	
@@ -21,7 +25,12 @@ public class Idf extends Expression {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
+		if(!s.getType().equals("entier")){
+			throw new AnalyseSemantiqueException("Le type de la varialbe doit etre un entier");
+		}
+		else{
+			s.setType("entier");
+		}
 		
 	}
 	public String toString() {
