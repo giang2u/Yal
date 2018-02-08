@@ -1,0 +1,14 @@
+.text
+main:
+	li $v0,5
+	sw $v0, 0($sp)
+	add $sp, $sp, -4 
+	li $v0,5
+	add $sp, $sp,4 
+	lw $t8, ($sp) 
+# Resultat addition 
+	add $v0, $t8, $v0
+end :
+move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0
+li $v0, 10               # retour au systeme
+syscall

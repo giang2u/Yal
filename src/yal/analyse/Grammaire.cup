@@ -4,6 +4,7 @@ import java.util.*;
 import yal.arbre.* ;
 import yal.arbre.expression.* ;
 import yal.exceptions.AnalyseSyntaxiqueException;
+import yal.tds.*;
 
 import java_cup.runtime.*;
 
@@ -117,17 +118,16 @@ LISTDECLARATION::= LISTDECLARATION DECLARATION:decl
 
 DECLARATION::=DECL_VAR:dv
                 {:
-                  Tds tds=Tds.getInstance();
                   RESULT=dv;
                 :};
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
-          	SymboleVariable s=new SymboleVariable(4);
-          	EntreVariable entre = new EntreVarible(idf);
-          	tds.ajouter(entre,s);
+          	SymboleVariable s = new SymboleVariable(4);
+          	EntreeVariable entre = new EntreeVariable(idf);
+          	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf);
           :}
-          |
+          /*|
           TYPE IDF:idf EGAL EXPR:e POINTVIRGULE
           {:
             Idf i=new Idf(idf);
@@ -137,7 +137,7 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
             //sur qui est la plus convenable
             RESULT=i;
 
-          :}
+          :}*/
           ;
 
 

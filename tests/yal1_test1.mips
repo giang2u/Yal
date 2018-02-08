@@ -1,0 +1,6 @@
+.text
+main:
+je vais la commencerje vais la commencerje vais la commencerend :
+move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0
+li $v0, 10               # retour au systeme
+syscall

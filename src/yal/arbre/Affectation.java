@@ -1,6 +1,6 @@
 package yal.arbre;
 
-import tds.Symbole;
+import yal.tds.Symbole;
 import yal.arbre.expression.Expression;
 
 public class Affectation extends ArbreAbstrait {
