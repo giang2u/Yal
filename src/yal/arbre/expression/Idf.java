@@ -26,7 +26,7 @@ public class Idf extends Expression {
 	@Override
 	public void verifier() {
 		
-		EntreeVariable entre = new EntreeVariable("i");
+		EntreeVariable entre = new EntreeVariable(this.nom);
 		Tds.getInstance().identifier(entre);
 		if(!s.getType().equals("entier")){
 			throw new AnalyseSemantiqueException("Le type de la varialbe doit etre un entier");

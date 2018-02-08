@@ -69,13 +69,13 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL ;
+terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE ;
-terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF ;
+terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF, FIN, DEBUT ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECTATION ;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT ;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -95,7 +95,9 @@ start with PROG ;
                    arbre.ajouter(e) ;
                    RESULT = arbre ; :}
                 ;*/
-PROG    ::=   LISTDECLARATION
+                
+
+/*PROG    ::=   LISTDECLARATION
                 {:
                   RESULT=arbre;
                 :}
@@ -103,8 +105,19 @@ PROG    ::=   LISTDECLARATION
                 LINST:li
                 {:
                   RESULT=li;
-                :};
+                :}
+                |
+                INSTRUCTION
+                {:
+                 RESULT=arbre;
+                :}
                 
+                ;*/                
+                
+PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d  FIN
+				{: RESULT=d;/*RESULT=i*/; :};	
+​
+        
 LISTDECLARATION   ::=   LISTDECLARATION DECLARATION:decl
                 {:
                   arbre.ajouter(decl);
@@ -115,12 +128,14 @@ LISTDECLARATION   ::=   LISTDECLARATION DECLARATION:decl
                 {:
                   arbre.ajouter(d);
                   RESULT=arbre;
-                :};
+                :}
+                ;
 
 DECLARATION   ::=   DECL_VAR:dv
                 {:
                   RESULT=dv;
                 :};
+                
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
           	SymboleVariable s = new SymboleVariable(4);
@@ -141,19 +156,20 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           :}*/
           ;
           
-          
-INSTRUCTION   ::=   AFFECT   
-					 {:
+LINST	::= LINST:li INSTRUCTION:i      
+					{: arbre.ajouter(i);
+						RESULT=li ; :};
+						   
+INSTRUCTION   ::=   AFFECT:a   
+				{:
                   RESULT=arbre;
-                :}
-                |   BOUCLE   
-                |   CONDITION   
-                |   LIRE   
-                |   ECRIRE   
-                |   RETOURNE;
+                :};
 
-AFFECT   ::=   idf:i   =   EXP:e   ; |   idf[   EXP   ]=   EXP   ;
+AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE 
 				 {: RESULT = new Affectation(eleft+1, i, e) ; :}
+		   |   IDF PAROUV   EXPR   PARFER EGAL   EXPR   POINTVIRGULE
+		   		{: :}
+				 ;
 
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d

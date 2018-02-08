@@ -1,12 +1,9 @@
 package yal.arbre;
 
-<<<<<<< HEAD
-import tds.EntreeVariable;
-import tds.Symbole;
-import tds.Tds;
-=======
+
+import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
->>>>>>> 64012cd57feb203f2acd571446bee6eac05a2500
+import yal.tds.Tds;
 import yal.arbre.expression.Expression;
 import yal.exceptions.AnalyseSemantiqueException;
 
@@ -17,11 +14,11 @@ public class Affectation extends ArbreAbstrait {
 	private Symbole s;
 	
 	
-	protected Affectation(int no,String idf,Expression e) {
+	public Affectation(int no,String idf,Expression e) {
 		super(no);
 		this.idf=idf;
 		expression=e;
-		s = Tds.getInstance().identifier(new EntreeVariable(idf));
+		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 	}
 
 	@Override

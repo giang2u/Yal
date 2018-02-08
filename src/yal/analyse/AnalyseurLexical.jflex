@@ -29,6 +29,9 @@ import yal.exceptions.AnalyseLexicaleException;
 %}
 %state commentaire
 
+debut= "debut"
+programme= "programme"
+fin="fin"
 csteE = [0-9]+
 csteB = "vrai" | "faux"
 type ="entier"
@@ -63,8 +66,10 @@ commentaireEtoileSlash = [*][/]
 {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
 {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
 {type}      	        { return symbol(CodesLexicaux.TYPE, yytext()); }
+{debut}					{ return symbol(CodesLexicaux.DEBUT, yytext()); }
+{programme}					{ return symbol(CodesLexicaux.PROGRAMME, yytext()); }
+{fin}					{ return symbol(CodesLexicaux.FIN, yytext()); }
 {idf}               { return symbol(CodesLexicaux.IDF, yytext()); }
-
 {commentaireSlashSlash} {}
 {commentaireSlashEtoile} { yybegin(commentaire); }
 {espace}                { }
