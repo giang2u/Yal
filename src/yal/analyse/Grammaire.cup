@@ -120,7 +120,7 @@ DECLARATION::=DECL_VAR:dv
                   RESULT=dv;
                 :};
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
-          {:
+          {://rajoute les entres et symboles et tds
             RESULT=new Idf(idf);
           :}
           |
@@ -128,11 +128,15 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {:
             Idf i=new Idf(idf);
             //Affectation af = new Affectation(eleft+1,idf,e);
-
+            //rajouter les symboles
+            //RESULT doit soit contenir l Affectation ou l idf je ne suis pas
+            //sur qui est la plus convenable
             RESULT=i;
 
           :}
           ;
+
+
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}
