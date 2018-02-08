@@ -18,4 +18,13 @@ public class Symbole {
 		return this.type;
 	}
 	
+	/**
+	 * 
+	 * @param deplacement
+	 * Mise à jour du déplacment
+	 */
+	public void setDeplacement(int deplacement) {
+		this.nombre_deplacement = -4*deplacement; 
+	}
+	
 }
