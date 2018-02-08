@@ -9,7 +9,7 @@ public class Tds {
 	private static Tds tds=new Tds();
 	
 	
-	public Tds getInstance() {
+	public static Tds getInstance() {
 		return tds;
 	}
 	public void ajouter(Entree e,Symbole s) {

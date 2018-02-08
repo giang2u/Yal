@@ -1,0 +1,8 @@
+	li $v0,1
+	sw $v0, 0($sp)
+	add $sp, $sp, -4 
+	li $v0,1
+	add $sp, $sp,4 
+	lw $t8, ($sp) 
+# Resultat addition 
+	add $v0, $t8, $v0

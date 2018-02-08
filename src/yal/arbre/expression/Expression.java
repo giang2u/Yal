@@ -21,7 +21,7 @@ public abstract class Expression extends ArbreAbstrait {
         super(n) ;
     }
 	
-    protected String getType() {
+    public String getType() {
     	return type;
     }
     /**

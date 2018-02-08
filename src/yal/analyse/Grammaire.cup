@@ -74,7 +74,7 @@ terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR ;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECTATION ;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -94,7 +94,7 @@ start with PROG ;
                    arbre.ajouter(e) ;
                    RESULT = arbre ; :}
                 ;*/
-PROG    ::= LISTDECLARATION
+PROG    ::=   LISTDECLARATION
                 {:
                   RESULT=arbre;
                 :}
@@ -103,7 +103,8 @@ PROG    ::= LISTDECLARATION
                 {:
                   RESULT=li;
                 :};
-LISTDECLARATION::= LISTDECLARATION DECLARATION:decl
+                
+LISTDECLARATION   ::=   LISTDECLARATION DECLARATION:decl
                 {:
                   arbre.ajouter(decl);
                   RESULT=arbre;
@@ -115,7 +116,7 @@ LISTDECLARATION::= LISTDECLARATION DECLARATION:decl
                   RESULT=arbre;
                 :};
 
-DECLARATION::=DECL_VAR:dv
+DECLARATION   ::=   DECL_VAR:dv
                 {:
                   RESULT=dv;
                 :};
@@ -135,7 +136,20 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
 
           :}
           ;
+          
+          
+INSTRUCTION   ::=   AFFECT   
+					 {:
+                  RESULT=arbre;
+                :}
+                |   BOUCLE   
+                |   CONDITION   
+                |   LIRE   
+                |   ECRIRE   
+                |   RETOURNE;
 
+AFFECT   ::=   idf:i   =   EXP:e   ; |   idf[   EXP   ]=   EXP   ;
+				 {: RESULT = new Affectation(eleft+1, i, e) ; :}
 
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
