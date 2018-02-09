@@ -35,11 +35,11 @@ public class Affectation extends Instruction {
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
+		StringBuilder sb=new StringBuilder();
+		sb.append(expression.toMIPS());
+		sb.append("sw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 		
-		
-		
-		return "la methode affect a faire";
+		return sb.toString();
 	}
 	public String toString() {
 		return idf+" = "+expression.toString();

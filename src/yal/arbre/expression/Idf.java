@@ -2,9 +2,7 @@ package yal.arbre.expression;
 
 import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
-import yal.tds.SymboleVariable;
 import yal.tds.Tds;
-import yal.exceptions.AnalyseSemantiqueException;
 
 public class Idf extends Expression {
 	
@@ -18,21 +16,22 @@ public class Idf extends Expression {
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void verifier() {
-		s=Tds.getInstance().identifier(new EntreeVariable(nom));		
+		s=Tds.getInstance().identifier(new EntreeVariable(nom));
+		setType(s.getType());
 	}
 	public String toString() {
-		return nom;
+		return "entier "+nom;
 	}
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return "je vais la commencer";
+		StringBuilder sb=new StringBuilder();
+		sb.append("lw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+		return sb.toString();
 	}
 
 }

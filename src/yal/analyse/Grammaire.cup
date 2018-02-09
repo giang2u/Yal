@@ -208,7 +208,12 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |
                 PAROUV  EXPR:e  PARFER
                 {: RESULT = e ; :}
+        |       IDF:e
+                {:
+                  RESULT=new Idf(e);
+                :}
                 ;
+
 
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
