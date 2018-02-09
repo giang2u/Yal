@@ -163,6 +163,7 @@ ECRITURE::= ECRIRE EXPR:e POINTVIRGULE
         |
         ECRIRE CSTECHAINE:csteCH POINTVIRGULE
         {:
+          StockChaine.getInstance().ajouter(csteCH);
           RESULT=new Ecrire(csteCH,csteCHleft+1);
         :};
 

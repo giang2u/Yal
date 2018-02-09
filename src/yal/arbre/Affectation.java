@@ -18,14 +18,13 @@ public class Affectation extends Instruction {
 		super(no);
 		this.idf=idf;
 		expression=e; 
+		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 	}
 
 	@Override
 	public void verifier() {
 		expression.verifier();
-		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 		// verifie que les types du symbole et de l'expression
-		
 		if (!s.getType().equals(expression.getType()) ) {
 			throw new AnalyseSemantiqueException(" numero ligne d erreur "+this.noLigne +""
 					+ " le type de l'idf et de l'expression ne son pas compatibles");

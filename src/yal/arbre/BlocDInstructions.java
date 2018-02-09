@@ -34,7 +34,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 	@Override
 	/**
 	 * 
-	 * verifier toutes les instructions de l´arbre abstrait  
+	 * verifier toutes les instructions de lï¿½arbre abstrait  
 	 */
 	public void verifier() {
 		for(ArbreAbstrait a:expr) {
@@ -44,6 +44,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
+		string.append(".data\n");
+		string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
         string.append(".text\nmain:\n");
 		for(ArbreAbstrait a:expr) {
 			string.append(a.toMIPS());

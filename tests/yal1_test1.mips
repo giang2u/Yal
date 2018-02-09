@@ -1,6 +1,67 @@
+.data
+str:	.asciiz "hello nam " 
 .text
 main:
-je vais la commencerend :
+lw $v0,-4($s7)
+lw $v0,-8($s7)
+lw $v0,-8($s7)
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+lw $v0,-4($s7)
+	sw $v0, 0($sp)
+	add $sp, $sp, -4 
+	li $v0,5
+	add $sp, $sp,4 
+	lw $t8, ($sp) 
+# Resultat addition 
+	add $v0, $t8, $v0
+sw $v0,-8($s7)
+	li $v0,1
+	sw $v0, 0($sp)
+	add $sp, $sp, -4 
+	li $v0,1
+	add $sp, $sp,4 
+	lw $t8, ($sp) 
+# Resultat addition 
+	add $v0, $t8, $v0
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+lw $v0,-8($s7)
+sw $v0,-4($s7)
+	li $v0, 4
+	la $a0, str
+	syscall
+lw $v0,-4($s7)
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+	li $v0,123456
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+	li $v0,1
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+	li $v0,1
+	sw $v0, 0($sp)
+	add $sp, $sp, -4 
+	li $v0,0
+	add $sp, $sp,4 
+	lw $t8, ($sp) 
+	and $v0,$v0,$t8 
+	move $t8,$v0
+	li $v0 , 1
+	move $a0, $t8
+	syscall
+end :
 move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0
 li $v0, 10               # retour au systeme
 syscall
