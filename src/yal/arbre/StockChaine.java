@@ -16,11 +16,17 @@ public class StockChaine {
 	}
 	
 	public void ajouter(String s){
-		this.chaines.add(s);
+		if(s.length() == 2) {
+			this.chaines.add("");
+		}
+		else {
+			s = s.substring(1, s.length() - 1);
+			this.chaines.add(s);
+		}
 	}
 
 	
-	public String getDerniereCahine(){
+	public String getDerniereChaine(){
 		return this.chaines.get(this.chaines.size() -1);
 	}
 	

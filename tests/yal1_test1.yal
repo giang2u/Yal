@@ -1,4 +1,20 @@
-programme tamere debut
+programme function debut
+//hello nam
+/*azerar arazr*/
 entier a;
-a = 2;
+entier b;
+ecrire b;
+b = a + 5; 
+ecrire 1 + 1;
+a = b; 
+/**azrar
+
+
+*/
+ecrire "hello";
+ecrire "nam";
+ecrire a;
+ecrire 123456;
+ecrire vrai;
+ecrire vrai et faux;
 fin
