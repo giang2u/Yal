@@ -21,14 +21,28 @@ public class Ecrire extends Instruction {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(!estChaine){
+			expr.verifier();
+		}
 	}
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return "A faire pour Ecrire";
+		StringBuilder s = new StringBuilder("");
+		if(estChaine){
+			s.append("\tli $v0, 4\n");
+			s.append("\tla $a0, str\n");
+			
+		}
+		else{
+			s.append(expr.toMIPS());
+			s.append("\tmove $t8,$v0\n");
+			s.append("\tli $v0 , 1\n");
+			s.append("\tmove $a0, $t8\n");
+			
+		}
+		s.append("syscall\n");
+		return s.toString();
 	}
 	public String toString(){
 		if (estChaine) {
