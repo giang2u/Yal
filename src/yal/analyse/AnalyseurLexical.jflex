@@ -41,7 +41,7 @@ espace = {finDeLigne}  | [ \t\f]
 commentaireSlashSlash = [/][/].*
 commentaireSlashEtoile = [/][*]
 commentaireEtoileSlash = [*][/]
-csteChaine = [\"] ([\"\"]|[^\"]|\n)*[\"]
+csteChaine = [\"] ([\"][\"]|[^\"\n])*[\"]
 %%
 <YYINITIAL>{
 ";"                 { return symbol(CodesLexicaux.POINTVIRGULE); }
