@@ -3,7 +3,11 @@ package yal.arbre.expression;
 import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
 import yal.tds.Tds;
-
+/**
+ * 
+ * @author AS
+ *la classe identifiant 
+ */
 public class Idf extends Expression {
 	
 	private String nom;
