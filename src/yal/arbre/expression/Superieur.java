@@ -57,7 +57,7 @@ public class Superieur extends Comparaison {
 		string.append("si"+ compteCondition+":	");
 
 		string.append("\tsub $v0, $v0, $t8 \n");
-		string.append("\tbgtz $v0, sinon"+compteCondition+"\n");
+		string.append("\tbeqz $v0, sinon"+compteCondition+"\n");
 		string.append("alors"+compteCondition+":\n");
 		string.append("\tli $v0, 1\n");
 		string.append("\tj finsi"+compteCondition+"\n");
