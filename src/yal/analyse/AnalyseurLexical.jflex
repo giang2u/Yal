@@ -41,7 +41,7 @@ espace = {finDeLigne}  | [ \t\f]
 commentaireSlashSlash = [/][/].*
 commentaireSlashEtoile = [/][*]
 commentaireEtoileSlash = [*][/]
-csteChaine = [\"]([^\"]|\n)*[\"]
+csteChaine = [\"] ([\"\"]|[^\"]|\n)*[\"]
 %%
 <YYINITIAL>{
 ";"                 { return symbol(CodesLexicaux.POINTVIRGULE); }
@@ -50,7 +50,6 @@ csteChaine = [\"]([^\"]|\n)*[\"]
 "*"                	{ return symbol(CodesLexicaux.MULT); }
 "/"                	{ return symbol(CodesLexicaux.DIV); }
 "="                    { return symbol(CodesLexicaux.EGAL); }
-
 "=="                    { return symbol(CodesLexicaux.EGALEGAL); }
 "!="                    { return symbol(CodesLexicaux.DIFF); }
 "<"                	{ return symbol(CodesLexicaux.INF); }
@@ -59,7 +58,6 @@ csteChaine = [\"]([^\"]|\n)*[\"]
 "et"                	{ return symbol(CodesLexicaux.ET); }
 "ou"                	{ return symbol(CodesLexicaux.OU); }
 "non"                	{ return symbol(CodesLexicaux.NON); }
-
 "("                	{ return symbol(CodesLexicaux.PAROUV); }
 ")"                	{ return symbol(CodesLexicaux.PARFER); }
 "ecrire"            { return symbol(CodesLexicaux.ECRIRE,yytext());}

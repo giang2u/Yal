@@ -14,7 +14,21 @@ public class Ecrire extends Instruction {
 			this.chaine = "";
 		}
 		else {
+			
 			this.chaine = chai.substring(1, chai.length() - 1);
+			if(chaine.contains("\"\"")) {
+				char[] tableau=chaine.toCharArray();
+				for (int i = 0; i < tableau.length-1; i++) {
+					if(tableau[i]==tableau[i+1] && tableau[i]=='\"'){
+						tableau[i]='\\';
+						i++;
+					}
+				}
+				
+				chaine=String.copyValueOf(tableau);
+				
+				//System.out.println(s);
+				}
 		}
 		estChaine=true;
 	}
@@ -44,10 +58,27 @@ public class Ecrire extends Instruction {
 		}
 		else{
 			s.append(expr.toMIPS());
+			
+			if(expr.getType().equals("bool")) {
+				s.append("\tbeqz $v0, sinon"+compteCondition+"\n");
+				s.append("\talors"+compteCondition+":\n");
+				s.append("\tli $v0, 4\n");
+				s.append("\tla $a0, vrai\n");
+				s.append("\tsyscall\n");
+				s.append("\tj finsi"+compteCondition+"\n");
+				s.append("sinon"+compteCondition+":\n");
+				s.append("\tli $v0, 4\n");
+				s.append("\tla $a0, faux\n");
+				s.append("\tsyscall\n");
+				s.append("finsi"+compteCondition+":\n");
+				compteCondition++;
+			}
+			else {
 			s.append("\tmove $t8,$v0\n");
 			s.append("\tli $v0 , 1\n");
 			s.append("\tmove $a0, $t8\n");
 			s.append("\tsyscall\n");
+			}
 		}
 		
 		return s.toString();

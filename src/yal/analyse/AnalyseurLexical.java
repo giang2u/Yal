@@ -92,7 +92,7 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
     "\0\u0120\0\u0144\0\u0168\0\u018c\0\110\0\u01b0\0\110\0\u01d4"+
     "\0\110\0\110\0\110\0\u01f8\0\u021c\0\110\0\110\0\110"+
     "\0\110\0\u0240\0\u0264\0\264\0\u0288\0\u02ac\0\u02d0\0\264"+
-    "\0\u02f4\0\u0318\0\u033c\0\u0360\0\u0384\0\110\0\u01d4\0\110"+
+    "\0\u02f4\0\u0318\0\u033c\0\u0360\0\u0384\0\110\0\u01d4\0\u01d4"+
     "\0\110\0\110\0\110\0\u03a8\0\u03cc\0\u03f0\0\u0414\0\u0438"+
     "\0\264\0\264\0\u045c\0\u0480\0\u04a4\0\u04c8\0\u04ec\0\264"+
     "\0\264\0\u0510\0\u0534\0\u0558\0\264\0\264\0\u057c\0\u05a0"+
@@ -195,7 +195,7 @@ public class AnalyseurLexical implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\2\0\1\11\11\1\1\11\1\1\1\11\1\1\3\11"+
-    "\2\1\4\11\14\1\1\11\1\0\4\11\27\1";
+    "\2\1\4\11\14\1\1\11\1\0\1\1\3\11\27\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[66];

@@ -1,6 +1,7 @@
 package yal.arbre;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class StockChaine {
 	private ArrayList<String> chaines ;
@@ -21,6 +22,20 @@ public class StockChaine {
 		}
 		else {
 			s = s.substring(1, s.length() - 1);
+			if(s.contains("\"\"")) {
+			char[] tableau=s.toCharArray();
+			for (int i = 0; i < tableau.length-1; i++) {
+				if(tableau[i]==tableau[i+1] && tableau[i]=='\"'){
+					tableau[i]='\\';
+					i++;
+				}
+			}
+			
+			s=String.copyValueOf(tableau);
+			
+			//System.out.println(s);
+			}
+			
 			this.chaines.add(s);
 		}
 	}

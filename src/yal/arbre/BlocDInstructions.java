@@ -46,6 +46,9 @@ public class BlocDInstructions extends ArbreAbstrait {
 		StringBuilder string = new StringBuilder("");
 		string.append(".data\n");
 		string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
+		string.append("vrai:\t.asciiz    \"vrai\" \n");
+		string.append("faux:\t.asciiz	 \"faux\" \n");
+		
         string.append(".text\nmain:\n");
 		for(ArbreAbstrait a:expr) {
 			string.append(a.toMIPS());
