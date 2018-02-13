@@ -1,5 +1,6 @@
 package yal.arbre.expression;
 
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseSemantiqueException;
 import yal.exceptions.ExecutionException;
 
@@ -52,8 +53,10 @@ public abstract class BinaireArithmetique extends Binaire {
 
 		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 			
-			throw new AnalyseSemantiqueException(this.noLigne +" une ou plusieurs expressions" +
+			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : "+this.noLigne +" une ou plusieurs expressions" +
 					" ne sont pas de type entier");
+			//throw new AnalyseSemantiqueException(this.noLigne +" une ou plusieurs expressions" +
+			//		" ne sont pas de type entier");
 		}
 		else {
 			

@@ -1,5 +1,6 @@
 package yal.arbre.expression;
 
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 /**
@@ -29,7 +30,14 @@ public abstract class BinaireLogique extends Binaire {
     	gauche.verifier();
     	droite.verifier();
     	if(!(gauche.getType().equals(droite.getType()) && gauche.getType().equals("bool"))){
-    		throw new AnalyseSemantiqueException(" numero de ligne "+this.noLigne +" Operation logique "  + operateur() + " avec: " + gauche.getType() + " - " + droite.getType() +  " impossible");
+    	/*	throw new AnalyseSemantiqueException(" numero de ligne "+this.noLigne +" Operation logique " 
+    	+ operateur() + " avec: " +
+    				gauche.getType() + " - " + droite.getType() +  " impossible");
+    		*/
+    		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Operation logique " 
+    	+ operateur() + " avec: " +
+    				gauche.getType() + " - " + droite.getType() +  " impossible");
+    	
     	} 
     	else {
     		setType("bool");

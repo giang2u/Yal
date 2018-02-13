@@ -2,6 +2,8 @@ package yal.arbre;
 
 import java.util.ArrayList;
 
+import yal.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -39,6 +41,9 @@ public class BlocDInstructions extends ArbreAbstrait {
 	public void verifier() {
 		for(ArbreAbstrait a:expr) {
 			a.verifier();
+		}
+		if(!StockErreur.getInstance().estVideChaine()) {
+			throw new AnalyseSemantiqueException(StockErreur.getInstance().fusionDesErreurs());
 		}
 	}
 	@Override

@@ -1,5 +1,6 @@
 package yal.arbre.expression;
 
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 /**
@@ -26,7 +27,10 @@ public abstract class Comparaison extends Binaire {
     	if(operateur().equals(" < ") || operateur().equals(" > ") ) {
 			if (!(this.gauche.getType().equals(this.droite.getType()) 
 				&& this.gauche.getType().equals("entier")	)){
-				throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +
+				/*throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +
+						" Comparaison operateur "+ operateur() + " incorrect entre " +
+								"" + this.gauche.getType() + " & " + this.droite.getType());*/
+				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d´erreur "+this.noLigne +
 						" Comparaison operateur "+ operateur() + " incorrect entre " +
 								"" + this.gauche.getType() + " & " + this.droite.getType());
 			}
@@ -36,10 +40,13 @@ public abstract class Comparaison extends Binaire {
     	}
     	else if(operateur().equals(" == ") || operateur().equals(" != ")) {
     		if(!(this.gauche.getType().equals(this.droite.getType()))){
-				throw new AnalyseSemantiqueException(" numero ligne d'erreur " + this.noLigne + 
+				/*throw new AnalyseSemantiqueException(" numero ligne d'erreur " + this.noLigne + 
 						" Comparaison operateur "+ operateur() + " incorrect entre " +
 								"" + this.gauche.getType() + " & " + this.droite.getType());
-
+*/
+    			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero ligne d'erreur " + this.noLigne + 
+						" Comparaison operateur "+ operateur() + " incorrect entre " +
+								"" + this.gauche.getType() + " & " + this.droite.getType());
     		}
     		else {
     			setType("bool");

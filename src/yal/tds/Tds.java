@@ -2,6 +2,8 @@ package yal.tds;
 
 import java.util.HashMap;
 import java.util.Iterator;
+
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 public class Tds {
@@ -20,14 +22,19 @@ public class Tds {
 	}
 	public void ajouter(Entree e,Symbole s) {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
+		boolean existedeja=false;
 		while(lesentrees.hasNext()) {
 			if(e.toString().equals(lesentrees.next().toString())) {
-				throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
+				//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
+				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la variable "+e.toString()+" deja declare ");
+				existedeja=true;
 			}
 		}
-		deplacement++;
-		s.setDeplacement(deplacement);
-		hashmap.put(e,s);
+		if(!existedeja) {
+			deplacement++;
+			s.setDeplacement(deplacement);
+			hashmap.put(e,s);
+		}
 		
 	}
 	public Symbole identifier(Entree e) {
@@ -38,7 +45,9 @@ public class Tds {
 				return hashmap.get(entree);
 			}
 		}
-		throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
+		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
+		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la variable "+e.toString()+" n est pas declare ");
+		return null;
 	}
 	
 	public HashMap<Entree , Symbole > getMap() {

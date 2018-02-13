@@ -1,7 +1,6 @@
 package yal.arbre;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 /**
  * 
  * @author AS

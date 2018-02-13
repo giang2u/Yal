@@ -26,7 +26,9 @@ public class Idf extends Expression {
 	@Override
 	public void verifier() {
 		s=Tds.getInstance().identifier(new EntreeVariable(nom));
-		setType(s.getType());
+		if(s!=null) {
+			setType(s.getType());
+		}
 	}
 	public String toString() {
 		return "entier "+nom;

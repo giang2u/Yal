@@ -1,5 +1,7 @@
 package yal.arbre.expression;
 
+import yal.arbre.StockChaine;
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 /**
@@ -30,7 +32,10 @@ public abstract class Unaire extends Expression {
     	expression.verifier();
     	if (operateur().equals("- ")) {
     		if(!expression.getType().equals("entier")) {
-    			throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +""
+/*    			throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +""
+    					+ " l operande pour le Non logique nï¿½est pas de type entier");
+ */
+    			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d´erreur "+this.noLigne +""
     					+ " l operande pour le Non logique nï¿½est pas de type entier");
     		}
     		else {
@@ -39,7 +44,11 @@ public abstract class Unaire extends Expression {
 		}
     	else if(operateur().equals(" non ")) {
     		if (!expression.getType().equals("bool")) {
-    			throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +""
+    		/*	throw new AnalyseSemantiqueException(" numero ligne d´erreur "+this.noLigne +""
+    					+ " l operande pour le non logique n est pas de type "
+    					+ " Bool");*/
+    			
+    			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d´erreur "+this.noLigne +""
     					+ " l operande pour le non logique n est pas de type "
     					+ " Bool");
     		}
