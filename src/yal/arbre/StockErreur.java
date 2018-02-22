@@ -23,6 +23,10 @@ public class StockErreur {
 	public boolean estVideChaine(){
 		return this.leserreurs.size() == 0;
 	}
+	
+	public int getNbErreur() {
+		return this.leserreurs.size();
+	}
 
 	public String fusionDesErreurs(){
 		StringBuilder sb = new StringBuilder("");

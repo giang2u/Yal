@@ -25,12 +25,14 @@ public class Affectation extends Instruction {
 	public void verifier() {
 		expression.verifier();
 		// verifie que les types du symbole et de l'expression
+		if ( s != null) {
 		if (!s.getType().equals(expression.getType()) ) {
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d erreur "+this.noLigne +""
 					+ " le type de l'idf et de l'expression ne son pas compatibles");
 			
 //			throw new AnalyseSemantiqueException(" numero ligne d erreur "+this.noLigne +""
 //					+ " le type de l'idf et de l'expression ne son pas compatibles");
+		}
 		}
 		
 	}

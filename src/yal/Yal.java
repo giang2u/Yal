@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import yal.analyse.AnalyseurLexical;
 import yal.analyse.AnalyseurSyntaxique;
 import yal.arbre.ArbreAbstrait;
+import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseException;
 
 /**
@@ -28,8 +29,8 @@ public class Yal {
             //System.err.println("expression stockée dans l'arbre : " + arbre);
             arbre.verifier() ; 
             //System.out.println(arbre.toMIPS());
-            ecrire(arbre.toMIPS(), fichier);
-            System.out.println("COMPILATION OK !"); 
+            	ecrire(arbre.toMIPS(), fichier);
+            	System.out.println("COMPILATION OK !"); 
 
          
         } 
