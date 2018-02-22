@@ -28,6 +28,7 @@ public class BoucleTANT extends Instruction{
 		this.listIns =listIns;
 		this.exp = exp;
 	}
+	
 
 	@Override
 	public void verifier() {
@@ -36,18 +37,30 @@ public class BoucleTANT extends Instruction{
 		if(!(this.exp.getType().equals("bool") && this.exp != null)){
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Expression n'est pas de type boolean");
 		}
-	/*	for(Instruction ins : listIns){
+		for(ArbreAbstrait ins : listIns.getexpr()){
 			ins.verifier();
-		}*/
+		}
 		
 		
 	}
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb=new StringBuilder();
+		sb.append(this.exp.toMIPS());
+		sb.append("\ttq"+ compteCondition+":");
+		sb.append("\tbeqz $v0, fintq"+compteCondition + "\n");
+		for(int i = 0; i < listIns.getexpr().size();i++){
+			sb.append(listIns.getexpr().get(i).toMIPS());
+		}
+		sb.append(this.exp.toMIPS());
+		compteCondition--;
+		sb.append("\tj tq"+compteCondition+ "\n");
+		sb.append("\tfintq"+ compteCondition+":\n");
+		return sb.toString();
 	}
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("tant ");
