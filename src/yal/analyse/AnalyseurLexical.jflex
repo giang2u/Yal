@@ -61,6 +61,15 @@ csteChaine = [\"] ([\"][\"]|[^\"\n])+[\"]
 "("                	{ return symbol(CodesLexicaux.PAROUV); }
 ")"                	{ return symbol(CodesLexicaux.PARFER); }
 "ecrire"            { return symbol(CodesLexicaux.ECRIRE,yytext());}
+"alors"					       { return symbol(CodesLexicaux.ALORS, yytext()); }
+"si"					       { return symbol(CodesLexicaux.SI, yytext()); }
+"sinon"					       { return symbol(CodesLexicaux.SINON, yytext()); }
+"fsi"					       { return symbol(CodesLexicaux.FSI, yytext()); }
+
+"lire"					       { return symbol(CodesLexicaux.LIRE, yytext()); }
+"tantque"					       { return symbol(CodesLexicaux.TANTQUE, yytext()); }
+"repeter"					       { return symbol(CodesLexicaux.REPETER, yytext()); }
+"fintantque"					       { return symbol(CodesLexicaux.FINTANTQUE, yytext()); }
 {csteChaine}        { return symbol(CodesLexicaux.CSTECHAINE,yytext());}
 {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
 {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
@@ -68,6 +77,7 @@ csteChaine = [\"] ([\"][\"]|[^\"\n])+[\"]
 {debut}					{ return symbol(CodesLexicaux.DEBUT, yytext()); }
 {programme}					{ return symbol(CodesLexicaux.PROGRAMME, yytext()); }
 {fin}					{ return symbol(CodesLexicaux.FIN, yytext()); }
+
 {idf}               { return symbol(CodesLexicaux.IDF, yytext()); }
 {commentaireSlashSlash} {}
 {commentaireSlashEtoile} { yybegin(commentaire); }

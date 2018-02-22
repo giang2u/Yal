@@ -71,7 +71,7 @@ public class StockChaine {
 	public String fusionChaine(){
 		StringBuilder sb = new StringBuilder("");
 		for(String s : this.chaines){
-			sb.append(s + " ");
+			sb.append(s + "");
 		}
 		return sb.toString();
 	}
