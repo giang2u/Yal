@@ -65,5 +65,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 		return string.toString();
 	}
 
+	public ArrayList<ArbreAbstrait> getexpr(){
+		return this.expr;
+	}
 
 }
