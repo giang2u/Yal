@@ -18,12 +18,14 @@ public class Affectation extends Instruction {
 		super(no);
 		this.idf=idf;
 		expression=e; 
-		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 	}
 
 	@Override
 	public void verifier() {
+		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
+		if(expression!=null && s!=null) {
 		expression.verifier();
+		
 		// verifie que les types du symbole et de l'expression
 		if ( s != null) {
 		if (!s.getType().equals(expression.getType()) ) {
@@ -35,6 +37,7 @@ public class Affectation extends Instruction {
 		}
 		}
 		
+	}
 	}
 
 	@Override

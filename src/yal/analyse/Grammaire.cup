@@ -70,13 +70,15 @@ parser code {:
 /* Terminals (tokens returned by the scanner).  */
 
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME ;
-terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE,DOUBLECOTE ;
+terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE;
 terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF, FIN, DEBUT,ECRIRE,CSTECHAINE ;
+terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
+
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT ;
-non terminal ArbreAbstrait ECRITURE;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,BOUCLE,CONDITION ;
+non terminal ArbreAbstrait ECRITURE,LECTURE;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -149,6 +151,18 @@ INSTRUCTION   ::=   AFFECT:a
         {:
           RESULT=e;
         :}
+        | BOUCLE:b
+        {:
+          RESULT=b;
+        :}
+        | CONDITION:c
+        {:
+          RESULT=c;
+        :}
+        | LECTURE:le
+        {:
+        RESULT=le;
+        :}
         ;
 
 AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE
@@ -166,6 +180,31 @@ ECRITURE::= ECRIRE EXPR:e POINTVIRGULE
           StockChaine.getInstance().ajouter(csteCH);
           RESULT=new Ecrire(csteCH,csteCHleft+1);
         :};
+LECTURE::=LIRE EXPR:e POINTVIRGULE
+        {:
+          RESULT=new Lire(e,eleft);
+        :};
+CONDITION::=SI EXPR:e ALORS LINST FSI
+      {:
+
+      :}
+      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i FSI
+      {:
+      :}
+      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i LINST FSI
+      {:
+
+      :}
+      ;
+BOUCLE::=TANTQUE EXPR:ex REPETER INSTRUCTION FINTANTQUE
+      {:
+
+      :}
+      |
+      TANTQUE EXPR:ex REPETER INSTRUCTION LINST:lis FINTANTQUE
+      {:
+
+      :};
 
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
