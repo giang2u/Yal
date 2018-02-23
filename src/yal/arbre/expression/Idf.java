@@ -30,6 +30,11 @@ public class Idf extends Expression {
 			setType(s.getType());
 		}
 	}
+	
+	public Symbole getSymbole() {
+		Symbole ss=Tds.getInstance().identifier(new EntreeVariable(nom));
+		return ss;
+	}
 	public String toString() {
 		return "entier "+nom;
 	}
