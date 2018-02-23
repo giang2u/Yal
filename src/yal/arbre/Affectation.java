@@ -42,7 +42,7 @@ public class Affectation extends Instruction {
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(expression.toMIPS());
-		sb.append("sw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+		sb.append("\tsw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 		
 		return sb.toString();
 	}

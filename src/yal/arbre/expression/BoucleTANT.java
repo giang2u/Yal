@@ -46,17 +46,19 @@ public class BoucleTANT extends Instruction{
 
 	@Override
 	public String toMIPS() {
+		int comptCur = compteCondition;
 		StringBuilder sb=new StringBuilder();
+
+		BlocDInstructions.entete = false;
 		sb.append(this.exp.toMIPS());
-		sb.append("\ttq"+ compteCondition+":");
-		sb.append("\tbeqz $v0, fintq"+compteCondition + "\n");
+		sb.append("tq"+ comptCur+":");
+		sb.append("\tbeqz $v0, fintq"+comptCur + "\n");
 		for(int i = 0; i < listIns.getexpr().size();i++){
 			sb.append(listIns.getexpr().get(i).toMIPS());
 		}
 		sb.append(this.exp.toMIPS());
-		compteCondition--;
-		sb.append("\tj tq"+compteCondition+ "\n");
-		sb.append("\tfintq"+ compteCondition+":\n");
+		sb.append("\tj tq"+comptCur+ "\n");
+		sb.append("fintq"+ comptCur+":\n");
 		return sb.toString();
 	}
 	

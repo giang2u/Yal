@@ -11,7 +11,7 @@ import yal.exceptions.AnalyseSemantiqueException;
  */
 
 public class BlocDInstructions extends ArbreAbstrait {
-    
+    public static boolean entete = true;
     protected ArrayList<ArbreAbstrait> expr ;
     
     
@@ -49,19 +49,29 @@ public class BlocDInstructions extends ArbreAbstrait {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
-		string.append(".data\n");
-		string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
-		string.append("vrai:\t.asciiz    \"vrai\" \n");
-		string.append("faux:\t.asciiz	 \"faux\" \n");
-		
-        string.append(".text\nmain:\n");
-		for(ArbreAbstrait a:expr) {
-			string.append(a.toMIPS());
+		if(entete){
+			string.append(".data\n");
+			string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
+			string.append("vrai:\t.asciiz    \"vrai\" \n");
+			string.append("faux:\t.asciiz	 \"faux\" \n");
+			
+	        string.append(".text\nmain:\n");
+	        for(ArbreAbstrait a:expr) {
+				string.append(a.toMIPS());
+			}
+			
+		      string.append("end :\n" +
+	         "move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0\n" +
+	         "li $v0, 10               # retour au systeme\n" +
+	         "syscall");
+		} 
+		else {
+			for(ArbreAbstrait a:expr) {
+				string.append(a.toMIPS());
+			}
 		}
-	      string.append("end :\n" +
-         "move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0\n" +
-         "li $v0, 10               # retour au systeme\n" +
-         "syscall");
+
+		
 		return string.toString();
 	}
 
