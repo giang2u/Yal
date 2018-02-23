@@ -10,6 +10,7 @@ import java_cup.runtime.*;
 
 action code {:
   BlocDInstructions arbre = new BlocDInstructions(0) ;
+ // BlocDInstructions arbreBoucle = new BlocDInstructions(0) ;
 
              :} ;
 
@@ -77,6 +78,7 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
 
 /* Non terminals used in the grammar section.  */
 
+<<<<<<< HEAD<<<<<<< HEAD
 non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR
 , INSTRUCTION, AFFECT,BOUCLE,CONDITION,LINST ;
 non terminal ArbreAbstrait ECRITURE,LECTURE;
@@ -94,14 +96,11 @@ precedence left NON ;
 
 start with PROG ;
 
-/*PROG    ::=     EXPR:e
-                {: BlocDInstructions arbre = new BlocDInstructions(eleft+1) ;
-                   arbre.ajouter(e) ;
-                   RESULT = arbre ; :}
-                ;*/
 
 PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:i FIN
-				{: RESULT=arbre; :}
+				{:
+					RESULT=arbre;
+				:}
         |
         PROGRAMME IDF DEBUT LINST:i FIN
         {: RESULT=arbre; :}
@@ -140,9 +139,22 @@ LINST	::= LINST:li INSTRUCTION:i
 					{: arbre.ajouter(i);
 						RESULT=li ; :}
 			| INSTRUCTION:i
-				{: arbre.ajouter(i);
+				{:
+					arbre.ajouter(i);
 					RESULT=arbre; :}
 				;
+
+LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
+				{:
+				((BlocDInstructions) li).ajouter(i);
+				RESULT=li ; :}
+			| INSTRUCTION:i
+				{:
+				BlocDInstructions arbreBoucle = new BlocDInstructions(0) ;
+				arbreBoucle.ajouter(i);
+					RESULT=arbreBoucle; :}
+				;
+
 
 INSTRUCTION   ::=   AFFECT:a
 				{:
@@ -208,6 +220,7 @@ CONDITION::=SI EXPR:e ALORS FSI
         RESULT=new Condition(e,li_aux,li_sinon_aux,eleft+1);
       :}
       ;
+<<<<<<< HEAD
 LINST::= INSTRUCTION:i
       {:
         RESULT=i;
@@ -227,7 +240,19 @@ BOUCLE::=TANTQUE EXPR:ex REPETER INSTRUCTION FINTANTQUE
       TANTQUE EXPR:ex REPETER INSTRUCTION LINST:lis FINTANTQUE
       {:
 
+=======
+
+BOUCLE::=TANTQUE EXPR:e REPETER  LINSTBOUCLE:lis FINTANTQUE
+      {:
+      		BlocDInstructions bloc = new BlocDInstructions(0);
+
+			bloc.ajouter(lis);
+
+			RESULT= new BoucleTANT(eleft+1,e,bloc);
+
+>>>>>>> ab932f2ddc75edcd00c2dfea57bc8484becd2253
       :};
+
 
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
