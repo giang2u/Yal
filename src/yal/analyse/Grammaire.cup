@@ -77,7 +77,8 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,BOUCLE,CONDITION ;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR
+, INSTRUCTION, AFFECT,BOUCLE,CONDITION,LINST ;
 non terminal ArbreAbstrait ECRITURE,LECTURE;
 non terminal Expression EXPR, CSTE ;
 
@@ -184,18 +185,40 @@ LECTURE::=LIRE EXPR:e POINTVIRGULE
         {:
           RESULT=new Lire(e,eleft);
         :};
-CONDITION::=SI EXPR:e ALORS LINST FSI
+CONDITION::=SI EXPR:e ALORS FSI
       {:
-
+        RESULT=new Condition(e,eleft+1);
       :}
-      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i FSI
+      |
+      SI EXPR:e ALORS LINST:lis FSI
       {:
+        ArrayList<ArbreAbstrait> li_aux = new ArrayList<>();
+        li_aux = (ArrayList<ArbreAbstrait>) lis.clone();
+        lis.clear();
+        RESULT=new Condition(e,li_aux,eleft+1);
       :}
-      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i LINST FSI
+      | SI EXPR:e ALORS LINST:list SINON INSTRUCTION:i LINST:listsinon FSI
       {:
-
+        ArrayList<ArbreAbstrait> li_aux = new ArrayList<>();
+        ArrayList<ArbreAbstrait> li_sinon_aux = new ArrayList<>();
+        li_aux = (ArrayList<ArbreAbstrait>) lis.clone();
+        li_sinon_aux = (ArrayList<ArbreAbstrait>) listsinon.clone();
+        lis.clear();
+        listsinon.clear();
+        RESULT=new Condition(e,li_aux,li_sinon_aux,eleft+1);
       :}
       ;
+LINST::= INSTRUCTION:i
+      {:
+        RESULT=i;
+      :}
+      |
+      INSTRUCTION:i LINST:li
+      {:
+        li.ajouter(i);
+        RESULT=li
+      :};
+
 BOUCLE::=TANTQUE EXPR:ex REPETER INSTRUCTION FINTANTQUE
       {:
 
