@@ -9,7 +9,7 @@ import yal.tds.*;
 import java_cup.runtime.*;
 
 action code {:
-  BlocDInstructions arbre = new BlocDInstructions(0) ;
+  //BlocDInstructions arbre = new BlocDInstructions(0) ;
  // BlocDInstructions arbreBoucle = new BlocDInstructions(0) ;
 
              :} ;
@@ -79,7 +79,7 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
 /* Non terminals used in the grammar section.  */
 
 non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT;
-non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION, LINSTBOUCLE;
+non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -95,24 +95,27 @@ precedence left NON ;
 start with PROG ;
 
 
-PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:i FIN
+PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:li FIN
 				{: 
-					RESULT=arbre; 
+					RESULT=li; 
 				:}
         |
         PROGRAMME IDF DEBUT LINST:i FIN
-        {: RESULT=arbre; :}
+        {: 
+        	RESULT=i; :}
         ;
 
 
-LISTDECLARATION   ::=  LISTDECLARATION DECLARATION:decl
+LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
                 {:
-                  arbre.ajouter(decl);
-                  RESULT=arbre;
+                  ((BlocDInstructions)lidecl).ajouter(decl);
+                  RESULT=lidecl;
                 :}
                 |
                 DECLARATION:d
                 {:
+				BlocDInstructions arbre = new BlocDInstructions(0) ;
+               
                   arbre.ajouter(d);
                   RESULT=arbre;
                 :}
@@ -134,14 +137,16 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           ;
 
 LINST	::= LINST:li INSTRUCTION:i
-					{: arbre.ajouter(i);
+					{: ((BlocDInstructions)li).ajouter(i);
 						RESULT=li ; :}
 			| INSTRUCTION:i
 				{: 
+					BlocDInstructions arbre = new BlocDInstructions(0) ;
+				
 					arbre.ajouter(i);
 					RESULT=arbre; :}
 				;
-
+/*
 LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
 				{: 
 				((BlocDInstructions) li).ajouter(i);
@@ -152,7 +157,7 @@ LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
 				arbreBoucle.ajouter(i);
 					RESULT=arbreBoucle; :}
 				;
-
+*/
 
 INSTRUCTION   ::=   AFFECT:a
 				{:
@@ -195,20 +200,30 @@ LECTURE::=LIRE EXPR:e POINTVIRGULE
         {:
           RESULT=new Lire(e,eleft);
         :};
-CONDITION::=SI EXPR:e ALORS LINST FSI
+CONDITION::=SI EXPR:e ALORS FSI
       {:
-
+		RESULT=new Condition(e,eleft+1);		
       :}
-      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i FSI
+      | SI EXPR:e ALORS LINST:li FSI
       {:
+		RESULT=new Condition(e,((BlocDInstructions)li,eleft+1);
       :}
-      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i LINST FSI
+      |  SI EXPR:e ALORS SINON LINST:lisinon FSI
       {:
-
+      		
+      		RESULT=new Condition(e,eleft+1,(BlocDInstructions)lisinon);
+      
+      :}
+      | 
+      SI EXPR:e ALORS LINST:lisi SINON LINST:lisinon FSI
+      {:
+ 
+      		RESULT=new Condition(e,(BlocDInstructions)lisi,eleft+1,(BlocDInstructions)lisinon);
+      
       :}
       ;
       
-BOUCLE::=TANTQUE EXPR:e REPETER  LINSTBOUCLE:lis FINTANTQUE
+BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
       {:	
       		BlocDInstructions bloc = new BlocDInstructions(0);
 
