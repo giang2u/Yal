@@ -5,6 +5,7 @@ import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
 import yal.tds.Tds;
 import yal.arbre.expression.Expression;
+import yal.arbre.expression.Idf;
 import yal.exceptions.AnalyseSemantiqueException;
 
 public class Affectation extends Instruction {
@@ -12,6 +13,7 @@ public class Affectation extends Instruction {
 	private Expression expression;
 	private String idf;
 	private Symbole s;
+	private Idf idf1;
 	
 	
 	public Affectation(int no,String idf,Expression e) {
@@ -19,10 +21,16 @@ public class Affectation extends Instruction {
 		this.idf=idf;
 		expression=e; 
 	}
+	
+	public Affectation(int no,Idf idf,Expression e) {
+		super(no);
+		this.idf1=idf;
+		expression=e; 
+	}
 
 	@Override
 	public void verifier() {
-		s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
+		/*s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
 		if(expression!=null && s!=null) {
 		expression.verifier();
 		
@@ -34,8 +42,20 @@ public class Affectation extends Instruction {
 //			throw new AnalyseSemantiqueException(" numero ligne d erreur "+this.noLigne +""
 //					+ " le type de l'idf et de l'expression ne son pas compatibles");
 		}
-		}
-		
+		}*/
+		idf1.verifier();
+		if(idf1.getSymbole()!=null) {
+			if(expression!=null) {
+				expression.verifier();			
+				if(!idf1.getType().equals(expression.getType())) {
+					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d erreur "+this.noLigne +""
+						+ " le type de l'idf et de l'expression ne son pas compatibles");	
+				}
+				else {
+					idf1.setValue(expression.getValue());
+				}	
+			}
+		}		
 	}
 
 	@Override
@@ -47,7 +67,8 @@ public class Affectation extends Instruction {
 		return sb.toString();
 	}
 	public String toString() {
-		return idf+" = "+expression.toString();
+		return idf1.toString()+" = "+expression.toString();
 	}
+	
 
 }

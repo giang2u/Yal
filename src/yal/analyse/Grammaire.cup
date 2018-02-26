@@ -78,10 +78,8 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
 
 /* Non terminals used in the grammar section.  */
 
-<<<<<<< HEAD<<<<<<< HEAD
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR
-, INSTRUCTION, AFFECT,BOUCLE,CONDITION,LINST ;
-non terminal ArbreAbstrait ECRITURE,LECTURE;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT;
+non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION, LINSTBOUCLE;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -99,6 +97,7 @@ start with PROG ;
 
 PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:i FIN
 				{:
+
 					RESULT=arbre;
 				:}
         |
@@ -130,13 +129,13 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           	SymboleVariable s = new SymboleVariable(0);
           	EntreeVariable entre = new EntreeVariable(idf);
           	Tds.getInstance().ajouter(entre,s);
-            RESULT=new Idf(idf);
+            RESULT=new Idf(idf,idfleft+1);
           :}
 
           ;
 
 LINST	::= LINST:li INSTRUCTION:i
-					{: arbre.ajouter(i);
+					{: li.ajouter(i);
 						RESULT=li ; :}
 			| INSTRUCTION:i
 				{:
@@ -144,6 +143,7 @@ LINST	::= LINST:li INSTRUCTION:i
 					RESULT=arbre; :}
 				;
 
+/*
 LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
 				{:
 				((BlocDInstructions) li).ajouter(i);
@@ -155,7 +155,7 @@ LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
 					RESULT=arbreBoucle; :}
 				;
 
-
+*/
 INSTRUCTION   ::=   AFFECT:a
 				{:
             RESULT=a;
@@ -180,7 +180,9 @@ INSTRUCTION   ::=   AFFECT:a
 
 AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE
 				{:
-          RESULT = new Affectation(eleft+1, i, e);
+        //RESULT = new Affectation(eleft+1, i, e);
+        RESULT = new Affectation(eleft+1, new Idf(i,ileft+1), e);
+
         :}
 				 ;
 ECRITURE::= ECRIRE EXPR:e POINTVIRGULE
@@ -197,63 +199,38 @@ LECTURE::=LIRE EXPR:e POINTVIRGULE
         {:
           RESULT=new Lire(e,eleft);
         :};
-CONDITION::=SI EXPR:e ALORS FSI
+
+/*CONDITION::=SI EXPR:e ALORS FSI
       {:
         RESULT=new Condition(e,eleft+1);
       :}
-      |
-      SI EXPR:e ALORS LINST:lis FSI
+      | SI EXPR:e ALORS SINON LINSTBOUCLE:lsinon FSI
       {:
-        ArrayList<ArbreAbstrait> li_aux = new ArrayList<>();
-        li_aux = (ArrayList<ArbreAbstrait>) lis.clone();
-        lis.clear();
-        RESULT=new Condition(e,li_aux,eleft+1);
+          BlocDInstructions bloc = new BlocDInstructions(eleft+1);
+          bloc.ajouter(lis);
+          RESULT= new Condition(eleft+1,e,bloc);
       :}
-      | SI EXPR:e ALORS LINST:list SINON INSTRUCTION:i LINST:listsinon FSI
+      | SI EXPR:e ALORS LINSTBOUCLE:blc SINON INSTRUCTION:i FSI
       {:
-        ArrayList<ArbreAbstrait> li_aux = new ArrayList<>();
-        ArrayList<ArbreAbstrait> li_sinon_aux = new ArrayList<>();
-        li_aux = (ArrayList<ArbreAbstrait>) lis.clone();
-        li_sinon_aux = (ArrayList<ArbreAbstrait>) listsinon.clone();
-        lis.clear();
-        listsinon.clear();
-        RESULT=new Condition(e,li_aux,li_sinon_aux,eleft+1);
+          BlocDInstructions bloc = new BlocDInstructions(eleft+1);
+          bloc.ajouter(lis);
+          RESULT= new Condition(eleft+1,e,bloc);
+      :}
+      | SI EXPR:e ALORS LINST SINON INSTRUCTION:i LINST FSI
+      {:
+
       :}
       ;
-<<<<<<< HEAD
-LINST::= INSTRUCTION:i
+*/
+BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
       {:
-        RESULT=i;
-      :}
-      |
-      INSTRUCTION:i LINST:li
-      {:
-        li.ajouter(i);
-        RESULT=li
-      :};
-
-BOUCLE::=TANTQUE EXPR:ex REPETER INSTRUCTION FINTANTQUE
-      {:
-
-      :}
-      |
-      TANTQUE EXPR:ex REPETER INSTRUCTION LINST:lis FINTANTQUE
-      {:
-
-=======
-
-BOUCLE::=TANTQUE EXPR:e REPETER  LINSTBOUCLE:lis FINTANTQUE
-      {:
-      		BlocDInstructions bloc = new BlocDInstructions(0);
+      		BlocDInstructions bloc = new BlocDInstructions(eleft+1);
 
 			bloc.ajouter(lis);
 
 			RESULT= new BoucleTANT(eleft+1,e,bloc);
 
->>>>>>> ab932f2ddc75edcd00c2dfea57bc8484becd2253
       :};
-
-
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}
@@ -298,7 +275,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = e ; :}
         |       IDF:e
                 {:
-                  RESULT=new Idf(e);
+                  RESULT=new Idf(e,eleft+1);
                 :}
                 ;
 
@@ -307,4 +284,4 @@ CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e
                 {: RESULT = new ConstanteBool(e, eleft+1) ; :}
-                ;
+;

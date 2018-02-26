@@ -13,8 +13,8 @@ public class Idf extends Expression {
 	private String nom;
 	private Symbole s;
 	
-	public Idf(String idf) {
-		super(0);
+	public Idf(String idf,int no) {
+		super(no);
 		nom=idf;
 	}
 
@@ -38,6 +38,12 @@ public class Idf extends Expression {
 		StringBuilder sb=new StringBuilder();
 		sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 		return sb.toString();
+	}
+	public Symbole getSymbole() {
+		return s;
+	}
+	public void setValue(int value) {
+		this.valeur=value;
 	}
 
 }
