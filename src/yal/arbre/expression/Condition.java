@@ -22,6 +22,17 @@ public class Condition extends Instruction {
 		lesinstructionSI=listinstruction;
 		conditionExpr=expression;
 	}
+	/**
+	 * constructeur pour sinon diff de condition de si
+	 * @param expression
+	 * @param no
+	 * @param listinstructionSinon
+	 */
+	public Condition(Expression expression,int no,BlocDInstructions listinstructionSinon) {
+		super(no);
+		lesinstructionSINON=listinstructionSinon;
+		conditionExpr=expression;
+	}
 	
 	public Condition(Expression expression,BlocDInstructions listinstruction,int no,BlocDInstructions listinstructionSinon) {
 		super(no);
@@ -51,7 +62,37 @@ public class Condition extends Instruction {
 
 	@Override
 	public String toMIPS() {
-		return null;
+		StringBuilder sb=new StringBuilder();
+		BlocDInstructions.entete = false;
+		sb.append(this.conditionExpr.toMIPS());
+		sb.append("si"+compteCondition+":");
+		sb.append("\tbeqz $v0, sinon"+compteCondition + "\n");
+		sb.append("alors"+compteCondition+":\n");
+		if(lesinstructionSI!=null){		
+			sb.append(lesinstructionSI.toMIPS());
+		}
+		sb.append("\tj finsi"+compteCondition+"\n");
+		sb.append("sinon"+compteCondition+":\n");
+		if(lesinstructionSINON!=null){
+			sb.append(lesinstructionSINON.toMIPS());
+		}
+		sb.append("finsi"+compteCondition+":\n");
+		compteCondition++;
+		return sb.toString();
+	}
+	public String toString(){
+		StringBuilder sb=new StringBuilder();
+		sb.append(" Si "+conditionExpr.toString());
+		sb.append(" Alors ");
+		if(lesinstructionSI!=null){
+			sb.append(lesinstructionSI.toString());
+		}
+		sb.append("sinon ");
+		if(lesinstructionSINON!=null){
+			sb.append(lesinstructionSINON.toString());
+		}
+		sb.append(" Fsi");
+		return sb.toString();
 	}
 
 }
