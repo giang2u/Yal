@@ -1,12 +1,9 @@
 package yal.arbre;
 
 
-import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
-import yal.tds.Tds;
 import yal.arbre.expression.Expression;
 import yal.arbre.expression.Idf;
-import yal.exceptions.AnalyseSemantiqueException;
 
 public class Affectation extends Instruction {
 
@@ -49,11 +46,13 @@ public class Affectation extends Instruction {
 				expression.verifier();			
 				if(!idf1.getType().equals(expression.getType())) {
 					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d erreur "+this.noLigne +""
-						+ " le type de l'idf et de l'expression ne son pas compatibles");	
+						+ " le type de l'idf et de l'expression ne son pas compatibles");
+					
 				}
 				else {
 					idf1.setValue(expression.getValue());
-				}	
+				}
+				
 			}
 		}		
 	}
@@ -62,12 +61,12 @@ public class Affectation extends Instruction {
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(expression.toMIPS());
-		sb.append("\tsw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+		sb.append("\tsw $v0,"+idf1.getSymbole().getNombreDeplacement()+"($s7)\n");
 		
 		return sb.toString();
 	}
 	public String toString() {
-		return idf1.toString()+" = "+expression.toString();
+		return idf+" = "+expression.toString();
 	}
 	
 

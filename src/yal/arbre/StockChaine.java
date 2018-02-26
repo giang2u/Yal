@@ -75,4 +75,13 @@ public class StockChaine {
 		}
 		return sb.toString();
 	}
+	
+	public int taille() {
+		return this.chaines.size();
+	}
+	public ArrayList<String> getChaines(){
+		return this.chaines;
+	}
+	
+	
 }

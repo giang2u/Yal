@@ -1,6 +1,7 @@
 package yal.arbre;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import yal.exceptions.AnalyseSemantiqueException;
 
@@ -52,6 +53,12 @@ public class BlocDInstructions extends ArbreAbstrait {
 		if(entete){
 			string.append(".data\n");
 			string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
+			
+			for (int i = 0; i <StockChaine.getInstance().taille() ; i++) {
+				string.append("str"+i+":\t.asciiz " +  "\"" 
+			+ StockChaine.getInstance().getChaines().get(i) +"\" \n");				
+			}
+			
 			string.append("vrai:\t.asciiz    \"vrai\" \n");
 			string.append("faux:\t.asciiz	 \"faux\" \n");
 			
