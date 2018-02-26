@@ -1,6 +1,7 @@
 package yal.arbre.expression;
 
 import yal.arbre.Instruction;
+import yal.arbre.StockErreur;
 
 public class Lire extends Instruction{
 	private Expression expression;
@@ -12,14 +13,19 @@ public class Lire extends Instruction{
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		expression.verifier();
+		if(!expression.getType().equals("entier")){
+			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Expression n'est pas un nom de variable");
+		}
 	}
 
 	@Override
 	public String toMIPS() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb = new StringBuilder("");
+		sb.append("\tli $v0 , 5 \n");
+		sb.append("syscall \n");
+		sb.append("\tsw $v0,"+((Idf)expression).getSymbole().getNombreDeplacement()+"($s7)\n");
+		return sb.toString();
 	}
 
 }

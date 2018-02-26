@@ -30,6 +30,11 @@ public class Idf extends Expression {
 			setType(s.getType());
 		}
 	}
+	
+	public Symbole getSymbole() {
+		Symbole ss=Tds.getInstance().identifier(new EntreeVariable(nom));
+		return ss;
+	}
 	public String toString() {
 		return "entier "+nom;
 	}
@@ -39,9 +44,7 @@ public class Idf extends Expression {
 		sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 		return sb.toString();
 	}
-	public Symbole getSymbole() {
-		return s;
-	}
+
 	public void setValue(int value) {
 		this.valeur=value;
 	}

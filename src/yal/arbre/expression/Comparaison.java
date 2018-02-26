@@ -1,7 +1,6 @@
 package yal.arbre.expression;
 
 import yal.arbre.StockErreur;
-import yal.exceptions.AnalyseSemantiqueException;
 
 /**
  * 3 déc. 2015
