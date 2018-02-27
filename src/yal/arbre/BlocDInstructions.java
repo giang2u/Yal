@@ -52,7 +52,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 		StringBuilder string = new StringBuilder("");
 		if(entete){
 			string.append(".data\n");
-			string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
+			//string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
 			
 			for (int i = 0; i <StockChaine.getInstance().taille() ; i++) {
 				string.append("str"+i+":\t.asciiz " +  "\"" 
