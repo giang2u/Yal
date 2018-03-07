@@ -3,6 +3,7 @@ package yal.tds;
 public abstract class Entree {
 
 	private String idf;
+	static protected int numRegion;
 	
 	public Entree(String idf){
 		this.idf = idf; 
