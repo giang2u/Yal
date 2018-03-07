@@ -73,12 +73,12 @@ parser code {:
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE;
 terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF, FIN, DEBUT,ECRIRE,CSTECHAINE ;
-terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,VIRGULE ;
+terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,VIRGULE,RETOURNE ;
 
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER;
 non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF;
 non terminal Expression EXPR, CSTE ;
 
@@ -203,6 +203,11 @@ INSTRUCTION   ::=   AFFECT:a
         {:
         RESULT=le;
         :}
+        |
+        RETOURNER:re
+        {:
+        	RESULT=re;
+        :}
         ;
 
 AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE
@@ -258,6 +263,10 @@ BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
 			RESULT= new BoucleTANT(eleft+1,e,bloc);
       :};
 
+RETOURNER::=RETOURNE EXPR:e
+		{:
+			//RESULT=RetourneExpression(e,elft+1);
+		:};
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}
         |

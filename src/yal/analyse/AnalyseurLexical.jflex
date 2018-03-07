@@ -62,7 +62,7 @@ csteChaine = [\"] ([\"][\"]|[^\"])+[\"]
 "non"                	{ return symbol(CodesLexicaux.NON); }
 "("                	{ return symbol(CodesLexicaux.PAROUV); }
 ")"                	{ return symbol(CodesLexicaux.PARFER); }
-"ecrire"            { return symbol(CodesLexicaux.ECRIRE,yytext());}
+"ecrire"            { return symbol(CodesLexicaux.ECRIRE);}
 "alors"					       { return symbol(CodesLexicaux.ALORS, yytext()); }
 "si"					       { return symbol(CodesLexicaux.SI, yytext()); }
 "sinon"					       { return symbol(CodesLexicaux.SINON, yytext()); }
@@ -71,6 +71,7 @@ csteChaine = [\"] ([\"][\"]|[^\"])+[\"]
 "lire"					       { return symbol(CodesLexicaux.LIRE, yytext()); }
 "tantque"					       { return symbol(CodesLexicaux.TANTQUE, yytext()); }
 "repeter"					       { return symbol(CodesLexicaux.REPETER, yytext()); }
+"retourne"			{ return symbol(CodesLexicaux.RETOURNE, yytext()); }
 "fintantque"	{ return symbol(CodesLexicaux.FINTANTQUE, yytext()); }
 "fonction"		{ return symbol(CodesLexicaux.FONCTION, yytext()); }
 
