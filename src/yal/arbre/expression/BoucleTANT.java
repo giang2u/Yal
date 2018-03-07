@@ -1,11 +1,9 @@
 package yal.arbre.expression;
 
-import java.util.ArrayList;
 
 import yal.arbre.ArbreAbstrait;
 import yal.arbre.BlocDInstructions;
 import yal.arbre.Instruction;
-import yal.arbre.StockChaine;
 import yal.arbre.StockErreur;
 
 public class BoucleTANT extends Instruction{

@@ -31,8 +31,8 @@ public class StockChaine {
 	public void ajouter(String s){
 		
 
-			s = s.substring(1, s.length() - 1);
-			if(s.contains("\"\"")) {
+		s = s.substring(1, s.length() - 1);
+		if(s.contains("\"\"")) {
 			char[] tableau=s.toCharArray();
 			for (int i = 0; i < tableau.length-1; i++) {
 				if(tableau[i]==tableau[i+1] && tableau[i]=='\"'){
@@ -40,12 +40,10 @@ public class StockChaine {
 					i++;
 				}
 			}
-			s=String.copyValueOf(tableau);
-			
-			//System.out.println(s);
-			}
-			
-			this.chaines.add(s);
+			s=String.copyValueOf(tableau);				
+		}
+		s=s.replaceAll("[\n\r]","");
+		this.chaines.add(s);
 		
 	}
 
@@ -75,4 +73,13 @@ public class StockChaine {
 		}
 		return sb.toString();
 	}
+	
+	public int taille() {
+		return this.chaines.size();
+	}
+	public ArrayList<String> getChaines(){
+		return this.chaines;
+	}
+	
+	
 }

@@ -50,9 +50,17 @@ public class Ecrire extends Instruction {
 	public String toMIPS() {
 		StringBuilder s = new StringBuilder("");
 		if(estChaine){
-			if (StockChaine.getInstance().getDerniereChaine().equals(chaine)){
+/*			if (StockChaine.getInstance().getDerniereChaine().equals(chaine)){
 				s.append("\tli $v0, 4\n");
 				s.append("\tla $a0, str\n");
+				s.append("\tsyscall\n");
+			}*/
+			chaine=chaine.replaceAll("[\n\r]","");
+			if (StockChaine.getInstance().getChaines().contains(chaine)){
+				int i=StockChaine.getInstance().getChaines().indexOf(chaine);
+				//System.out.println(i);
+				s.append("\tli $v0, 4\n");
+				s.append("\tla $a0, str"+i+"\n");
 				s.append("\tsyscall\n");
 			}
 		}
