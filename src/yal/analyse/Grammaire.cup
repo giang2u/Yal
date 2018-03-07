@@ -73,13 +73,13 @@ parser code {:
 terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE;
 terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF, FIN, DEBUT,ECRIRE,CSTECHAINE ;
-terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE ;
+terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,VIRGULE ;
 
 
 /* Non terminals used in the grammar section.  */
 
 non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT;
-non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION;
+non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -124,7 +124,14 @@ LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
 DECLARATION   ::=   DECL_VAR:dv
                 {:
                   RESULT=dv;
-                :};
+                :}
+                |
+                DECL_FONCTION:df
+                {:
+                	RESULT=df;
+                :}
+                ;
+
 
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
@@ -135,6 +142,33 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           :}
 
           ;
+
+DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LINST:li FIN
+		{:
+		
+		:}
+		|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
+		{:
+			
+		:}
+		;
+		
+PARAMETRES ::= PAROUV PARFER{:
+		:}
+		|
+		PAROUV LISTEPARAM PARFER
+		{:
+			
+		:};
+LISTEPARAM ::=TYPE IDF:i 
+		{:
+		
+		:}
+		| TYPE IDF:i POINTVIRGULE LISTEPARAM
+		{:
+			
+		:}
+		;
 
 LINST	::= LINST:li INSTRUCTION:i
 
@@ -148,18 +182,6 @@ LINST	::= LINST:li INSTRUCTION:i
 			arbre.ajouter(i);
 			RESULT=arbre; :}
 		;
-/*
-LINSTBOUCLE	::= LINSTBOUCLE:li INSTRUCTION:i
-				{:
-				((BlocDInstructions) li).ajouter(i);
-				RESULT=li ; :}
-			| INSTRUCTION:i
-				{:
-				BlocDInstructions arbreBoucle = new BlocDInstructions(0) ;
-				arbreBoucle.ajouter(i);
-					RESULT=arbreBoucle; :}
-				;
-*/
 
 INSTRUCTION   ::=   AFFECT:a
 				{:
@@ -281,9 +303,22 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {:
                   RESULT=new Idf(e,eleft+1);
                 :}
+        |		IDF:e PAROUV PAR_EFF PARFER
+        		{:
+        		//	RESULT=new Fonction();
+        		:}
+        |		IDF:e PAROUV PARFER
+        		{:
+        		:}
                 ;
-
-
+                
+PAR_EFF::= EXPR:e
+				{:
+				:}
+		| EXPR:e VIRGULE PAR_EFF
+				{:
+				:}
+				;
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e

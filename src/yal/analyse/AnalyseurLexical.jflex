@@ -44,6 +44,8 @@ commentaireEtoileSlash = [*][/]
 csteChaine = [\"] ([\"][\"]|[^\"])+[\"]
 %%
 <YYINITIAL>{
+","                 { return symbol(CodesLexicaux.VIRGULE); }
+
 ";"                 { return symbol(CodesLexicaux.POINTVIRGULE); }
 "+"                	{ return symbol(CodesLexicaux.PLUS); }
 "-"                	{ return symbol(CodesLexicaux.MOINS); }
@@ -69,7 +71,9 @@ csteChaine = [\"] ([\"][\"]|[^\"])+[\"]
 "lire"					       { return symbol(CodesLexicaux.LIRE, yytext()); }
 "tantque"					       { return symbol(CodesLexicaux.TANTQUE, yytext()); }
 "repeter"					       { return symbol(CodesLexicaux.REPETER, yytext()); }
-"fintantque"					       { return symbol(CodesLexicaux.FINTANTQUE, yytext()); }
+"fintantque"	{ return symbol(CodesLexicaux.FINTANTQUE, yytext()); }
+"fonction"		{ return symbol(CodesLexicaux.FONCTION, yytext()); }
+
 {csteChaine}        { return symbol(CodesLexicaux.CSTECHAINE,yytext());}
 {csteE}      	        { return symbol(CodesLexicaux.CONSTANTEINT, yytext()); }
 {csteB}      	        { return symbol(CodesLexicaux.CONSTANTEBOOL, yytext()); }
