@@ -36,7 +36,7 @@ public class Idf extends Expression {
 	@Override
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("lw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+		sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 		return sb.toString();
 	}
 
