@@ -25,6 +25,8 @@ public class Tds {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		boolean existedeja=false;
 		e.setRegion(numRegionCourant);// à corriger si ça marche 
+
+		System.out.println("dans ajouter: " + e.toString() + "*" + e.getRegion());
 		while(lesentrees.hasNext()) {
 			if(e.toString().equals(lesentrees.next().toString()) &&
 				e.getRegion() == numRegionCourant) {
@@ -60,7 +62,7 @@ public class Tds {
 		return hashmap;
 	}
 	
-	public void entreBlock(Entree e, Symbole s){
+	public void entreBlock(){
 		numRegion++;
 		numRegionCourant = numRegion;
 		

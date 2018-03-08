@@ -12,7 +12,7 @@ public abstract class Entree {
 	
 	public Entree(String idf, int e){
 		this.idf = idf; 
-		this.numRegion =e;
+		this.numRegion = e;
 	}
 	
 	

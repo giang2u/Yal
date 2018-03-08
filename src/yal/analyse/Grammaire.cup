@@ -136,24 +136,27 @@ DECLARATION   ::=   DECL_VAR:dv
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
           	SymboleVariable s = new SymboleVariable(0);
-          	EntreeVariable entre = new EntreeVariable(idf);
+          	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
           :}
 
           ;
 
-DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LINST:li FIN
+DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTDECLARATION:vr LINST:li FIN
 		{:
-			SymboleFonction sf = SymboleFonction(0);
-			EntreeFonction ef = EntreeFonction(idf);
+			Tds.getInstance().entreBlock();
+			SymboleFonction sf = new SymboleFonction(0);
+			EntreeFonction ef = new EntreeFonction(idf);
 			Tds.getInstance().ajouter(ef,sf);
-			RESULT = new Fonction()
-		:}
-		|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
-		{:
+			RESULT = new Fonction(idfleft++,idf,(BlocDInstructions)li);
+			Tds.getInstance().sortieBlock();
 			
 		:}
+		/*|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
+		{:
+			
+		:}*/
 		;
 		
 PARAMETRES ::= PAROUV PARFER{:

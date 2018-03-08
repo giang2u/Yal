@@ -7,13 +7,19 @@ import yal.arbre.BlocDInstructions;
 public class Fonction extends Expression {
 	private BlocDInstructions listeInstruction;
 	private ArrayList<Idf> listeParametres;
-	
+	private String nomfonction;
 	protected Fonction(int n) {
 		super(n);
-		// TODO Auto-generated constructor stub
+	}
+	
+	public Fonction(int n, String nomf,BlocDInstructions linst) {
+		super(n);
+		listeInstruction=linst;	
+		this.nomfonction = nomf;
+		listeParametres = new ArrayList<>();
 	}
 
-	protected Fonction(int n,BlocDInstructions linst,ArrayList<Idf> listParametres) {
+	public Fonction(int n,BlocDInstructions linst,ArrayList<Idf> listParametres) {
 		super(n);
 		listeInstruction=linst;
 		listeParametres=listParametres;		

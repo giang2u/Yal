@@ -13,6 +13,7 @@ import yal.analyse.AnalyseurSyntaxique;
 import yal.arbre.ArbreAbstrait;
 import yal.arbre.StockErreur;
 import yal.exceptions.AnalyseException;
+import yal.tds.Tds;
 
 /**
  * 24 mars 2015 
@@ -26,7 +27,9 @@ public class Yal {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-            //System.err.println("expression stockée dans l'arbre : " + arbre);
+            System.err.println("expression stockée dans l'arbre : " + arbre);
+            System.out.println(Tds.getInstance().numRegionCourant);
+            System.out.println(Tds.getInstance().numRegion);
             arbre.verifier() ; 
             //System.out.println(arbre.toMIPS());
             	ecrire(arbre.toMIPS(), fichier);
