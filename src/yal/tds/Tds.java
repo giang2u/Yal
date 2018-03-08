@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import yal.arbre.StockErreur;
-import yal.exceptions.AnalyseSemantiqueException;
 
 public class Tds {
 	private HashMap<Entree , Symbole > hashmap;

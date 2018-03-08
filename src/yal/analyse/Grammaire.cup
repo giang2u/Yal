@@ -148,6 +148,7 @@ DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LINST:li FIN
 			SymboleFonction sf = SymboleFonction(0);
 			EntreeFonction ef = EntreeFonction(idf);
 			Tds.getInstance().ajouter(ef,sf);
+			RESULT = new Fonction()
 		:}
 		|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
 		{:
