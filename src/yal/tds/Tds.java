@@ -8,15 +8,15 @@ import yal.exceptions.AnalyseSemantiqueException;
 
 public class Tds {
 	private HashMap<Entree , Symbole > hashmap;
-	private HashMap<String, Symbole> hashmapLocal;
 	private static Tds tds=new Tds();
+	public static int numRegionCourant = 0;
+	public static int numRegion = 0;
 	private int deplacement;
 	
 	
 	private Tds(){
 		deplacement=0;
 		hashmap = new HashMap<Entree , Symbole >();
-		hashmapLocal = new HashMap<String, Symbole>();//yal 3 initialiser le hashmaplocal
 	}
 	
 	public static Tds getInstance() {
@@ -25,8 +25,11 @@ public class Tds {
 	public void ajouter(Entree e,Symbole s) {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		boolean existedeja=false;
+		e.setRegion(numRegionCourant);// à corriger si ça marche 
 		while(lesentrees.hasNext()) {
-			if(e.toString().equals(lesentrees.next().toString())) {
+			if(e.toString().equals(lesentrees.next().toString()) &&
+				e.getRegion() == numRegionCourant) {
+				
 				//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
 				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la variable "+e.toString()+" deja declare ");
 				existedeja=true;
@@ -38,13 +41,14 @@ public class Tds {
 			hashmap.put(e,s);
 		}
 		
+		
 	}
 	
 	public Symbole identifier(Entree e) {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
-			if(e.getIdf().equals(entree.getIdf())) {
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() == numRegionCourant) {
 				return hashmap.get(entree);
 			}
 		}
@@ -57,28 +61,14 @@ public class Tds {
 		return hashmap;
 	}
 	
-	//yal3
-	public Symbole identifier(Entree e, int num ){
-		Iterator<String> lesentrees=hashmapLocal.keySet().iterator();
-		while(lesentrees.hasNext()) {
-			String cleMap = lesentrees.next();
-			String cleparametre = e.getIdf()+num;
-			if(cleparametre.equals(cleMap)) {
-				return hashmapLocal.get(cleMap);
-			}
-		}
-		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
-		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la variable "+e.toString()+" n est pas declare ");
-		return null;
-	}
-	 
 	public void entreBlock(Entree e, Symbole s){
-		Entree.numRegion++;
-		this.hashmapLocal.put(e.getIdf() + Entree.numRegion, s);
+		numRegion++;
+		numRegionCourant = numRegion;
 		
 	}
 	
 	public void sortieBlock(){
+		numRegionCourant = 0;
 		
 	}
 }
