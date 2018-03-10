@@ -53,6 +53,7 @@ public class Fonction extends Expression {
 			setType(s.getType());
 		}
 		listeInstruction.verifier();
+		retourExpr.verifier();
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class Fonction extends Expression {
 		}
 		sb.append(" ");
 		sb.append(listeInstruction.toString());
-		sb.append("retourne "+retourExpr.toString());
+		sb.append("retourne "+retourExpr.toString()+" ");
 		
 		sb.append("fin ");
 		

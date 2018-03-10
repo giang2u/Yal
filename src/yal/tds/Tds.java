@@ -63,14 +63,19 @@ public class Tds {
 		//System.out.println(" essai "+e.getIdf());
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
-			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
-			//	System.out.println(entree.toString() + " "+ e.toString()+ " numR "+ entree.getRegion()+" et "+e.getRegion());
+			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
+
+			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
 				return hashmap.get(entree);
 			}
+			else if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
+					return hashmap.get(entree);
+				}
+			
 		}
 		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
 		
-		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la variable "+e.toString()+" n est pas declare ");
+		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()+" n est pas declare ");
 		return null;
 	}
 	

@@ -333,19 +333,25 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 :}
         |		IDF:e PAROUV PAR_EFF PARFER
         		{:
-        		//	RESULT=new Fonction(e);
+        		//	RESULT=new AppelFonction(e,eleft+1);
         		:}
         |		IDF:e PAROUV PARFER
         		{:
+        		RESULT=new AppelFonction(e,eleft+1);
         		:}
                 ;
                 
 PAR_EFF::= EXPR:e
-				{:
-				:}
-		| EXPR:e VIRGULE PAR_EFF
-				{:
-				:}
+		{:
+			BlocDInstructions blo=new BlocDInstructions(0);		
+			blo.ajouter(e);
+			RESULT=blo;
+		:}
+		| EXPR:e VIRGULE PAR_EFF:peff
+		{:
+			((BlocDInstructions)peff).ajouter(e);
+			RESULT=peff ;
+		:}
 				;
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}

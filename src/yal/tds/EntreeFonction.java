@@ -5,7 +5,8 @@ public class EntreeFonction extends Entree {
 
 	
 	public EntreeFonction(String idf) {
-		super(idf+"()");
+		super(idf);
+		type="fonction";
 	}
 	public EntreeFonction(String idf,int num) {
 		super(idf,num);
