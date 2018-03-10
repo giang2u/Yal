@@ -6,6 +6,7 @@ import java.util.Iterator;
 import jflex.Out;
 import yal.arbre.BlocDInstructions;
 import yal.arbre.Instruction;
+import yal.arbre.StockErreur;
 import yal.tds.EntreeFonction;
 import yal.tds.Symbole;
 import yal.tds.Tds;
@@ -54,6 +55,12 @@ public class Fonction extends Expression {
 		}
 		listeInstruction.verifier();
 		retourExpr.verifier();
+		if(!retourExpr.getType().equals("entier")){
+			StockErreur.getInstance().ajouter(
+					"ERREUR SEMANTIQUE : ligne "+retourExpr.getNoLigne()+" le type de la valeur de retour n est pas entier");
+
+		}
+		
 	}
 
 	@Override
