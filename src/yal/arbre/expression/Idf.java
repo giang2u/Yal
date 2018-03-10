@@ -12,12 +12,26 @@ public class Idf extends Expression {
 	
 	private String nom;
 	private Symbole s;
+	private int numRegion;
 	
 	public Idf(String idf,int no) {
 		super(no);
 		nom=idf;
 	}
-
+	public Idf(String idf,int no,int numReg) {
+		super(no);
+		nom=idf;
+		numRegion=numReg;
+	}
+	
+	public void setNumRegion(int numReg) {
+		numRegion=numReg;
+	}
+	
+	public int getNumRegion() {
+		return this.numRegion;
+	}
+	
 	@Override
 	public int getValue() {
 		return 0;

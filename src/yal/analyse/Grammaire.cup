@@ -78,7 +78,7 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,V
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER,LISTEVARIABLESLOCALES;
 non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF;
 non terminal Expression EXPR, CSTE ;
 
@@ -106,7 +106,7 @@ PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:li FIN
         ;
 
 
-LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
+LISTDECLARATION   ::= DECLARATION:decl LISTDECLARATION:lidecl 
                 {:
                   ((BlocDInstructions)lidecl).ajouter(decl);
                   RESULT=lidecl;
@@ -114,24 +114,22 @@ LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
                 |
                 DECLARATION:d
                 {:
-				BlocDInstructions arbre = new BlocDInstructions(0) ;
-               
-                  arbre.ajouter(d);
-                  RESULT=arbre;
+					BlocDInstructions arbre = new BlocDInstructions(0) ;
+            		arbre.ajouter(d);
+                  	RESULT=arbre;
                 :}
                 ;
 
-DECLARATION   ::=   DECL_VAR:dv
-                {:
-                  RESULT=dv;
-                :}
-                |
-                DECL_FONCTION:df
+DECLARATION   ::= DECL_FONCTION:df
                 {:
                 	RESULT=df;
                 :}
+                |	
+				DECL_VAR:dv
+                {:
+                	RESULT=dv;
+                :}
                 ;
-
 
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
@@ -140,26 +138,23 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
           :}
-
           ;
 
-DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTDECLARATION:vr LINST:li FIN
+DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTEVARIABLESLOCALES:lv LINST:li FIN
 		{:
-			Tds.getInstance().entreBlock();
+			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
-			EntreeFonction ef = new EntreeFonction(idf);
+			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant);
+			BlocDInstructions liv=(BlocDInstructions)lv;
+			
 			Tds.getInstance().ajouter(ef,sf);
 			RESULT = new Fonction(idfleft++,idf,(BlocDInstructions)li);
-			Tds.getInstance().sortieBlock();
 			
 		:}
-		/*|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
-		{:
-			
-		:}*/
 		;
 		
 PARAMETRES ::= PAROUV PARFER{:
+			Tds.getInstance().entreBlock();		
 		:}
 		|
 		PAROUV LISTEPARAM PARFER
@@ -175,18 +170,36 @@ LISTEPARAM ::=TYPE IDF:i
 			
 		:}
 		;
+LISTEVARIABLESLOCALES ::=DECL_VAR:dv 
+		{:
+		
+			BlocDInstructions arbre = new BlocDInstructions(0) ;
+    		arbre.ajouter(dv);
+          	RESULT=arbre;   
+          	     
+		:}
+		| DECL_VAR:dv LISTEVARIABLESLOCALES:lidecl
+		{:
+	       ((BlocDInstructions)lidecl).ajouter(dv);
+	       RESULT=lidecl;
+		:}
+		;
 
 LINST	::= LINST:li INSTRUCTION:i
 
 		{: ((BlocDInstructions)li).ajouter(i);
-			RESULT=li ; 
+			RESULT=li ;
+			Tds.getInstance().sortieBlock();
+			 
 		:}
 		| INSTRUCTION:i
 		{: 
 			BlocDInstructions arbre = new BlocDInstructions(0) ;
 		
 			arbre.ajouter(i);
-			RESULT=arbre; :}
+			RESULT=arbre; 
+			
+			:}
 		;
 
 INSTRUCTION   ::=   AFFECT:a
