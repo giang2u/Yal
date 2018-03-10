@@ -3,6 +3,7 @@ package yal.arbre;
 
 import yal.tds.Symbole;
 import yal.arbre.expression.Expression;
+import yal.arbre.expression.Fonction;
 import yal.arbre.expression.Idf;
 
 public class Affectation extends Instruction {
@@ -11,7 +12,7 @@ public class Affectation extends Instruction {
 	private String idf;
 	private Symbole s;
 	private Idf idf1;
-	
+	private Fonction fonction;
 	
 	public Affectation(int no,String idf,Expression e) {
 		super(no);
@@ -24,23 +25,16 @@ public class Affectation extends Instruction {
 		this.idf1=idf;
 		expression=e; 
 	}
+	public Affectation(int no,Idf idf,Fonction f) {
+		super(no);
+		this.idf1=idf;
+		fonction=f; 
+	}
+	
 
 	@Override
 	public void verifier() {
-		/*s = Tds.getInstance().identifier(new EntreeVariable(this.idf));
-		if(expression!=null && s!=null) {
-		expression.verifier();
 		
-		// verifie que les types du symbole et de l'expression
-		if ( s != null) {
-		if (!s.getType().equals(expression.getType()) ) {
-			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : numero ligne d erreur "+this.noLigne +""
-					+ " le type de l'idf et de l'expression ne son pas compatibles");
-			
-//			throw new AnalyseSemantiqueException(" numero ligne d erreur "+this.noLigne +""
-//					+ " le type de l'idf et de l'expression ne son pas compatibles");
-		}
-		}*/
 		idf1.verifier();
 		if(idf1.getSymbole()!=null) {
 			if(expression!=null) {

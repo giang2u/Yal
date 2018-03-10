@@ -15,23 +15,27 @@ public class Fonction extends Expression {
 	private ArrayList<Idf> listeParametres;
 	private String nomfonction;
 	private int numRegion;
+	private Expression retourExpr;
 	
 	private Symbole s;
 	protected Fonction(int n) {
 		super(n);
 	}
 	
-	public Fonction(int n, String nomf,int numR,BlocDInstructions linst) {
+	public Fonction(int n, String nomf,int numR,BlocDInstructions linst,Expression eprR) {
 		super(n);
 		listeInstruction=linst;	
 		numRegion=numR;
 		this.nomfonction = nomf;
+		retourExpr=eprR;
+
 	}
 
-	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,ArrayList<Idf> listParametres) {
+	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,ArrayList<Idf> listParametres,Expression eprR) {
 		super(n);
 		nomfonction=nomF;
 		numRegion=numR;
+		retourExpr=eprR;
 		listeInstruction=linst;
 		listeParametres=listParametres;		
 	}
@@ -69,6 +73,8 @@ public class Fonction extends Expression {
 		}
 		sb.append(" ");
 		sb.append(listeInstruction.toString());
+		sb.append("retourne "+retourExpr.toString());
+		
 		sb.append("fin ");
 		
 		return sb.toString();
