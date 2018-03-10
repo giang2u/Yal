@@ -30,31 +30,39 @@ public class Tds {
 		
 		while(lesentrees.hasNext()) {
 			Entree ee=lesentrees.next();
-			if(e.toString().equals(ee.toString()) &&
-				e.getRegion() == ee.numRegion) {
+			if(	e.getType().equals(ee.getType()) && e.getType().equals("fonction")) {
 				
-				//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
-				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la variable"
-						+ " "+e.toString()+" deja declare "
-								+ "et sa region est "+e.getRegion());
-				existedeja=true;
+				if(e.toString().equals(ee.toString())) {
+				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la fonction"
+						+ " "+e.toString()+" deja declare ");
+					existedeja=true;
+				}
+			}
+			else {
+				if(e.toString().equals(ee.toString()) &&
+					e.getRegion() == ee.numRegion	) {
+					
+					//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
+					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la variable"
+							+ " "+e.toString()+" deja declare "
+									+ "et sa region est "+e.getRegion());
+					existedeja=true;
+				}
 			}
 		}
-		afficher();
+		//afficher();
 		if(!existedeja) {
 			deplacement++;
 			s.setDeplacement(deplacement);
 			hashmap.put(e,s);
 		}
-		
-		
 	}
 	
 	public Symbole identifier(Entree e) {
 		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
-			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() == numRegionCourant) {
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
 				return hashmap.get(entree);
 			}
 		}

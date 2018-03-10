@@ -39,15 +39,14 @@ public class Idf extends Expression {
 
 	@Override
 	public void verifier() {
-		s=Tds.getInstance().identifier(new EntreeVariable(nom));
+		s=Tds.getInstance().identifier(new EntreeVariable(nom,numRegion));
 		if(s!=null) {
 			setType(s.getType());
 		}
 	}
 	
 	public Symbole getSymbole() {
-		Symbole ss=Tds.getInstance().identifier(new EntreeVariable(nom));
-		return ss;
+		return s;
 	}
 	public String toString() {
 		return "entier "+nom;

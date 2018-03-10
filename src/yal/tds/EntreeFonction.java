@@ -9,6 +9,7 @@ public class EntreeFonction extends Entree {
 	}
 	public EntreeFonction(String idf,int num) {
 		super(idf,num);
+		type="fonction";
 	}	
 
 	public String toString() {

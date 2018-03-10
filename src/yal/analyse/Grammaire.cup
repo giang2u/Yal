@@ -97,16 +97,21 @@ start with PROG ;
 
 PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:li FIN
 				{: 
-					RESULT=li; 
+					BlocDInstructions bli=new BlocDInstructions(0);
+					bli.ajouter(d);
+					bli.ajouter(li);
+					
+                  //((BlocDInstructions)li).ajouter(d);
+					
+					RESULT=bli; 
 				:}
-        |
-        PROGRAMME IDF DEBUT LINST:i FIN
-        {: 
-        	RESULT=i; :}
-        ;
+		        |
+		        PROGRAMME IDF DEBUT LINST:i FIN
+		        {: 
+		        	RESULT=i; :}
+		        ;
 
-
-LISTDECLARATION   ::= DECLARATION:decl LISTDECLARATION:lidecl 
+LISTDECLARATION   ::= LISTDECLARATION:lidecl  DECLARATION:decl
                 {:
                   ((BlocDInstructions)lidecl).ajouter(decl);
                   RESULT=lidecl;
@@ -145,11 +150,11 @@ DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTEVARIABLESLOCALES:lv LINST
 			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
 			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant);
-			BlocDInstructions liv=(BlocDInstructions)lv;
-			
 			Tds.getInstance().ajouter(ef,sf);
-			RESULT = new Fonction(idfleft++,idf,(BlocDInstructions)li);
-			
+			BlocDInstructions bli=new BlocDInstructions(0);
+			bli.ajouter(lv);
+			bli.ajouter(li);
+			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,bli);
 		:}
 		;
 		
@@ -194,16 +199,14 @@ LINST	::= LINST:li INSTRUCTION:i
 		:}
 		| INSTRUCTION:i
 		{: 
-			BlocDInstructions arbre = new BlocDInstructions(0) ;
-		
+			BlocDInstructions arbre = new BlocDInstructions(0) ;		
 			arbre.ajouter(i);
 			RESULT=arbre; 
-			
-			:}
+		:}
 		;
 
 INSTRUCTION   ::=   AFFECT:a
-				{:
+		{:
             RESULT=a;
         :}
         | ECRITURE:e

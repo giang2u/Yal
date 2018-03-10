@@ -4,6 +4,7 @@ public abstract class Entree {
 
 	private String idf;
 	protected int numRegion;
+	protected String type;
 	
 	public Entree(String idf){
 		this.idf = idf; 
@@ -31,5 +32,8 @@ public abstract class Entree {
 	@Override
 	public String toString() {
 		return idf;
-	}	
-}
+	}
+	public String getType() {
+		return type;
+	}
+}	

@@ -68,7 +68,7 @@ public class Affectation extends Instruction {
 		return sb.toString();
 	}
 	public String toString() {
-		return idf+" = "+expression.toString();
+		return idf1.toString()+" = "+expression.toString();
 	}
 	
 
