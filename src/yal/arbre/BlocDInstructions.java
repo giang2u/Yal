@@ -1,7 +1,6 @@
 package yal.arbre;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import yal.exceptions.AnalyseSemantiqueException;
 
@@ -14,7 +13,6 @@ import yal.exceptions.AnalyseSemantiqueException;
 public class BlocDInstructions extends ArbreAbstrait {
     public static boolean entete = true;
     protected ArrayList<ArbreAbstrait> expr ;
-    
     
     public BlocDInstructions(int n) {
         super(n) ;
@@ -85,5 +83,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 	public ArrayList<ArbreAbstrait> getexpr(){
 		return this.expr;
 	}
-
+	public ArbreAbstrait derniereInstruction() {
+		return this.expr.get(expr.size()-1);
+	}
+	
 }

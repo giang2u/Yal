@@ -3,6 +3,7 @@ package yal.arbre.expression;
 
 import yal.arbre.BlocDInstructions;
 import yal.arbre.Instruction;
+import yal.arbre.RetourneExpression;
 import yal.arbre.StockErreur;
 
 public class Condition extends Instruction {
@@ -95,6 +96,29 @@ public class Condition extends Instruction {
 		}
 		sb.append(" Fsi");
 		return sb.toString();
+	}
+	public boolean verifierRetourSI() {
+//		System.out.println(lesinstructionSI.derniereInstruction());
+
+		if(lesinstructionSI==null) {
+			return false;
+		}
+		if(lesinstructionSI.derniereInstruction() instanceof RetourneExpression) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean verifierRetourSINON() {
+
+		if(lesinstructionSINON==null ) {
+			return true;
+		}
+		if(lesinstructionSINON.derniereInstruction() instanceof RetourneExpression) {
+			return true;
+		}
+		return false;
+		
 	}
 
 }

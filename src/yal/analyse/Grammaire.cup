@@ -145,16 +145,16 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           :}
           ;
 
-DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTEVARIABLESLOCALES:lv LINST:li RETOURNE EXPR:e POINTVIRGULE FIN
+DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTEVARIABLESLOCALES:lv LINST:li  FIN
 		{:
 			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
 			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant);
 			Tds.getInstance().ajouter(ef,sf);
 			BlocDInstructions bli=new BlocDInstructions(0);
-			bli.ajouter(lv);
+			//bli.ajouter(lv);
 			bli.ajouter(li);
-			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,bli,e);
+			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li);
 		:}
 		;
 		
@@ -284,7 +284,10 @@ BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
 			bloc.ajouter(lis);
 			RESULT= new BoucleTANT(eleft+1,e,bloc);
       :};
-
+RETOURNER::=RETOURNE EXPR:e POINTVIRGULE
+		{:
+		RESULT=new RetourneExpression(eleft+1,e);
+		:};
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}

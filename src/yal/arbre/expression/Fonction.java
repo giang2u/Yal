@@ -1,11 +1,9 @@
 package yal.arbre.expression;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import jflex.Out;
 import yal.arbre.BlocDInstructions;
-import yal.arbre.Instruction;
+import yal.arbre.RetourneExpression;
 import yal.arbre.StockErreur;
 import yal.tds.EntreeFonction;
 import yal.tds.Symbole;
@@ -16,27 +14,24 @@ public class Fonction extends Expression {
 	private ArrayList<Idf> listeParametres;
 	private String nomfonction;
 	private int numRegion;
-	private Expression retourExpr;
 	
 	private Symbole s;
 	protected Fonction(int n) {
 		super(n);
 	}
 	
-	public Fonction(int n, String nomf,int numR,BlocDInstructions linst,Expression eprR) {
+	public Fonction(int n, String nomf,int numR,BlocDInstructions linst) {
 		super(n);
 		listeInstruction=linst;	
 		numRegion=numR;
 		this.nomfonction = nomf;
-		retourExpr=eprR;
-
+		
 	}
 
-	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,ArrayList<Idf> listParametres,Expression eprR) {
+	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,ArrayList<Idf> listParametres) {
 		super(n);
 		nomfonction=nomF;
 		numRegion=numR;
-		retourExpr=eprR;
 		listeInstruction=linst;
 		listeParametres=listParametres;		
 	}
@@ -53,12 +48,12 @@ public class Fonction extends Expression {
 		if(s!=null) {
 			setType(s.getType());
 		}
-		listeInstruction.verifier();
-		retourExpr.verifier();
-		if(!retourExpr.getType().equals("entier")){
+		listeInstruction.verifier();	
+		if(!verifierRetour()) {
 			StockErreur.getInstance().ajouter(
-					"ERREUR SEMANTIQUE : ligne "+retourExpr.getNoLigne()+" le type de la valeur de retour n est pas entier");
-
+					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
+							+nomfonction+ "n a pas de retourner ");
+	
 		}
 		
 	}
@@ -81,10 +76,27 @@ public class Fonction extends Expression {
 		}
 		sb.append(" ");
 		sb.append(listeInstruction.toString());
-		sb.append("retourne "+retourExpr.toString()+" ");
 		
 		sb.append("fin ");
 		
 		return sb.toString();
+	}
+	public boolean verifierRetour() {
+		//System.out.println(listeInstruction.getexpr());
+		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
+			return true;
+			
+		}
+		else if(listeInstruction.derniereInstruction() instanceof Condition) {
+
+			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
+
+				if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSINON() ) {
+					return true;
+				}
+			}
+	
+		}
+		return false;
 	}
 }

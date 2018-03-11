@@ -2,7 +2,6 @@ package yal.arbre.expression;
 
 import yal.arbre.BlocDInstructions;
 import yal.tds.EntreeFonction;
-import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
 import yal.tds.Tds;
 
