@@ -45,7 +45,7 @@ public class Fonction extends Expression {
 
 	@Override
 	public void verifier() {
-		BlocDInstructions.estLafin =false;
+
 		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion));
 		if(s!=null) {
 			setType(s.getType());
@@ -56,7 +56,6 @@ public class Fonction extends Expression {
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ "n a pas de retourner ");
 		}
-		BlocDInstructions.estLafin =false;
 	}
 
 	@Override
@@ -84,14 +83,14 @@ public class Fonction extends Expression {
 	}
 	
 	public boolean verifierRetour() {
-		//System.out.println(listeInstruction.getexpr());
+		//System.out.println(listeInstruction.derniereInstruction());
 		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
 			
 			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
 			((SymboleFonction)s).setTypeRetour(etat);
 			return true;
 			
-		}/*
+		}
 		else if(listeInstruction.derniereInstruction() instanceof Condition) {
 
 			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
@@ -101,7 +100,7 @@ public class Fonction extends Expression {
 				}
 			}
 	
-		}*/
+		}
 		return false;
 	}
 }

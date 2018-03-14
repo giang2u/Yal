@@ -13,7 +13,7 @@ public class Affectation extends Instruction {
 	private Symbole s;
 	private Idf idf1;
 	private Fonction fonction;
-	
+
 	public Affectation(int no,String idf,Expression e) {
 		super(no);
 		this.idf=idf;
@@ -25,13 +25,13 @@ public class Affectation extends Instruction {
 		this.idf1=idf;
 		expression=e; 
 	}
+	
 	public Affectation(int no,Idf idf,Fonction f) {
 		super(no);
 		this.idf1=idf;
 		fonction=f; 
 	}
 	
-
 	@Override
 	public void verifier() {
 		
@@ -61,6 +61,7 @@ public class Affectation extends Instruction {
 		
 		return sb.toString();
 	}
+	
 	public String toString() {
 		return idf1.toString()+" = "+expression.toString();
 	}
