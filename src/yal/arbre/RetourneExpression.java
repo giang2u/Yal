@@ -29,7 +29,10 @@ public class RetourneExpression extends Instruction{
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return null;
+		StringBuilder s = new StringBuilder("");
+		s.append(retourneExpr.toMIPS());
+		s.append("\tsw $v0,12($sp)\n");
+		return s.toString();
 	}
 	public String toString() {
 		StringBuilder sb=new StringBuilder();

@@ -59,10 +59,58 @@ public class Fonction extends Expression {
 		BlocDInstructions.estLafin =false;
 	}
 
+	
+	public boolean verifierRetour() {
+		//System.out.println(listeInstruction.getexpr());
+		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
+			
+			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
+			((SymboleFonction)s).setTypeRetour(etat);
+			return true;
+			
+		}
+		else if(listeInstruction.derniereInstruction() instanceof Condition) {
+
+			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
+
+				if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSINON() ) {
+					return true;
+				}
+			}
+	
+		}
+		return false;
+	}
+	
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
-		return null;
+		StringBuilder s = new StringBuilder("");
+
+		s.append("fonction"+ nomfonction + ": \n");
+		
+		//empiler valeur de return
+		s.append("\tadd $sp, $sp,-4\n");
+		
+		
+		//empiler @ de retourn
+		s.append("\t$ra,$sp \n");
+		s.append("\tadd $sp, $sp,-4 \n");
+		
+		//empiler chainage dynamique
+		s.append("\tsw $s7, $sp \n");
+		s.append("\tadd $sp, $sp,-4 \n");
+		
+		//empiler nombre region
+		s.append("\tli $v0," + numRegion + "\n");
+		s.append("\tsw $v0, $sp \n");
+		s.append("\tadd $sp, $sp, -4 \n");
+		
+		for(int i = 0; i < listeInstruction.getexpr().size();i++){
+			s.append(listeInstruction.getexpr().get(i).toMIPS());
+		}
+		/* variable local*/
+		return s.toString();
 	}
 
 	public String toString() {
@@ -81,27 +129,5 @@ public class Fonction extends Expression {
 		sb.append("fin ");
 		
 		return sb.toString();
-	}
-	
-	public boolean verifierRetour() {
-		//System.out.println(listeInstruction.getexpr());
-		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
-			
-			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
-			((SymboleFonction)s).setTypeRetour(etat);
-			return true;
-			
-		}/*
-		else if(listeInstruction.derniereInstruction() instanceof Condition) {
-
-			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
-
-				if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSINON() ) {
-					return true;
-				}
-			}
-	
-		}*/
-		return false;
 	}
 }

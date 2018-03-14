@@ -51,6 +51,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 	@Override
 	public String toMIPS() {
 		StringBuilder string = new StringBuilder("");
+		System.out.println("hello entete : " + entete);
 		if(entete){
 			string.append(".data\n");
 			//string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
@@ -64,6 +65,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 			string.append("faux:\t.asciiz	 \"faux\" \n");
 			
 	        string.append(".text\nmain:\n");
+	        entete = false;
 	        for(ArbreAbstrait a:expr) {
 				string.append(a.toMIPS());
 			}
@@ -72,6 +74,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 	         "move $v1, $v0      # copie de v0 dans v1 pour permettre les tests de yal0\n" +
 	         "li $v0, 10               # retour au systeme\n" +
 	         "syscall");
+		      
 		} 
 		else {
 			for(ArbreAbstrait a:expr) {
