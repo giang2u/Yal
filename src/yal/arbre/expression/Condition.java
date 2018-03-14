@@ -46,6 +46,7 @@ public class Condition extends Instruction {
 
 	@Override
 	public void verifier() {
+		BlocDInstructions.estLafin = false;
 		if(conditionExpr!=null){
 			conditionExpr.verifier();
 			if(!conditionExpr.getType().equals("bool")){
@@ -60,12 +61,15 @@ public class Condition extends Instruction {
 				}
 			}
 		}
+		BlocDInstructions.estLafin = true;
+
 	}
 
 	@Override
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		BlocDInstructions.entete = false;
+
 		sb.append(this.conditionExpr.toMIPS());
 		sb.append("si"+compteCondition+":");
 		sb.append("\tbeqz $v0, sinon"+compteCondition + "\n");

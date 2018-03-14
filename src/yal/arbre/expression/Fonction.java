@@ -7,6 +7,7 @@ import yal.arbre.RetourneExpression;
 import yal.arbre.StockErreur;
 import yal.tds.EntreeFonction;
 import yal.tds.Symbole;
+import yal.tds.SymboleFonction;
 import yal.tds.Tds;
 
 public class Fonction extends Expression {
@@ -44,6 +45,7 @@ public class Fonction extends Expression {
 
 	@Override
 	public void verifier() {
+		BlocDInstructions.estLafin =false;
 		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion));
 		if(s!=null) {
 			setType(s.getType());
@@ -53,9 +55,8 @@ public class Fonction extends Expression {
 			StockErreur.getInstance().ajouter(
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ "n a pas de retourner ");
-	
 		}
-		
+		BlocDInstructions.estLafin =false;
 	}
 
 	@Override
@@ -81,12 +82,16 @@ public class Fonction extends Expression {
 		
 		return sb.toString();
 	}
+	
 	public boolean verifierRetour() {
 		//System.out.println(listeInstruction.getexpr());
 		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
+			
+			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
+			((SymboleFonction)s).setTypeRetour(etat);
 			return true;
 			
-		}
+		}/*
 		else if(listeInstruction.derniereInstruction() instanceof Condition) {
 
 			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
@@ -96,7 +101,7 @@ public class Fonction extends Expression {
 				}
 			}
 	
-		}
+		}*/
 		return false;
 	}
 }

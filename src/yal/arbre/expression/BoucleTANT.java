@@ -30,7 +30,7 @@ public class BoucleTANT extends Instruction{
 
 	@Override
 	public void verifier() {
-	
+		BlocDInstructions.estLafin = false;
 		this.exp.verifier();
 		if(!(this.exp.getType().equals("bool") && this.exp != null)){
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Expression n'est pas de type boolean");
@@ -40,7 +40,7 @@ public class BoucleTANT extends Instruction{
 			ins.verifier();
 		}
 */		
-		
+		BlocDInstructions.estLafin = true;
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import yal.arbre.expression.Expression;
 
 public class RetourneExpression extends Instruction{
 	private Expression retourneExpr;
+	public static String typeRetour;
+
 	public RetourneExpression(int no) {
 		super(no);
 		// TODO Auto-generated constructor stub
@@ -15,13 +17,15 @@ public class RetourneExpression extends Instruction{
 	
 	@Override
 	public void verifier() {
-		retourneExpr.verifier();
-		if(retourneExpr!=null && !retourneExpr.getType().equals("entier")) {
-			StockErreur.getInstance().ajouter(
-					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");
-		}
-	}
 
+		retourneExpr.verifier();
+		if( !retourneExpr.getType().equals("entier")) {
+			StockErreur.getInstance().ajouter(
+					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");		
+		}
+
+	}
+	
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
@@ -31,6 +35,10 @@ public class RetourneExpression extends Instruction{
 		StringBuilder sb=new StringBuilder();
 		sb.append("retourne "+retourneExpr.toString()+" ");
 		return sb.toString();
+	}
+	
+	public String getType() {
+		return retourneExpr.getType();
 	}
 
 }

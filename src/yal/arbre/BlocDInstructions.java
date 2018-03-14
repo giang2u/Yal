@@ -12,6 +12,8 @@ import yal.exceptions.AnalyseSemantiqueException;
 
 public class BlocDInstructions extends ArbreAbstrait {
     public static boolean entete = true;
+    public static boolean estLafin = true;
+
     protected ArrayList<ArbreAbstrait> expr ;
     
     public BlocDInstructions(int n) {
@@ -41,7 +43,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 		for(ArbreAbstrait a:expr) {
 			a.verifier();
 		}
-		if(!StockErreur.getInstance().estVideChaine()) {
+		
+		if(		BlocDInstructions.estLafin && !StockErreur.getInstance().estVideChaine()) {
 			throw new AnalyseSemantiqueException(StockErreur.getInstance().fusionDesErreurs());
 		}
 	}
