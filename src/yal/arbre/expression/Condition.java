@@ -46,7 +46,6 @@ public class Condition extends Instruction {
 
 	@Override
 	public void verifier() {
-		BlocDInstructions.estLafin = false;
 		if(conditionExpr!=null){
 			conditionExpr.verifier();
 			if(!conditionExpr.getType().equals("bool")){
@@ -61,7 +60,6 @@ public class Condition extends Instruction {
 				}
 			}
 		}
-		BlocDInstructions.estLafin = true;
 
 	}
 

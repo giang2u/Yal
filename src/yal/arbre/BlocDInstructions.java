@@ -12,7 +12,6 @@ import yal.exceptions.AnalyseSemantiqueException;
 
 public class BlocDInstructions extends ArbreAbstrait {
     public static boolean entete = true;
-    public static boolean estLafin = true;
 
     protected ArrayList<ArbreAbstrait> expr ;
     
@@ -44,9 +43,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 			a.verifier();
 		}
 		
-		if(		BlocDInstructions.estLafin && !StockErreur.getInstance().estVideChaine()) {
-			throw new AnalyseSemantiqueException(StockErreur.getInstance().fusionDesErreurs());
-		}
+		
 	}
 	@Override
 	public String toMIPS() {

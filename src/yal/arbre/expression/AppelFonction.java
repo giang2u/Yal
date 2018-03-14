@@ -39,9 +39,9 @@ public class AppelFonction extends Expression {
 	public String toMIPS() {
 		// TODO Auto-generated method stub
 		StringBuilder s = new StringBuilder("");
-		s.append("\tadd $sp, $sp,-4");
+		s.append("\tadd $sp, $sp,-4 \n");
 		s.append("\tjal fonction" + nomFonction +"\n");
-		s.append("\tlw $sp, $s7,12 \n");
+		s.append("\tlw $sp, 12($s7) \n");
 		s.append("\tlw $s7, 8($s7) \n");
 		s.append("\tlw $ra, ($sp) \n");
 		s.append("\tjr $ra \n");

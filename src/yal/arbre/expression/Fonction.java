@@ -45,7 +45,7 @@ public class Fonction extends Expression {
 
 	@Override
 	public void verifier() {
-		BlocDInstructions.estLafin =false;
+
 		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion));
 		if(s!=null) {
 			setType(s.getType());
@@ -56,31 +56,8 @@ public class Fonction extends Expression {
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ "n a pas de retourner ");
 		}
-		BlocDInstructions.estLafin =false;
 	}
 
-	
-	public boolean verifierRetour() {
-		//System.out.println(listeInstruction.getexpr());
-		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
-			
-			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
-			((SymboleFonction)s).setTypeRetour(etat);
-			return true;
-			
-		}
-		else if(listeInstruction.derniereInstruction() instanceof Condition) {
-
-			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
-
-				if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSINON() ) {
-					return true;
-				}
-			}
-	
-		}
-		return false;
-	}
 	
 	@Override
 	public String toMIPS() {
@@ -94,16 +71,16 @@ public class Fonction extends Expression {
 		
 		
 		//empiler @ de retourn
-		s.append("\t$ra,$sp \n");
+		s.append("\tsw $ra,($sp) \n");
 		s.append("\tadd $sp, $sp,-4 \n");
 		
 		//empiler chainage dynamique
-		s.append("\tsw $s7, $sp \n");
+		s.append("\tsw $s7, ($sp) \n");
 		s.append("\tadd $sp, $sp,-4 \n");
 		
 		//empiler nombre region
 		s.append("\tli $v0," + numRegion + "\n");
-		s.append("\tsw $v0, $sp \n");
+		s.append("\tsw $v0, ($sp) \n");
 		s.append("\tadd $sp, $sp, -4 \n");
 		
 		for(int i = 0; i < listeInstruction.getexpr().size();i++){
@@ -129,5 +106,27 @@ public class Fonction extends Expression {
 		sb.append("fin ");
 		
 		return sb.toString();
+	}
+
+	public boolean verifierRetour() {
+		//System.out.println(listeInstruction.derniereInstruction());
+		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
+			
+			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
+			((SymboleFonction)s).setTypeRetour(etat);
+			return true;
+			
+		}
+		else if(listeInstruction.derniereInstruction() instanceof Condition) {
+
+			if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSI() ) {
+
+				if( ((Condition)listeInstruction.derniereInstruction()).verifierRetourSINON() ) {
+					return true;
+				}
+			}
+	
+		}
+		return false;
 	}
 }
