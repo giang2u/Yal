@@ -32,7 +32,7 @@ public class RetourneExpression extends Instruction{
 		StringBuilder s = new StringBuilder("");
 		s.append(retourneExpr.toMIPS());
 		s.append("\tsw $v0,16($sp)\n");
-		s.append("\tlw $s7,($sp) \n");
+		//s.append("\tlw $s7,($sp) \n");
 		s.append("\tadd $sp, $sp, 12\n");
 		s.append("\tlw $ra,($sp) \n");
 		s.append("\tadd $sp, $sp, 4\n");
