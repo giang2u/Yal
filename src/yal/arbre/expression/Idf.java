@@ -12,12 +12,26 @@ public class Idf extends Expression {
 	
 	private String nom;
 	private Symbole s;
+	private int numRegion;
 	
 	public Idf(String idf,int no) {
 		super(no);
 		nom=idf;
 	}
-
+	public Idf(String idf,int no,int numReg) {
+		super(no);
+		nom=idf;
+		numRegion=numReg;
+	}
+	
+	public void setNumRegion(int numReg) {
+		numRegion=numReg;
+	}
+	
+	public int getNumRegion() {
+		return this.numRegion;
+	}
+	
 	@Override
 	public int getValue() {
 		return 0;
@@ -25,15 +39,14 @@ public class Idf extends Expression {
 
 	@Override
 	public void verifier() {
-		s=Tds.getInstance().identifier(new EntreeVariable(nom));
+		s=Tds.getInstance().identifier(new EntreeVariable(nom,numRegion));
 		if(s!=null) {
 			setType(s.getType());
 		}
 	}
 	
 	public Symbole getSymbole() {
-		Symbole ss=Tds.getInstance().identifier(new EntreeVariable(nom));
-		return ss;
+		return s;
 	}
 	public String toString() {
 		return "entier "+nom;

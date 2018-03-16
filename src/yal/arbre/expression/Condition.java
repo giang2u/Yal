@@ -3,6 +3,7 @@ package yal.arbre.expression;
 
 import yal.arbre.BlocDInstructions;
 import yal.arbre.Instruction;
+import yal.arbre.RetourneExpression;
 import yal.arbre.StockErreur;
 
 public class Condition extends Instruction {
@@ -59,12 +60,14 @@ public class Condition extends Instruction {
 				}
 			}
 		}
+
 	}
 
 	@Override
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		BlocDInstructions.entete = false;
+
 		sb.append(this.conditionExpr.toMIPS());
 		sb.append("si"+compteCondition+":");
 		sb.append("\tbeqz $v0, sinon"+compteCondition + "\n");
@@ -95,6 +98,29 @@ public class Condition extends Instruction {
 		}
 		sb.append(" Fsi");
 		return sb.toString();
+	}
+	public boolean verifierRetourSI() {
+//		System.out.println(lesinstructionSI.derniereInstruction());
+
+		if(lesinstructionSI==null) {
+			return false;
+		}
+		if(lesinstructionSI.derniereInstruction() instanceof RetourneExpression) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean verifierRetourSINON() {
+
+		if(lesinstructionSINON==null ) {
+			return true;
+		}
+		if(lesinstructionSINON.derniereInstruction() instanceof RetourneExpression) {
+			return true;
+		}
+		return false;
+		
 	}
 
 }

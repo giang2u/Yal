@@ -78,7 +78,7 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,V
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER;
+non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER,LISTEVARIABLESLOCALES;
 non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF;
 non terminal Expression EXPR, CSTE ;
 
@@ -97,16 +97,20 @@ start with PROG ;
 
 PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:li FIN
 				{: 
-					RESULT=li; 
+					BlocDInstructions bli=new BlocDInstructions(0);
+					bli.ajouter(d);
+					
+					((BlocDInstructions)d).ajouter(li);
+						
+					RESULT=d; 
 				:}
-        |
-        PROGRAMME IDF DEBUT LINST:i FIN
-        {: 
-        	RESULT=i; :}
-        ;
+		        |
+		        PROGRAMME IDF DEBUT LINST:i FIN
+		        {: 
+		        	RESULT=i; :}
+		        ;
 
-
-LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
+LISTDECLARATION   ::= LISTDECLARATION:lidecl  DECLARATION:decl
                 {:
                   ((BlocDInstructions)lidecl).ajouter(decl);
                   RESULT=lidecl;
@@ -114,46 +118,47 @@ LISTDECLARATION   ::=  LISTDECLARATION:lidecl DECLARATION:decl
                 |
                 DECLARATION:d
                 {:
-				BlocDInstructions arbre = new BlocDInstructions(0) ;
-               
-                  arbre.ajouter(d);
-                  RESULT=arbre;
+					BlocDInstructions arbre = new BlocDInstructions(0) ;
+            		arbre.ajouter(d);
+                  	RESULT=arbre;
                 :}
                 ;
 
-DECLARATION   ::=   DECL_VAR:dv
-                {:
-                  RESULT=dv;
-                :}
-                |
-                DECL_FONCTION:df
+DECLARATION   ::= DECL_FONCTION:df
                 {:
                 	RESULT=df;
                 :}
+                |	
+				DECL_VAR:dv
+                {:
+                	RESULT=dv;
+                :}
                 ;
-
 
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
           	SymboleVariable s = new SymboleVariable(0);
-          	EntreeVariable entre = new EntreeVariable(idf);
+          	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
           :}
-
           ;
 
 DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LINST:li FIN
 		{:
-		
-		:}
-		|FONCTION IDF:idf PARAMETRES DEBUT DECL_VAR:dv LINST:li FIN
-		{:
-			
+			//Tds.getInstance().entreBlock();
+			SymboleFonction sf = new SymboleFonction(0);
+			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant);
+			Tds.getInstance().ajouter(ef,sf);
+			BlocDInstructions bli=new BlocDInstructions(0);
+			//bli.ajouter(lv);
+			bli.ajouter(li);
+			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li);
 		:}
 		;
 		
 PARAMETRES ::= PAROUV PARFER{:
+			Tds.getInstance().entreBlock();		
 		:}
 		|
 		PAROUV LISTEPARAM PARFER
@@ -169,22 +174,38 @@ LISTEPARAM ::=TYPE IDF:i
 			
 		:}
 		;
+LISTEVARIABLESLOCALES ::=DECL_VAR:dv 
+		{:
+		
+			BlocDInstructions arbre = new BlocDInstructions(0) ;
+    		arbre.ajouter(dv);
+          	RESULT=arbre;   
+          	     
+		:}
+		| DECL_VAR:dv LISTEVARIABLESLOCALES:lidecl
+		{:
+	       ((BlocDInstructions)lidecl).ajouter(dv);
+	       RESULT=lidecl;
+		:}
+		;
 
 LINST	::= LINST:li INSTRUCTION:i
 
 		{: ((BlocDInstructions)li).ajouter(i);
-			RESULT=li ; 
+			RESULT=li ;
+			Tds.getInstance().sortieBlock();
+			 
 		:}
 		| INSTRUCTION:i
 		{: 
-			BlocDInstructions arbre = new BlocDInstructions(0) ;
-		
+			BlocDInstructions arbre = new BlocDInstructions(0) ;		
 			arbre.ajouter(i);
-			RESULT=arbre; :}
+			RESULT=arbre; 
+		:}
 		;
 
 INSTRUCTION   ::=   AFFECT:a
-				{:
+		{:
             RESULT=a;
         :}
         | ECRITURE:e
@@ -262,11 +283,11 @@ BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
 			bloc.ajouter(lis);
 			RESULT= new BoucleTANT(eleft+1,e,bloc);
       :};
-
-RETOURNER::=RETOURNE EXPR:e
+RETOURNER::=RETOURNE EXPR:e POINTVIRGULE
 		{:
-			//RESULT=RetourneExpression(e,elft+1);
+		RESULT=new RetourneExpression(eleft+1,e);
 		:};
+
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}
         |
@@ -314,19 +335,25 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 :}
         |		IDF:e PAROUV PAR_EFF PARFER
         		{:
-        		//	RESULT=new Fonction();
+        		//	RESULT=new AppelFonction(e,eleft+1);
         		:}
         |		IDF:e PAROUV PARFER
         		{:
+        		RESULT=new AppelFonction(e,eleft+1);
         		:}
                 ;
                 
 PAR_EFF::= EXPR:e
-				{:
-				:}
-		| EXPR:e VIRGULE PAR_EFF
-				{:
-				:}
+		{:
+			BlocDInstructions blo=new BlocDInstructions(0);		
+			blo.ajouter(e);
+			RESULT=blo;
+		:}
+		| EXPR:e VIRGULE PAR_EFF:peff
+		{:
+			((BlocDInstructions)peff).ajouter(e);
+			RESULT=peff ;
+		:}
 				;
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}

@@ -41,6 +41,7 @@ public class Ecrire extends Instruction {
 
 	@Override
 	public void verifier() {
+		
 		if(!estChaine){
 			expr.verifier();
 		}
@@ -91,6 +92,7 @@ public class Ecrire extends Instruction {
 		
 		return s.toString();
 	}
+	
 	public String toString(){
 		if (estChaine) {
 			return "ecrire "+chaine;

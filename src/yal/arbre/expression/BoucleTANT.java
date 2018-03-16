@@ -30,16 +30,15 @@ public class BoucleTANT extends Instruction{
 
 	@Override
 	public void verifier() {
-	
 		this.exp.verifier();
 		if(!(this.exp.getType().equals("bool") && this.exp != null)){
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Expression n'est pas de type boolean");
 		}
-		for(ArbreAbstrait ins : listIns.getexpr()){
+		listIns.verifier();
+/*		for(ArbreAbstrait ins : listIns.getexpr()){
 			ins.verifier();
 		}
-		
-		
+*/		
 	}
 
 	@Override

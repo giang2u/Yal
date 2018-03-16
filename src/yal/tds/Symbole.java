@@ -30,6 +30,7 @@ public abstract class Symbole {
 	public void setDeplacement(int deplacement) {
 		this.nombre_deplacement = -4*deplacement; 
 	}
+	
 	public String toString() {
 		return "le symbole";
 	}
