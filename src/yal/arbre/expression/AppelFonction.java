@@ -41,10 +41,8 @@ public class AppelFonction extends Expression {
 		StringBuilder s = new StringBuilder("");
 		s.append("\tadd $sp, $sp,-4 \n");
 		s.append("\tjal fonction" + nomFonction +"\n");
-		s.append("\tlw $sp, 12($s7) \n");
-		s.append("\tlw $s7, 8($s7) \n");
-		s.append("\tlw $ra, ($sp) \n");
-		s.append("\tjr $ra \n");
+
+		s.append("\tadd $sp, $sp,4 \n");
 		return s.toString();
 	}
 	public String toString() {

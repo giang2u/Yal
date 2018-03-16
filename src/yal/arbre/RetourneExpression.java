@@ -31,7 +31,11 @@ public class RetourneExpression extends Instruction{
 		// TODO Auto-generated method stub
 		StringBuilder s = new StringBuilder("");
 		s.append(retourneExpr.toMIPS());
-		s.append("\tsw $v0,12($sp)\n");
+		s.append("\tsw $v0,16($sp)\n");
+		s.append("\tlw $s7,($sp) \n");
+		s.append("\taddi $sp, $sp, 4\n");
+		//s.append("\tlw $ra,($sp) \n");
+		s.append("\tjr $ra \n");
 		return s.toString();
 	}
 	public String toString() {

@@ -99,9 +99,10 @@ PROG	::=		PROGRAMME IDF DEBUT LISTDECLARATION:d LINST:li FIN
 				{: 
 					BlocDInstructions bli=new BlocDInstructions(0);
 					bli.ajouter(d);
-					bli.ajouter(li);
+					
+					((BlocDInstructions)d).ajouter(li);
 						
-					RESULT=bli; 
+					RESULT=d; 
 				:}
 		        |
 		        PROGRAMME IDF DEBUT LINST:i FIN
@@ -143,7 +144,7 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           :}
           ;
 
-DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LISTEVARIABLESLOCALES:lv LINST:li FIN
+DECL_FONCTION::=FONCTION IDF:idf PARAMETRES DEBUT LINST:li FIN
 		{:
 			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
