@@ -9,6 +9,7 @@ package yal.arbre.expression;
  */
 
 public class Different extends Comparaison {
+	
 
     public Different(Expression gauche, Expression droite) {
         super(gauche, droite);

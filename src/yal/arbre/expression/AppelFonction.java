@@ -31,6 +31,9 @@ public class AppelFonction extends Expression {
 		if(ss!=null) {
 			setType("entier");
 		}
+		else{
+			setType("Erreur");
+		}
 		
 	}
 

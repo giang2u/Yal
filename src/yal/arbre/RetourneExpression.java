@@ -19,9 +19,10 @@ public class RetourneExpression extends Instruction{
 	public void verifier() {
 
 		retourneExpr.verifier();
-		if( !retourneExpr.getType().equals("entier")) {
+
+		if(retourneExpr.getType() != null && !retourneExpr.getType().equals("entier") ) {
 			StockErreur.getInstance().ajouter(
-					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");		
+					"ERREUR SEMANTIQUE :  "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");		
 		}
 
 	}
