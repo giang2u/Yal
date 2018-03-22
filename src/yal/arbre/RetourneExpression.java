@@ -19,9 +19,10 @@ public class RetourneExpression extends Instruction{
 	public void verifier() {
 
 		retourneExpr.verifier();
-		if( !retourneExpr.getType().equals("entier")) {
+
+		if(retourneExpr.getType() != null && !retourneExpr.getType().equals("entier") ) {
 			StockErreur.getInstance().ajouter(
-					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");		
+					"ERREUR SEMANTIQUE :  "+this.getNoLigne()+" le type de la valeur de retour n est pas entier");		
 		}
 
 	}
@@ -32,7 +33,7 @@ public class RetourneExpression extends Instruction{
 		StringBuilder s = new StringBuilder("");
 		s.append(retourneExpr.toMIPS());
 		s.append("\tsw $v0,16($sp)\n");
-		s.append("\tlw $s7,($sp) \n");
+		//s.append("\tlw $s7,($sp) \n");
 		s.append("\tadd $sp, $sp, 12\n");
 		s.append("\tlw $ra,($sp) \n");
 		s.append("\tadd $sp, $sp, 4\n");

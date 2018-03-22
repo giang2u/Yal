@@ -66,7 +66,6 @@ public class BlocDInstructions extends ArbreAbstrait {
 			for(ArbreAbstrait a:expr) {
 				if(!(a instanceof Fonction)){
 					string.append(a.toMIPS());
-					System.out.println("pas fonction");
 				}
 			}
 
@@ -77,7 +76,6 @@ public class BlocDInstructions extends ArbreAbstrait {
 			for(ArbreAbstrait a:expr) {
 				if((a instanceof Fonction)){
 					string.append(a.toMIPS());
-					System.out.println("fonction");
 				}
 			}
 		} 
