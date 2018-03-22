@@ -67,20 +67,20 @@ public class Condition extends Instruction {
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		BlocDInstructions.entete = false;
-
+		int tempt = compteCondition;
 		sb.append(this.conditionExpr.toMIPS());
-		sb.append("si"+compteCondition+":");
-		sb.append("\tbeqz $v0, sinon"+compteCondition + "\n");
-		sb.append("alors"+compteCondition+":\n");
+		sb.append("conditionSi"+tempt+":");
+		sb.append("\tbeqz $v0, sinon"+tempt + "\n");
+		sb.append("conditionAlors"+compteCondition+":\n");
 		if(lesinstructionSI!=null){		
 			sb.append(lesinstructionSI.toMIPS());
 		}
-		sb.append("\tj finsi"+compteCondition+"\n");
-		sb.append("sinon"+compteCondition+":\n");
+		sb.append("\tj conditionFinsi"+compteCondition+"\n");
+		sb.append("conditionSinon"+compteCondition+":\n");
 		if(lesinstructionSINON!=null){
 			sb.append(lesinstructionSINON.toMIPS());
 		}
-		sb.append("finsi"+compteCondition+":\n");
+		sb.append("conditionFinsi"+compteCondition+":\n");
 		compteCondition++;
 		return sb.toString();
 	}
@@ -114,7 +114,7 @@ public class Condition extends Instruction {
 	public boolean verifierRetourSINON() {
 
 		if(lesinstructionSINON==null ) {
-			return true;
+			return false;
 		}
 		if(lesinstructionSINON.derniereInstruction() instanceof RetourneExpression) {
 			return true;

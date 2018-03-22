@@ -54,7 +54,7 @@ public class Fonction extends Expression {
 		if(!verifierRetour()) {
 			StockErreur.getInstance().ajouter(
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
-							+nomfonction+ "n a pas de retourner ");
+							+nomfonction+ " n a pas de retourner ");
 		}
 	}
 

@@ -43,36 +43,37 @@ public abstract class BinaireArithmetique extends Binaire {
      * verifier si les operandes sont de meme types
      * verifier aussi si on a une division par 0 
      *@throws AnalyseSemantiqueException une exeption d analyse 
-     *@throws ExecutionException une ERREUR d´EXECUTION 
+     *@throws ExecutionException une ERREUR dï¿½EXECUTION 
      *@see AnalyseSemantiqueException une Erreur de semaantique
      */
     @Override
 	public void verifier() {
     	gauche.verifier();
     	droite.verifier();
-
-		if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
-			
-			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : "+this.noLigne +" une ou plusieurs expressions" +
-					" ne sont pas de type entier");
-			//throw new AnalyseSemantiqueException(this.noLigne +" une ou plusieurs expressions" +
-			//		" ne sont pas de type entier");
-		}
-		else {
-			
-			if(operateur().equals(" / ")) {
-
-				if(droite.getValue()==0) {
-					 throw new ExecutionException("numero de ligne "+this.noLigne +" vous avez une division par 0 ");
-				}
-				else {
-					setType("entier");
-				}
+    	if(gauche !=null && droite != null){
+			if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
+				
+				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : "+this.noLigne +" une ou plusieurs expressions" +
+						" ne sont pas de type entier");
+				//throw new AnalyseSemantiqueException(this.noLigne +" une ou plusieurs expressions" +
+				//		" ne sont pas de type entier");
 			}
 			else {
-				setType("entier");				
+				
+				if(operateur().equals(" / ")) {
+		
+					if(droite.getValue()==0) {
+						 throw new ExecutionException("numero de ligne "+this.noLigne +" vous avez une division par 0 ");
+					}
+					else {
+						setType("entier");
+					}
+				}
+				else {
+					setType("entier");				
+				}
 			}
-		}
+    	}
 	}
     
     
