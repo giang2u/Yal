@@ -100,7 +100,6 @@ public class Condition extends Instruction {
 		return sb.toString();
 	}
 	public boolean verifierRetourSI() {
-//		System.out.println(lesinstructionSI.derniereInstruction());
 
 		if(lesinstructionSI==null) {
 			return false;
