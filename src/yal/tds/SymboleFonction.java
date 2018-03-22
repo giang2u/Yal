@@ -6,7 +6,7 @@ public class SymboleFonction extends Symbole {
 	
 	public SymboleFonction(int deplacement) {
 		
-		super(deplacement);
+		super(0);
 		this.type="fonction";
 		
 	}

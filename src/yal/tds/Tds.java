@@ -14,7 +14,7 @@ public class Tds {
 	
 	
 	private Tds(){
-		deplacement=0;
+		deplacement=1;
 		hashmap = new HashMap<Entree , Symbole >();
 	}
 	
@@ -52,9 +52,9 @@ public class Tds {
 		}
 		//afficher();
 		if(!existedeja) {
-			deplacement++;
 			s.setDeplacement(deplacement);
 			hashmap.put(e,s);
+			deplacement++;
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class Tds {
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
 				return hashmap.get(entree);
 			}
-			else if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
 					return hashmap.get(entree);
 				}
 			
@@ -99,7 +99,9 @@ public class Tds {
 	public void afficher() {
 		for (Entree e:hashmap.keySet()) {
 			System.out.print(e.getIdf()+" "+e.getRegion()+" et  ");
+			System.out.println(hashmap.get(e).toString());
 		}
 		System.out.println();
 	}
+	
 }

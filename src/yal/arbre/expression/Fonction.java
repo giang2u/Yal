@@ -56,18 +56,21 @@ public class Fonction extends Expression {
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ " n a pas de retourner ");
 		}
+		Tds.getInstance().afficher();
 	}
 
 	
 	@Override
 	public String toMIPS() {
 		// TODO Auto-generated method stub
+		
+		
 		StringBuilder s = new StringBuilder("");
 
 		s.append("fonction"+ nomfonction + ": \n");
 		
 		//empiler valeur de return
-		s.append("\tadd $sp, $sp,-4\n");
+		//s.append("\tadd $sp, $sp,-4\n");
 		
 		
 		//empiler @ de retourn
@@ -82,6 +85,9 @@ public class Fonction extends Expression {
 		s.append("\tli $v0," + numRegion + "\n");
 		s.append("\tsw $v0, ($sp) \n");
 		s.append("\tadd $sp, $sp, -4 \n");
+		
+		
+		//s.append("\tmove $s7, $sp\n");
 		
 		
 		for(int i = 0; i < listeInstruction.getexpr().size();i++){

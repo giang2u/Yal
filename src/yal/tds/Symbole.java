@@ -28,11 +28,12 @@ public abstract class Symbole {
 	 * Mise � jour du d�placment
 	 */
 	public void setDeplacement(int deplacement) {
+		if (  !(this instanceof SymboleFonction )) 
 		this.nombre_deplacement = -4*deplacement; 
 	}
 	
 	public String toString() {
-		return "le symbole";
+		return "le symbole" + "  nombre deplacement " + nombre_deplacement ;
 	}
 	
 }

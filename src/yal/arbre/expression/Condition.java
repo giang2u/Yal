@@ -70,17 +70,17 @@ public class Condition extends Instruction {
 		int tempt = compteCondition;
 		sb.append(this.conditionExpr.toMIPS());
 		sb.append("conditionSi"+tempt+":");
-		sb.append("\tbeqz $v0, sinon"+tempt + "\n");
-		sb.append("conditionAlors"+compteCondition+":\n");
+		sb.append("\tbeqz $v0, conditionSinon"+tempt + "\n");
+		sb.append("conditionAlors"+tempt+":\n");
 		if(lesinstructionSI!=null){		
 			sb.append(lesinstructionSI.toMIPS());
 		}
-		sb.append("\tj conditionFinsi"+compteCondition+"\n");
-		sb.append("conditionSinon"+compteCondition+":\n");
+		sb.append("\tj conditionFinsi"+tempt+"\n");
+		sb.append("conditionSinon"+tempt+":\n");
 		if(lesinstructionSINON!=null){
 			sb.append(lesinstructionSINON.toMIPS());
 		}
-		sb.append("conditionFinsi"+compteCondition+":\n");
+		sb.append("conditionFinsi"+tempt+":\n");
 		compteCondition++;
 		return sb.toString();
 	}
