@@ -354,7 +354,7 @@ PAR_EFF::= EXPR:e
 			((BlocDInstructions)peff).ajouter(e);
 			RESULT=peff ;
 		:}
-				;
+			;
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e
