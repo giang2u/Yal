@@ -27,7 +27,7 @@ public class Yal {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-            //System.err.println("expression stockée dans l'arbre : " + arbre);            
+            System.err.println("expression stockée dans l'arbre : " + arbre);            
             arbre.verifier() ; 
             if(	!StockErreur.getInstance().estVideChaine()) {
     			throw new AnalyseSemantiqueException(StockErreur.getInstance().fusionDesErreurs());

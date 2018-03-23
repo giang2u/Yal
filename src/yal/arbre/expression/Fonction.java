@@ -15,18 +15,18 @@ public class Fonction extends Expression {
 	private ArrayList<Idf> listeParametres;
 	private String nomfonction;
 	private int numRegion;
-	
+	private int nbparam;
 	private Symbole s;
 	protected Fonction(int n) {
 		super(n);
 	}
 	
-	public Fonction(int n, String nomf,int numR,BlocDInstructions linst) {
+	public Fonction(int n, String nomf,int numR,BlocDInstructions linst,int nbPar) {
 		super(n);
 		listeInstruction=linst;	
 		numRegion=numR;
 		this.nomfonction = nomf;
-		
+		this.nbparam=nbPar;	
 	}
 
 	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,ArrayList<Idf> listParametres) {
@@ -35,6 +35,13 @@ public class Fonction extends Expression {
 		numRegion=numR;
 		listeInstruction=linst;
 		listeParametres=listParametres;		
+	}
+	public Fonction(String nomF,int numR,int n,BlocDInstructions linst,int nbPar) {
+		super(n);
+		nomfonction=nomF;
+		numRegion=numR;
+		listeInstruction=linst;
+		this.nbparam=nbPar;	
 	}
 	
 	@Override
@@ -46,7 +53,7 @@ public class Fonction extends Expression {
 	@Override
 	public void verifier() {
 
-		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion));
+		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion,nbparam));
 		if(s!=null) {
 			setType(s.getType());
 		}
@@ -56,7 +63,7 @@ public class Fonction extends Expression {
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ " n a pas de retourner ");
 		}
-		Tds.getInstance().afficher();
+		//Tds.getInstance().afficher();
 	}
 
 	
@@ -120,7 +127,7 @@ public class Fonction extends Expression {
 		if (listeInstruction.derniereInstruction() instanceof RetourneExpression) {
 			
 			String etat=((RetourneExpression)listeInstruction.derniereInstruction()).getType();
-			((SymboleFonction)s).setTypeRetour(etat);
+			//((SymboleFonction)s).setTypeRetour(etat);
 			return true;
 			
 		}

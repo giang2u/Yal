@@ -96,5 +96,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 	public ArbreAbstrait derniereInstruction() {
 		return this.expr.get(expr.size()-1);
 	}
+	public int nbInstruction(){
+		return this.expr.size();
+	}
 
 }
