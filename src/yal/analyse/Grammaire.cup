@@ -177,13 +177,10 @@ PARAMETRES ::= PAROUV PARFER{:
 		{:
 			Tds.getInstance().entreBlock();		
 			RESULT = listp;
+			
 		:};
-		
-		
 LISTEPARAM ::=TYPE IDF:i 
 		{:
-			//Tds.getInstance().entreBlock();		
-		
 		    SymboleVariable s = new SymboleVariable(0);
           	EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
@@ -194,7 +191,6 @@ LISTEPARAM ::=TYPE IDF:i
 		:}
 		| TYPE IDF:i VIRGULE LISTEPARAM:listp
 		{:
-
 			SymboleVariable s = new SymboleVariable(0);
           	EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
