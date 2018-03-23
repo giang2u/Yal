@@ -36,7 +36,12 @@ public class Idf extends Expression {
 	public int getValue() {
 		return 0;
 	}
+	
+	
 
+	public String getNom() {
+		return nom;
+	}
 	@Override
 	public void verifier() {
 		s=Tds.getInstance().identifier(new EntreeVariable(nom,numRegion));

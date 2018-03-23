@@ -7,12 +7,17 @@ import yal.tds.Tds;
 
 public class AppelFonction extends Expression {
 	private String nomFonction;
-	private BlocDInstructions parametresPasses;
-	
+	//private BlocDInstructions parametresPasses;
+	private int nbpar;
 	
 	public AppelFonction(String nom,int no) {
 		super(no);
 		nomFonction=nom;
+	}	
+	public AppelFonction(String nom,int no,int nbparam) {
+		super(no);
+		nomFonction=nom;
+		nbpar=nbparam;
 	}
 	
 
@@ -26,9 +31,12 @@ public class AppelFonction extends Expression {
 
 
 	@Override
-	public void verifier() {
-		Symbole ss=Tds.getInstance().identifier(new EntreeFonction(nomFonction));
+	public void verifier() {//EntreeFonction(String idf,int num, int nbParam)
+		System.out.println("ca passe");
+
+		Symbole ss=Tds.getInstance().identifier(new EntreeFonction(nomFonction,0,nbpar));
 		if(ss!=null) {
+
 			setType("entier");
 		}
 		else{
@@ -49,10 +57,8 @@ public class AppelFonction extends Expression {
 		return s.toString();
 	}
 	public String toString() {
-		if(parametresPasses==null) {
-			return nomFonction+"()";
-		}
-		return "";
+			return nomFonction+"()"+ nbpar;
+	
 		
 	}
 

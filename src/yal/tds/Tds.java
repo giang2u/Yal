@@ -30,8 +30,8 @@ public class Tds {
 		
 		while(lesentrees.hasNext()) {
 			Entree ee=lesentrees.next();
-			if(	e.getType().equals(ee.getType()) && e.getType().equals("fonction")) {
-				
+			if(	e.getType().equals(ee.getType()) && e.getType().equals("fonction")
+				&& (((EntreeFonction)e).getnbParam()==((EntreeFonction)ee).getnbParam())) {
 				if(e.toString().equals(ee.toString())) {
 				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la fonction"
 						+ " "+e.toString()+" deja declare ");
@@ -64,15 +64,29 @@ public class Tds {
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
-
+			//System.out.println(e);
+			System.out.println(e);
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
-				return hashmap.get(entree);
-			}
-			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()) {
+				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
 					return hashmap.get(entree);
 				}
-			
+			}
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()
+					&& e.getType().equals("variable")
+					) {
+					return hashmap.get(entree);
+			}
 		}
+		lesentrees=hashmap.keySet().iterator();
+
+		while(lesentrees.hasNext()) {
+			Entree entree=lesentrees.next();
+			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("variable")) {
+				//System.out.println(hashmap.get(entree));
+					return hashmap.get(entree);
+			}
+		}
+		
 		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
 		
 		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()+" n est pas declare ");
@@ -98,7 +112,7 @@ public class Tds {
 	}
 	public void afficher() {
 		for (Entree e:hashmap.keySet()) {
-			System.out.print(e.getIdf()+" "+e.getRegion()+" et  ");
+			System.out.print(e.toString());
 			System.out.println(hashmap.get(e).toString());
 		}
 		System.out.println();
