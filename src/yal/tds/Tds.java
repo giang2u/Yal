@@ -65,7 +65,7 @@ public class Tds {
 			Entree entree=lesentrees.next();
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
 			//System.out.println(e);
-			System.out.println(e);
+			//System.out.println(e);
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
 				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
 					return hashmap.get(entree);
