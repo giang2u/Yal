@@ -147,22 +147,25 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
 DECL_FONCTION::=FONCTION IDF:idf PARAMETRES:p DEBUT LINST:li FIN
 		{:
 			//Tds.getInstance().entreBlock();
+			int nb=((BlocDInstructions)p).nbInstruction();
+			
 			SymboleFonction sf = new SymboleFonction(0);
-			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant);
+			EntreeFonction ef = new EntreeFonction(idf,0,nb);
 			Tds.getInstance().ajouter(ef,sf);
 			BlocDInstructions bli=new BlocDInstructions(0);
 			//bli.ajouter(lv);
 			bli.ajouter(li);
-						int nb=((BlocDInstructions)p).nbInstruction();
 			
 			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li,nb);
+						Tds.getInstance().sortieBlock();
+			
 		:}
 		|
 		FONCTION IDF:idf PARAMETRES:p DEBUT LISTEVARIABLESLOCALES LINST:li FIN
 		{:
 			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
-			EntreeFonction ef = new EntreeFonction(idf,Tds.numRegionCourant,
+			EntreeFonction ef = new EntreeFonction(idf,0,
 			((BlocDInstructions)p).nbInstruction());
 			Tds.getInstance().ajouter(ef,sf);
 			BlocDInstructions bli=new BlocDInstructions(0);
@@ -170,6 +173,8 @@ DECL_FONCTION::=FONCTION IDF:idf PARAMETRES:p DEBUT LINST:li FIN
 			bli.ajouter(li);
 			int nb=((BlocDInstructions)p).nbInstruction();
 			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li,nb);
+						Tds.getInstance().sortieBlock();
+			
 		:}
 		;
 		
@@ -231,7 +236,6 @@ LINST	::= LINST:li INSTRUCTION:i
 
 		{: ((BlocDInstructions)li).ajouter(i);
 			RESULT=li ;
-			Tds.getInstance().sortieBlock();
 			 
 		:}
 		| INSTRUCTION:i
@@ -323,7 +327,7 @@ BOUCLE::=TANTQUE EXPR:e REPETER  LINST:lis FINTANTQUE
       :};
 RETOURNER::=RETOURNE EXPR:e POINTVIRGULE
 		{:
-		RESULT=new RetourneExpression(eleft+1,e);
+		RESULT=new RetourneExpression(eleft+1,e,Tds.numRegionCourant);
 		:};
 
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
@@ -374,7 +378,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |		IDF:e PAROUV PAR_EFF:peff PARFER
         		{:
         			int nb=((BlocDInstructions)peff).nbInstruction();
-        			RESULT=new AppelFonction(e,eleft+1,nb);
+        			RESULT=new AppelFonction(e,eleft+1,nb,((BlocDInstructions)peff));
         		:}
         |		IDF:e PAROUV PARFER
         		{:

@@ -65,7 +65,7 @@ public class Tds {
 			Entree entree=lesentrees.next();
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
 			//System.out.println(e);
-			System.out.println(e);
+			//System.out.println(e);
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
 				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
 					return hashmap.get(entree);
@@ -89,7 +89,7 @@ public class Tds {
 		
 		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
 		
-		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()+" n est pas declare ");
+		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()+" n est pas declare "+e.numRegion);
 		return null;
 	}
 	
@@ -100,6 +100,7 @@ public class Tds {
 	public void entreBlock(){
 		numRegion++;
 		numRegionCourant = numRegion;
+		deplacement = 0;
 		//System.out.println("dans entreebloc: "+numRegionCourant);
 		
 	}
@@ -116,6 +117,30 @@ public class Tds {
 			System.out.println(hashmap.get(e).toString());
 		}
 		System.out.println();
+	}
+	
+	
+	public boolean avoirParam(int numR){
+		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
+		while(lesentrees.hasNext()) {
+			Entree entree=lesentrees.next();
+			if(numR ==entree.getRegion() && entree.getType().equals("variable")) {
+					return true;
+			}
+		}
+		return false;
+	}
+	public int nbVariableTotal(int numR){
+		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
+		int nombre=0;
+		while(lesentrees.hasNext()) {
+			Entree entree=lesentrees.next();
+			if(numR ==entree.getRegion() && entree.getType().equals("variable")) {
+				//System.out.println(numR);
+				nombre++;
+			}
+		}
+		return nombre;
 	}
 	
 }
