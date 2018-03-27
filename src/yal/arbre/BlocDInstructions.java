@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import yal.arbre.expression.Fonction;
 import yal.exceptions.AnalyseSemantiqueException;
+import yal.tds.Tds;
 
 /**
  * 3 déc. 2015
@@ -63,6 +64,9 @@ public class BlocDInstructions extends ArbreAbstrait {
 
 			string.append(".text\nmain:\n");
 			entete = false;
+			string.append("\tmove $s7,$sp\n");
+			string.append("\taddi $sp,$sp,"+-4*Tds.getInstance().nbVariableTotal(0)+"\n");
+			
 			for(ArbreAbstrait a:expr) {
 				if(!(a instanceof Fonction)){
 					string.append(a.toMIPS());

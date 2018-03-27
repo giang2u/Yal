@@ -4,9 +4,9 @@ import yal.arbre.Instruction;
 import yal.arbre.StockErreur;
 
 public class Lire extends Instruction{
-	private Expression expression;
+	private Idf expression;
 	
-	public Lire(Expression expr,int no) {
+	public Lire(Idf expr,int no) {
 		super(no);
 		expression=expr;
 	}
@@ -14,6 +14,7 @@ public class Lire extends Instruction{
 	@Override
 	public void verifier() {
 		expression.verifier();
+		
 		if(!expression.getType().equals("entier")){
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +" Expression n'est pas un nom de variable");
 		}
@@ -24,7 +25,8 @@ public class Lire extends Instruction{
 		StringBuilder sb = new StringBuilder("");
 		sb.append("\tli $v0 , 5 \n");
 		sb.append("syscall \n");
-		sb.append("\tsw $v0,"+((Idf)expression).getSymbole().getNombreDeplacement()+"($s7)\n");
+		System.out.println(expression.getSymbole().getNombreDeplacement());
+		sb.append("\tsw $v0,"+expression.getSymbole().getNombreDeplacement()+"($s7)\n");
 		return sb.toString();
 	}
 

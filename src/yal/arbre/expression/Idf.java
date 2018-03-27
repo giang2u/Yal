@@ -47,6 +47,7 @@ public class Idf extends Expression {
 		s=Tds.getInstance().identifier(new EntreeVariable(nom,numRegion));
 		if(s!=null) {
 			setType(s.getType());
+			this.setType("entier");
 		}
 		else{
 			s=Tds.getInstance().identifier(new EntreeVariable(nom,0));
@@ -66,6 +67,7 @@ public class Idf extends Expression {
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+		//sb.append("\tlw $v0,"+"-4($s7)\n");
 		return sb.toString();
 	}
 
