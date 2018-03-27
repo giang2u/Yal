@@ -14,7 +14,7 @@ public class Tds {
 	
 	
 	private Tds(){
-		deplacement=1;
+		deplacement=0;
 		hashmap = new HashMap<Entree , Symbole >();
 	}
 	
@@ -63,10 +63,10 @@ public class Tds {
 		//System.out.println(" essai "+e.getIdf());
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
+			
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
-			//System.out.println(e);
-			//System.out.println(e);
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
+				//System.out.println(e);
 				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
 					return hashmap.get(entree);
 				}
@@ -74,6 +74,8 @@ public class Tds {
 			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()
 					&& e.getType().equals("variable")
 					) {
+				//System.out.println(e);
+
 					return hashmap.get(entree);
 			}
 		}

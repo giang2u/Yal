@@ -207,7 +207,7 @@ LISTEPARAM ::=TYPE IDF:i
           	RESULT=arbre;   
           	     
 		:}
-		| TYPE IDF:i VIRGULE LISTEPARAM:listp
+		| TYPE IDF:i POINTVIRGULE LISTEPARAM:listp
 		{:
 
 			//SymboleVariable s = new SymboleVariable(0);
@@ -290,9 +290,10 @@ ECRITURE::= ECRIRE EXPR:e POINTVIRGULE
           StockChaine.getInstance().ajouter(csteCH);
           RESULT=new Ecrire(csteCH,csteCHleft+1);
         :};
-LECTURE::=LIRE EXPR:e POINTVIRGULE
+LECTURE::=LIRE IDF:e POINTVIRGULE
         {:
-          RESULT=new Lire(e,eleft);
+        Idf id = new Idf(e,eleft, Tds.numRegionCourant);
+          RESULT=new Lire(id,eleft+1);
         :};
 
         
