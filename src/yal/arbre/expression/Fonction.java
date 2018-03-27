@@ -53,7 +53,7 @@ public class Fonction extends Expression {
 	@Override
 	public void verifier() {
 
-		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,numRegion,nbparam));
+		s=Tds.getInstance().identifier(new EntreeFonction(nomfonction,0,nbparam));
 		if(s!=null) {
 			setType(s.getType());
 		}
@@ -74,7 +74,7 @@ public class Fonction extends Expression {
 		
 		StringBuilder s = new StringBuilder("");
 
-		s.append("fonction"+ nomfonction + ": \n");
+		s.append("fonction"+ nomfonction + nbparam+ ": \n");
 		
 		//empiler valeur de return
 		//s.append("\tadd $sp, $sp,-4\n");
@@ -93,9 +93,21 @@ public class Fonction extends Expression {
 		s.append("\tsw $v0, ($sp) \n");
 		s.append("\tadd $sp, $sp, -4 \n");
 		
-		
-		//s.append("\tmove $s7, $sp\n");
-		
+		if(Tds.getInstance().avoirParam(numRegion)){
+			int nb=Tds.getInstance().nbVariableTotal(numRegion);
+			s.append("\tmove $s7, $sp\n");
+			s.append("\taddi $sp, $sp,"+nb*-4+" \n");
+		}
+		if(nbparam>0){
+			int dep=nbparam*4+12;
+			s.append("\tmove $t8, $s7\n");
+			s.append("\taddi $t8, $t8,"+dep+" \n");
+			for (int i = 0; i < nbparam; i++) {
+				s.append("\tlw $v0,"+-4*i+"($t8) \n");
+				s.append("\tsw $v0,"+-4*i+"($s7) \n");
+				
+			}
+		}
 		
 		for(int i = 0; i < listeInstruction.getexpr().size();i++){
 			s.append(listeInstruction.getexpr().get(i).toMIPS());

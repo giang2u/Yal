@@ -48,6 +48,12 @@ public class Idf extends Expression {
 		if(s!=null) {
 			setType(s.getType());
 		}
+		else{
+			s=Tds.getInstance().identifier(new EntreeVariable(nom,0));
+			if(s!=null) {
+				setType(s.getType());
+			}
+		}
 	}
 	
 	public Symbole getSymbole() {

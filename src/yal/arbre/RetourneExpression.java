@@ -1,18 +1,22 @@
 package yal.arbre;
 
 import yal.arbre.expression.Expression;
+import yal.tds.Tds;
 
 public class RetourneExpression extends Instruction{
 	private Expression retourneExpr;
 	public static String typeRetour;
+	private int numR;
 
 	public RetourneExpression(int no) {
 		super(no);
 		// TODO Auto-generated constructor stub
 	}
-	public RetourneExpression(int no,Expression e) {
+	public RetourneExpression(int no,Expression e,int numeroBloc) {
 		super(no);
 		retourneExpr=e;
+		numR=numeroBloc;
+		
 	}
 	
 	@Override
@@ -31,13 +35,15 @@ public class RetourneExpression extends Instruction{
 	public String toMIPS() {
 		// TODO Auto-generated method stub
 		StringBuilder s = new StringBuilder("");
+		int n=Tds.getInstance().nbVariableTotal(numR)*4+12;
+		System.out.print(n);
 		s.append(retourneExpr.toMIPS());
 		/*s.append("\tsw $v0,16($sp)\n");
 		//s.append("\tlw $s7,($sp) \n");
 		s.append("\tadd $sp, $sp, 12\n");
 		s.append("\tlw $ra,($sp) \n");
 		s.append("\tadd $sp, $sp, 4\n");*/
-		s.append("\tadd $sp,$sp, 12\n");
+		s.append("\tadd $sp,$sp, "+n+"\n");
 		//s.append("\tlw $s7, 8($s) \n");
 		s.append("\tlw $ra, ($sp) \n");
 		s.append("\tjr $ra \n");
@@ -45,7 +51,7 @@ public class RetourneExpression extends Instruction{
 	}
 	public String toString() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("retourne "+retourneExpr.toString()+" ");
+		sb.append("retourne "+retourneExpr.toString()+" "+numR);
 		return sb.toString();
 	}
 	
