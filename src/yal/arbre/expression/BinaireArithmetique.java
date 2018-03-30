@@ -50,7 +50,7 @@ public abstract class BinaireArithmetique extends Binaire {
 	public void verifier() {
     	gauche.verifier();
     	droite.verifier();
-    	if(gauche !=null && droite != null){
+    	if(gauche.getType() !=null && droite.getType() != null){
 			if ( !gauche.getType().equals("entier") || !droite.getType().equals("entier") ) {
 				
 				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : "+this.noLigne +" une ou plusieurs expressions" +

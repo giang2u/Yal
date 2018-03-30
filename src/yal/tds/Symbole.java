@@ -4,6 +4,7 @@ public abstract class Symbole {
 	
 	protected int nombre_deplacement;
 	protected String type;
+	protected int numRegion;
 	
 	public Symbole(int deplacement){
 		this.type = "entier";
@@ -35,5 +36,13 @@ public abstract class Symbole {
 	public String toString() {
 		return "le symbole" + "  nombre deplacement " + nombre_deplacement ;
 	}
+	public int getNumRegion(){
+		return this.numRegion;
+	}
+	public void setNumRegion(int numRegion){
+		this.numRegion=numRegion;
+	}
+
+	
 	
 }

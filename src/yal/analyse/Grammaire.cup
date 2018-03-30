@@ -138,6 +138,7 @@ DECLARATION   ::= DECL_FONCTION:df
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           {://rajoute les entres et symboles et tds
           	SymboleVariable s = new SymboleVariable(0);
+          	s.setNumRegion(Tds.numRegionCourant);
           	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
@@ -188,6 +189,8 @@ PARAMETRES ::= PAROUV PARFER{:
 			Tds.getInstance().entreBlock();
 			for(ArbreAbstrait aa : ((BlocDInstructions)listp).getexpr()) {
 				SymboleVariable s = new SymboleVariable(0);
+	          	s.setNumRegion(Tds.numRegionCourant);
+				
           		EntreeVariable entre = new EntreeVariable(((Idf)aa).getNom(),Tds.numRegionCourant);
           		Tds.getInstance().ajouter(entre,s);
 			}		
@@ -201,6 +204,7 @@ LISTEPARAM ::=TYPE IDF:i
 		
 		    //SymboleVariable s = new SymboleVariable(0);
           	//EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
+        
           	//Tds.getInstance().ajouter(entre,s);
 			BlocDInstructions arbre = new BlocDInstructions(0) ;
     		arbre.ajouter(new Idf(i,ileft+1));
@@ -211,6 +215,7 @@ LISTEPARAM ::=TYPE IDF:i
 		{:
 			//SymboleVariable s = new SymboleVariable(0);
           	//EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
+          	
           	//Tds.getInstance().ajouter(entre,s);
 		    ((BlocDInstructions)listp).ajouter(new Idf(i,ileft+1));
 	       	RESULT=listp;
@@ -396,8 +401,7 @@ PAR_EFF::= EXPR:e
 		{:
 			((BlocDInstructions)peff).ajouter(e);
 			RESULT=peff ;
-		:}
-			;
+		:};
 CSTE    ::=     CONSTANTEINT:e
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
         |       CONSTANTEBOOL:e

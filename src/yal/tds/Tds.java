@@ -71,7 +71,7 @@ public class Tds {
 					return hashmap.get(entree);
 				}
 			}
-			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() ==entree.getRegion()
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() == entree.getRegion()
 					&& e.getType().equals("variable")
 					) {
 				//System.out.println(e);
@@ -80,21 +80,24 @@ public class Tds {
 			}
 		}
 		lesentrees=hashmap.keySet().iterator();
-
-		while(lesentrees.hasNext()) {
-			Entree entree=lesentrees.next();
-			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("variable")) {
-				//System.out.println(hashmap.get(entree));
-					return hashmap.get(entree);
+		if(e.numRegion!=0){
+			while(lesentrees.hasNext()) {
+				Entree entree=lesentrees.next();
+				if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("variable")) {
+					//System.out.println(hashmap.get(entree));
+						return hashmap.get(entree);
+				}
 			}
 		}
 		
 		//throw new AnalyseSemantiqueException(" la variable "+e.toString()+" n est pas declare ");
 		
-		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()+" n est pas declare "+e.numRegion);
+		StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE : la "+e.getType()+" "+e.toString()
+				+" n est pas declare "+e.numRegion);
 		return null;
 	}
 	
+
 	public HashMap<Entree , Symbole > getMap() {
 		return hashmap;
 	}

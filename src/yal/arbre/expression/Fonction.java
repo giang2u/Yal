@@ -156,4 +156,12 @@ public class Fonction extends Expression {
 		}
 		return false;
 	}
+
+	public int getNumRegion() {
+		return numRegion;
+	}
+
+	public void setNumRegion(int numRegion) {
+		this.numRegion = numRegion;
+	}
 }

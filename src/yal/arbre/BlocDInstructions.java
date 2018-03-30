@@ -43,9 +43,15 @@ public class BlocDInstructions extends ArbreAbstrait {
 	public void verifier() {
 		for(ArbreAbstrait a:expr) {
 			a.verifier();
+			if (entete && a instanceof RetourneExpression
+					&& ((RetourneExpression)a).getNumR()==0) {
+				
+				StockErreur.getInstance().ajouter(
+						"ERREUR SEMANTIQUE : ligne "+a.getNoLigne()+
+						" on ne doit pas avoir de retourner ");
+			}
 		}
-
-
+		
 	}
 	@Override
 	public String toMIPS() {
@@ -64,6 +70,9 @@ public class BlocDInstructions extends ArbreAbstrait {
 
 			string.append(".text\nmain:\n");
 			entete = false;
+			string.append("\tsw $zero,($sp) \n");
+			string.append("\taddi $sp,$sp,-4\n");
+			
 			string.append("\tmove $s7,$sp\n");
 			string.append("\taddi $sp,$sp,"+-4*Tds.getInstance().nbVariableTotal(0)+"\n");
 			

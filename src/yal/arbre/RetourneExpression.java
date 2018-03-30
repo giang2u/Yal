@@ -60,5 +60,9 @@ public class RetourneExpression extends Instruction{
 	public String getType() {
 		return retourneExpr.getType();
 	}
+	public int getNumR() {
+		return numR;
+	}
+	
 
 }
