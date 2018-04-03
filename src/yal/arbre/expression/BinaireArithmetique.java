@@ -60,16 +60,16 @@ public abstract class BinaireArithmetique extends Binaire {
 			}
 			else {
 				
-				if(operateur().equals(" / ")) {
+				/*if(operateur().equals(" / ")) {
 		
-					if(droite.getValue()==0) {
+					if(droite.getValue()==0 && droite instanceof) {
 						 throw new ExecutionException("numero de ligne "+this.noLigne +" vous avez une division par 0 ");
 					}
 					else {
 						setType("entier");
 					}
 				}
-				else {
+				else */{
 					setType("entier");				
 				}
 			}

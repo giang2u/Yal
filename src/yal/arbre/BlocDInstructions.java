@@ -68,7 +68,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 
 			string.append("vrai:\t.asciiz    \"vrai\" \n");
 			string.append("faux:\t.asciiz	 \"faux\" \n");
-
+			string.append("erreurDivisionZero:\t.asciiz	 \"Erreur D execution Division par zero\" \n");
 			string.append(".text\nmain:\n");
 			entete = false;
 			string.append("\tsw $zero,($sp) \n");

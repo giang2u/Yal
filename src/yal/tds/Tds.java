@@ -43,7 +43,7 @@ public class Tds {
 					e.getRegion() == ee.numRegion	) {
 					
 					//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
-					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : la variable"
+					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : "+e.getType()+" "
 							+ " "+e.toString()+" deja declare "
 									+ "et sa region est "+e.getRegion());
 					existedeja=true;
@@ -65,19 +65,31 @@ public class Tds {
 			Entree entree=lesentrees.next();
 			
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
-			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction")) {
+			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction") 
+			&& e.getType().equals(entree.getType())		
+					
+					) {
 				//System.out.println(e);
 				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
 					return hashmap.get(entree);
 				}
 			}
+			
 			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() == entree.getRegion()
-					&& e.getType().equals("variable")
+					&& e.getType().equals("variable") && e.getType().equals(entree.getType())
 					) {
 				//System.out.println(e);
 
 					return hashmap.get(entree);
 			}
+			if(e.getIdf().equals(entree.getIdf()) && e.getRegion() == entree.getRegion()
+					&& e.getType().equals(entree.getType()) && e.getType().equals("tableau")
+					) {
+				//System.out.println(e);
+
+					return hashmap.get(entree);
+			}
+
 		}
 		lesentrees=hashmap.keySet().iterator();
 		if(e.numRegion!=0){
@@ -87,6 +99,11 @@ public class Tds {
 					//System.out.println(hashmap.get(entree));
 						return hashmap.get(entree);
 				}
+				if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("tableau")) {
+					//System.out.println(hashmap.get(entree));
+						return hashmap.get(entree);
+				}
+				
 			}
 		}
 		

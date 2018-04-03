@@ -148,14 +148,15 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
           :}
-          ;
-DECL_TAB::=TYPE CROCHOUV CONSTANTEINT:c CROCHFER IDF:idf POINTVIRGULE
-          {://rajoute les entres et symboles et tds
-          	/*SymboleVariable s = new SymboleVariable(0);
+          |
+          TYPE CROCHOUV EXPR:e CROCHFER IDF:idf POINTVIRGULE
+          {:
+          	//rajoute les entres et symboles et tds
+          	SymboleFonction s = new SymboleFonction(0);
           	s.setNumRegion(Tds.numRegionCourant);
-          	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
+          	EntreeTableau entre = new EntreeTableau(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
-            RESULT=new Idf(idf,idfleft+1);*/
+            RESULT=new Tableau(idf,idfleft+1,e);
           :}
           ;
 
@@ -292,12 +293,15 @@ INSTRUCTION   ::=   AFFECT:a
         ;
 
 AFFECT   ::=   IDF:i   EGAL   EXPR:e   POINTVIRGULE
-				{:
-        //RESULT = new Affectation(eleft+1, i, e);
-        RESULT = new Affectation(eleft+1, new Idf(i,ileft+1), e);
-
+		{:
+        	RESULT = new Affectation(eleft+1, new Idf(i,ileft+1), e);
         :}
-				 ;
+         |
+         IDF:idf CROCHOUV EXPR:i CROCHFER EGAL   EXPR:e   POINTVIRGULE
+		{:
+        	RESULT = new AffectationTableau(eleft+1, idf,i, e);
+        :}
+		;
 ECRITURE::= ECRIRE EXPR:e POINTVIRGULE
         {:
           RESULT=new Ecrire(e,eleft+1);
@@ -401,12 +405,17 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         		:}
         |		IDF:e PAROUV PARFER
         		{:
-        		RESULT=new AppelFonction(e,eleft+1,0);
+        			RESULT=new AppelFonction(e,eleft+1);
         		:}
 		|		IDF:e POINT LONGUEUR 
+				{:
+					RESULT=new TableauLongueur(e,eleft+1);
+				:}
+        |		IDF:e CROCHOUV EXPR:indice CROCHFER 
 		{:
-		//RESULT=new AppelFonction(e,eleft+1,0);
+			RESULT=new TableauLongueur(e,eleft+1);
 		:}
+                
                 
                 ;
                 

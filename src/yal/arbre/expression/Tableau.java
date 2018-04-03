@@ -1,7 +1,7 @@
 package yal.arbre.expression;
 
+import yal.arbre.StockErreur;
 import yal.tds.EntreeTableau;
-import yal.tds.EntreeVariable;
 import yal.tds.Symbole;
 import yal.tds.Tds;
 
@@ -11,9 +11,9 @@ public class Tableau  extends Expression {
 		private Symbole s;
 		private int numRegion;
 		public static int comptCur;
-		private int nombreElement;
+		private Expression nombreElement;
 
-		public Tableau(String idf,int no,int nombreElement) {
+		public Tableau(String idf,int no,Expression nombreElement) {
 			super(no);
 			nom=idf;
 			numRegion=Tds.getInstance().numRegionCourant;
@@ -33,14 +33,6 @@ public class Tableau  extends Expression {
 			return 0;
 		}
 		
-		public int getNombreElement() {
-			return nombreElement;
-		}
-
-		public void setNombreElement(int nombreElement) {
-			this.nombreElement = nombreElement;
-		}
-
 		public void setNom(String nom) {
 			this.nom = nom;
 		}
@@ -53,19 +45,22 @@ public class Tableau  extends Expression {
 			//System.out.println(nom + "***" +numRegion);
 			s=Tds.getInstance().identifier(new EntreeTableau(nom,numRegion));
 			if(s!=null) {
-				setType(s.getType());
+				//setType(s.getType());
 				this.setType("entier");
+				nombreElement.verifier();
+				if (nombreElement.getType()==null || (!nombreElement.getType().equals("entier")) ) {
+					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
+							" la taille du tableau n est pas un entier");
+				}
 			}
-			if(nombreElement<0) {
-				
-			}
+		
 		}
 		
 		public Symbole getSymbole() {
 			return s;
 		}
 		public String toString() {
-			return "entier "+nom;
+			return "entier [] "+nom;
 		}
 		@Override
 		public String toMIPS() {

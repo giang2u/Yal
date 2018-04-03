@@ -10,13 +10,11 @@ public class TableauLongueur extends Expression {
 		private Symbole s;
 		private int numRegion;
 		public static int comptCur;
-		private int nombreElement;
 
-		public TableauLongueur(String idf,int no,int nombreElement) {
+		public TableauLongueur(String idf,int no) {
 			super(no);
 			nom=idf;
 			numRegion=Tds.getInstance().numRegionCourant;
-			this.nombreElement=nombreElement;
 		}
 		
 		public void setNumRegion(int numReg) {
@@ -32,21 +30,7 @@ public class TableauLongueur extends Expression {
 			return 0;
 		}
 		
-		public int getNombreElement() {
-			return nombreElement;
-		}
 
-		public void setNombreElement(int nombreElement) {
-			this.nombreElement = nombreElement;
-		}
-
-		public void setNom(String nom) {
-			this.nom = nom;
-		}
-
-		public String getNom() {
-			return nom;
-		}
 		@Override
 		public void verifier() {
 			//System.out.println(nom + "***" +numRegion);
@@ -68,7 +52,5 @@ public class TableauLongueur extends Expression {
 			StringBuilder sb=new StringBuilder();
 			return sb.toString();
 		}
-
-
 
 }
