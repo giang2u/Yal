@@ -55,6 +55,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 	}
 	@Override
 	public String toMIPS() {
+		Tds.getInstance().afficher();
 		StringBuilder string = new StringBuilder("");
 		if(entete){
 			string.append(".data\n");

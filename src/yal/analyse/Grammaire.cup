@@ -70,8 +70,8 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME ;
-terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE;
+terminal Symbol    PLUS, MOINS, MULT, DIV, PAROUV, PARFER,EGAL, PROGRAMME,LONGUEUR ;
+terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON,POINTVIRGULE,POINT,CROCHOUV,CROCHFER;
 terminal String    CONSTANTEINT, CONSTANTEBOOL,TYPE,IDF, FIN, DEBUT,ECRIRE,CSTECHAINE ;
 terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,VIRGULE,RETOURNE ;
 
@@ -79,7 +79,7 @@ terminal String    TANTQUE,FINTANTQUE,SI,SINON,FSI,ALORS,REPETER,LIRE,FONCTION,V
 /* Non terminals used in the grammar section.  */
 
 non terminal ArbreAbstrait PROG,LISTDECLARATION,LINST,DECLARATION,DECL_VAR, INSTRUCTION, AFFECT,RETOURNER,LISTEVARIABLESLOCALES;
-non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF;
+non terminal ArbreAbstrait ECRITURE,LECTURE, BOUCLE,CONDITION,PARAMETRES,LISTEPARAM,DECL_FONCTION,PAR_EFF,DECL_TAB;
 non terminal Expression EXPR, CSTE ;
 
 precedence left OU ;
@@ -133,6 +133,11 @@ DECLARATION   ::= DECL_FONCTION:df
                 {:
                 	RESULT=dv;
                 :}
+                |
+                DECL_TAB:dt
+                {:
+                	RESULT=dt;
+                :}
                 ;
 
 DECL_VAR::=TYPE IDF:idf POINTVIRGULE
@@ -142,6 +147,15 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
             RESULT=new Idf(idf,idfleft+1);
+          :}
+          ;
+DECL_TAB::=TYPE CROCHOUV CONSTANTEINT:c CROCHFER IDF:idf POINTVIRGULE
+          {://rajoute les entres et symboles et tds
+          	/*SymboleVariable s = new SymboleVariable(0);
+          	s.setNumRegion(Tds.numRegionCourant);
+          	EntreeVariable entre = new EntreeVariable(idf,Tds.numRegionCourant);
+          	Tds.getInstance().ajouter(entre,s);
+            RESULT=new Idf(idf,idfleft+1);*/
           :}
           ;
 
@@ -389,6 +403,11 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         		{:
         		RESULT=new AppelFonction(e,eleft+1,0);
         		:}
+		|		IDF:e POINT LONGUEUR 
+		{:
+		//RESULT=new AppelFonction(e,eleft+1,0);
+		:}
+                
                 ;
                 
 PAR_EFF::= EXPR:e

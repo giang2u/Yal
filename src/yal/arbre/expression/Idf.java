@@ -13,7 +13,7 @@ public class Idf extends Expression {
 	private String nom;
 	private Symbole s;
 	private int numRegion;
-	
+	public static int comptCur;
 	public Idf(String idf,int no) {
 		super(no);
 		nom=idf;
@@ -71,16 +71,33 @@ public class Idf extends Expression {
 		//System.out.println(nom +" "+s.getNumRegion());
 
 		if(s.getNumRegion() != numRegion && s.getNumRegion() ==0 ){
-			sb.append("\tlw $t7, 8($s7) \n");
-			sb.append("\tlw $t5, 4($t7)\n");
+			
+			sb.append("\t#recupere le numero de region courant \n");
+			sb.append("\tlw $t7, 4($s7) \n");
+			
+			sb.append("\t#charger la base courante dans t8\n");
+			
+			sb.append("\tla $t8, 0($s7)\n");
+			/*
 			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
-		
+			sb.append("\tlw $t8, 8($t7)\n");*/
+
+			sb.append("chain"+ comptCur+":");
+			sb.append("\tbeqz $t7, finchain"+comptCur + "\n");
+			sb.append("\tlw $t8, 8($t8)\n");
+			sb.append("\tlw $t7, 4($t8) \n");
+			sb.append("\tj chain"+comptCur+ "\n");
+			
+			sb.append("finchain"+ comptCur+":\n");
+			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
+			
 		}
 		else{
 
 			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 
 		}
+		comptCur++;
 		//sb.append("\tlw $v0,"+"-4($s7)\n");
 		return sb.toString();
 	}

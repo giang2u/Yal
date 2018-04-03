@@ -114,12 +114,13 @@ public class Tds {
 		//System.out.println("dans sortiebloc: "+numRegionCourant);
 
 		numRegionCourant = 0;
+		deplacement =nbVariableTotal(0) ;
 		
 	}
 	public void afficher() {
 		for (Entree e:hashmap.keySet()) {
-			System.out.print(e.toString());
-			System.out.println(hashmap.get(e).toString());
+			System.out.print(e.toString()+" et numRegion "+e.numRegion);
+			System.out.println(" "+hashmap.get(e).toString());
 		}
 		System.out.println();
 	}
