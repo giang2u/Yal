@@ -25,19 +25,18 @@ public class AffectationTableau extends Instruction {
 	public void verifier() {
 		s=Tds.getInstance().identifier(new EntreeTableau(idf,numRegion));
 		if(s!=null) {
-			System.out.println(idf+" et "+numRegion);
-			//setType(s.getType());
-			indice.verifier();
-			expression.verifier();
-			if (indice.getType()==null || (!indice.getType().equals("entier")) ) {
-				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
-						" la taille du tableau n est pas un entier");
-			}
-			if (expression.getType()==null || (!expression.getType().equals("entier")) ) {
-				StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
-						" affectation entre deux types differents ");
-			}
-			
+			//System.out.println(idf+" et "+numRegion);
+			//setType(s.getType());			
+		}
+		indice.verifier();
+		expression.verifier();
+		if (indice.getType()==null || (!indice.getType().equals("entier")) ) {
+			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
+					" la taille du tableau n est pas un entier");
+		}
+		if (expression.getType()==null || (!expression.getType().equals("entier")) ) {
+			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
+					" affectation entre deux types differents ");
 		}
 	}
 	
