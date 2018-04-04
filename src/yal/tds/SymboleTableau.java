@@ -4,11 +4,10 @@ public class SymboleTableau extends Symbole {
 	
 	public SymboleTableau(int deplacement) {
 		
-		super(0);
+		super(deplacement);
 		this.type="tableau";
 		
 	}
-	
 	
 	public String getType(){
 		return this.type.toString();

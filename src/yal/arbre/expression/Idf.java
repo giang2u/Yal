@@ -68,7 +68,7 @@ public class Idf extends Expression {
 	@Override
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
-		//System.out.println(nom +" "+s.getNumRegion());
+		//System.out.println(nom +" "+s.getNombreDeplacement());
 
 		if(s.getNumRegion() != numRegion && s.getNumRegion() ==0 ){
 			

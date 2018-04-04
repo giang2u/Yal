@@ -152,7 +152,7 @@ DECL_VAR::=TYPE IDF:idf POINTVIRGULE
           TYPE CROCHOUV EXPR:e CROCHFER IDF:idf POINTVIRGULE
           {:
           	//rajoute les entres et symboles et tds
-          	SymboleFonction s = new SymboleFonction(0);
+          	SymboleTableau s = new SymboleTableau(0);
           	s.setNumRegion(Tds.numRegionCourant);
           	EntreeTableau entre = new EntreeTableau(idf,Tds.numRegionCourant);
           	Tds.getInstance().ajouter(entre,s);
