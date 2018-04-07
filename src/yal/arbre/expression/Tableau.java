@@ -65,37 +65,29 @@ public class Tableau  extends Expression {
 		@Override
 		public String toMIPS() {
 			StringBuilder sb=new StringBuilder();
-			//System.out.println(nom +" "+s.getNumRegion());
+			//System.out.println(nom +" "+s.getNombreDeplacement());
+			sb.append(nombreElement.toMIPS());
+			sb.append("\tbgtz $v0, superieur"+compteCondition+"\n");
+			sb.append("\tli $v0, 4\n");
+			sb.append("\tla $a0, taillenegative\n");
+			sb.append("\tsyscall\n");
+			sb.append("\tj end\n");
+			sb.append("superieur"+compteCondition+":\n");
+			sb.append("\taddi $sp,$sp,-8\n");
+			sb.append("\tsw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+			sb.append("\tsw $sp,"+(s.getNombreDeplacement()-4)+"($s7)\n");
+			sb.append("\tlw $t8,"+s.getNombreDeplacement()+"($s7)\n");
 
-			if(s.getNumRegion() != numRegion && s.getNumRegion() ==0 ){
-				
-				sb.append("\t#recupere le numero de region courant \n");
-				sb.append("\tlw $t7, 4($s7) \n");
-				
-				sb.append("\t#charger la base courante dans t8\n");
-				
-				sb.append("\tla $t8, 0($s7)\n");
-				/*
-				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
-				sb.append("\tlw $t8, 8($t7)\n");*/
-
-				sb.append("chain"+ comptCur+":");
-				sb.append("\tbeqz $t7, finchain"+comptCur + "\n");
-				sb.append("\tlw $t8, 8($t8)\n");
-				sb.append("\tlw $t7, 4($t8) \n");
-				sb.append("\tj chain"+comptCur+ "\n");
-				
-				sb.append("finchain"+ comptCur+":\n");
-				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
-				
-			}
-			else{
-
-				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
-
-			}
+			sb.append("reserve"+ comptCur+":");
+			
+			sb.append("\tbeqz $t8, finreserve"+comptCur + "\n");
+			sb.append("\taddi $sp,$sp,-4\n");
+			sb.append("\tsub $t8,$t8,1\n");
+			sb.append("\tj reserve"+comptCur+ "\n");
+			
+			sb.append("finreserve"+ comptCur+":\n");
+			compteCondition++;
 			comptCur++;
-			//sb.append("\tlw $v0,"+"-4($s7)\n");
 			return sb.toString();
 		}
 

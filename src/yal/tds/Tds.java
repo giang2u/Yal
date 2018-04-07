@@ -52,9 +52,13 @@ public class Tds {
 		}
 		//afficher();
 		if(!existedeja) {
+			//System.out.println(" entre " + e.toString() + "   depla   "  + deplacement   );
 			s.setDeplacement(deplacement);
 			hashmap.put(e,s);
 			deplacement++;
+			if (e.getType().equals("tableau")) {
+				deplacement++;
+			}
 		}
 	}
 	
@@ -162,6 +166,8 @@ public class Tds {
 				//System.out.println(numR);
 				nombre++;
 			}
+			
+			
 		}
 		return nombre;
 	}

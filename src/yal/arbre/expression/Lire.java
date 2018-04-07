@@ -25,7 +25,7 @@ public class Lire extends Instruction{
 		StringBuilder sb = new StringBuilder("");
 		sb.append("\tli $v0 , 5 \n");
 		sb.append("syscall \n");
-		System.out.println(expression.getSymbole().getNombreDeplacement());
+		//System.out.println(expression.getSymbole().getNombreDeplacement());
 		sb.append("\tsw $v0,"+expression.getSymbole().getNombreDeplacement()+"($s7)\n");
 		return sb.toString();
 	}

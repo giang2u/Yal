@@ -55,7 +55,7 @@ public class BlocDInstructions extends ArbreAbstrait {
 	}
 	@Override
 	public String toMIPS() {
-		Tds.getInstance().afficher();
+		//Tds.getInstance().afficher();
 		StringBuilder string = new StringBuilder("");
 		if(entete){
 			string.append(".data\n");
@@ -69,6 +69,11 @@ public class BlocDInstructions extends ArbreAbstrait {
 			string.append("vrai:\t.asciiz    \"vrai\" \n");
 			string.append("faux:\t.asciiz	 \"faux\" \n");
 			string.append("erreurDivisionZero:\t.asciiz	 \"Erreur D execution Division par zero\" \n");
+			string.append("taillenegative:\t.asciiz	 \"Erreur tableau de taille negative\" \n");
+			string.append("indiceenegative:\t.asciiz	 \"Erreur indice de tableau negatif\" \n");
+			string.append("indiceout:\t.asciiz	 \"Erreur indice outofbound de tableau \" \n");
+			
+			
 			string.append(".text\nmain:\n");
 			entete = false;
 			string.append("\tsw $zero,($sp) \n");
