@@ -1,23 +1,20 @@
-package yal.arbre;
+package yal.arbre.expression;
 
-
-import yal.arbre.expression.Expression;
+import yal.arbre.StockErreur;
 import yal.tds.EntreeTableau;
 import yal.tds.Symbole;
 import yal.tds.Tds;
 
-public class AffectationTableau extends Instruction {
+public class ElementTableau extends Expression {
 	private Expression indice;
-	private Expression expression;
 	private String idf;
 	private Symbole s;
 	private int numRegion;
 
-	public AffectationTableau(int no,String idf,Expression i,Expression e) {
+	public ElementTableau(String idf,int no,Expression i) {
 		super(no);
 		this.idf=idf;
 		indice=i; 
-		expression=e;
 		numRegion=Tds.numRegionCourant;
 	}
 
@@ -25,35 +22,27 @@ public class AffectationTableau extends Instruction {
 	@Override
 	public void verifier() {
 		s=Tds.getInstance().identifier(new EntreeTableau(idf,numRegion));
-		if(s==null) {
+		setType("");
+		if(s!=null) {
 			//System.out.println(idf+" et "+numRegion);
-			//setType(s.getType());			
+			setType("entier");			
 		}
 		indice.verifier();
-		expression.verifier();
 		if (indice.getType()==null || (!indice.getType().equals("entier")) ) {
 			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
 					" la taille du tableau n est pas un entier");
-			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
-					" affectation entre deux types differents ");
+			setType("");
+		}
 		
-		}
-		if (expression.getType()==null || (!expression.getType().equals("entier")) ) {
-			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
-					" affectation entre deux types differents ");
-			StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE numero de ligne "+this.noLigne +
-					" affectation entre deux types differents ");
-			
-		}
 	}
 	
 
 	@Override
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
-		sb.append("\n");
+//		sb.append("\n");
 
-		sb.append("#affectation\n");
+		sb.append("#calcul element\n");
 		
 		sb.append("#verification indice\n");
 		
@@ -83,21 +72,22 @@ public class AffectationTableau extends Instruction {
 		sb.append("\tmult $t5,$v0\n");
 		sb.append("\tmflo $t5\n");
 		sb.append("\taddi $t5,$t5,8\n");
-		sb.append("# l operande droite\n");
-		sb.append("\tmove $t2,$t5\n");
-
-		sb.append(expression.toMIPS());
-		sb.append("#fins l operande droite\n");
-		sb.append("\tsub $s7,$s7,$t2\n");
-		sb.append("\tsw $v0,0($s7)\n");
-		sb.append("\tadd $s7,$s7,$t2\n");
+		
+		sb.append("\tsub $s7,$s7,$t5\n");
+		sb.append("\tlw $v0,0($s7)\n");
+		sb.append("\tadd $s7,$s7,$t5\n");
 		
 		return sb.toString();
 	}
 	
 	public String toString() {
-		return idf+"["+indice.toString()+"] = "+expression.toString();
+		return idf+"["+indice.toString()+"]";
 	}
-	
 
+
+	@Override
+	public int getValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
 }

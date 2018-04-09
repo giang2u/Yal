@@ -60,7 +60,6 @@ public class BlocDInstructions extends ArbreAbstrait {
 		if(entete){
 			string.append(".data\n");
 			//string.append("str:\t.asciiz " +  "\"" + StockChaine.getInstance().fusionChaine() +"\" \n");
-
 			for (int i = 0; i <StockChaine.getInstance().taille() ; i++) {
 				string.append("str"+i+":\t.asciiz " +  "\"" 
 						+ StockChaine.getInstance().getChaines().get(i) +"\" \n");				
@@ -78,9 +77,11 @@ public class BlocDInstructions extends ArbreAbstrait {
 			entete = false;
 			string.append("\tsw $zero,($sp) \n");
 			string.append("\taddi $sp,$sp,-4\n");
+			string.append("\t#allouer les variables\n");
 			
 			string.append("\tmove $s7,$sp\n");
 			string.append("\taddi $sp,$sp,"+-4*Tds.getInstance().nbVariableTotal(0)+"\n");
+			string.append("\taddi $sp,$sp,"+-8*Tds.getInstance().nbTableauTotal(0)+"\n");
 			
 			for(ArbreAbstrait a:expr) {
 				if(!(a instanceof Fonction)){

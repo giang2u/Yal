@@ -169,15 +169,15 @@ DECL_FONCTION::=FONCTION IDF:idf PARAMETRES:p DEBUT LINST:li FIN
 			EntreeFonction ef = new EntreeFonction(idf,0,nb);
 			Tds.getInstance().ajouter(ef,sf);
 			BlocDInstructions bli=new BlocDInstructions(0);
-			//bli.ajouter(lv);
+			bli.ajouter(p);
 			bli.ajouter(li);
 			
-			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li,nb);
+			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)bli,nb);
 						Tds.getInstance().sortieBlock();
 			
 		:}
 		|
-		FONCTION IDF:idf PARAMETRES:p DEBUT LISTEVARIABLESLOCALES LINST:li FIN
+		FONCTION IDF:idf PARAMETRES:p DEBUT LISTEVARIABLESLOCALES:lv LINST:li FIN
 		{:
 			//Tds.getInstance().entreBlock();
 			SymboleFonction sf = new SymboleFonction(0);
@@ -185,10 +185,11 @@ DECL_FONCTION::=FONCTION IDF:idf PARAMETRES:p DEBUT LINST:li FIN
 			((BlocDInstructions)p).nbInstruction());
 			Tds.getInstance().ajouter(ef,sf);
 			BlocDInstructions bli=new BlocDInstructions(0);
-			//bli.ajouter(lv);
+			bli.ajouter(p);
+			bli.ajouter(lv);
 			bli.ajouter(li);
 			int nb=((BlocDInstructions)p).nbInstruction();
-			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)li,nb);
+			RESULT = new Fonction(idfleft++,idf,Tds.numRegionCourant,(BlocDInstructions)bli,nb);
 						Tds.getInstance().sortieBlock();
 			
 		:}
@@ -207,20 +208,15 @@ PARAMETRES ::= PAROUV PARFER{:
 	          	s.setNumRegion(Tds.numRegionCourant);
 				
           		EntreeVariable entre = new EntreeVariable(((Idf)aa).getNom(),Tds.numRegionCourant);
+          		((Idf)aa).setNumRegion(Tds.numRegionCourant);
           		Tds.getInstance().ajouter(entre,s);
+          	
 			}		
 			RESULT = listp;
 			
 		:};
 LISTEPARAM ::=TYPE IDF:i 
 		{:
-
-			//Tds.getInstance().entreBlock();		
-		
-		    //SymboleVariable s = new SymboleVariable(0);
-          	//EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
-        
-          	//Tds.getInstance().ajouter(entre,s);
 			BlocDInstructions arbre = new BlocDInstructions(0) ;
     		arbre.ajouter(new Idf(i,ileft+1));
           	RESULT=arbre;   
@@ -228,10 +224,7 @@ LISTEPARAM ::=TYPE IDF:i
 		:}
 		| TYPE IDF:i POINTVIRGULE LISTEPARAM:listp
 		{:
-			//SymboleVariable s = new SymboleVariable(0);
-          	//EntreeVariable entre = new EntreeVariable(i,Tds.numRegionCourant);
-          	
-          	//Tds.getInstance().ajouter(entre,s);
+
 		    ((BlocDInstructions)listp).ajouter(new Idf(i,ileft+1));
 	       	RESULT=listp;
 		:}
@@ -413,7 +406,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
 				:}
         |		IDF:e CROCHOUV EXPR:indice CROCHFER 
 		{:
-			RESULT=new TableauElement(e,eleft+1,indice);
+				RESULT=new ElementTableau(e,eleft+1,indice);
 		:}
                 
                 

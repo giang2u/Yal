@@ -50,6 +50,11 @@ public class TableauLongueur extends Expression {
 		@Override
 		public String toMIPS() {
 			StringBuilder sb=new StringBuilder();
+			
+			sb.append("\t#longueur du tableau\n");
+
+			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+
 			return sb.toString();
 		}
 

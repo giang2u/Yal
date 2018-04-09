@@ -39,15 +39,23 @@ public class Tds {
 				}
 			}
 			else {
-				if(e.toString().equals(ee.toString()) &&
-					e.getRegion() == ee.numRegion	) {
-					
+				if(e.toString().equals(ee.toString()) && e.getRegion() == ee.numRegion	) {
 					//throw new AnalyseSemantiqueException("Double Declaration : la variable "+e.toString()+" deja declare ");
 					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : "+e.getType()+" "
 							+ " "+e.toString()+" deja declare "
 									+ "et sa region est "+e.getRegion());
 					existedeja=true;
 				}
+				if(e.getIdf().equals(ee.getIdf()) && e.getRegion() == ee.numRegion && !e.getType().equals(ee.getType())	
+						&& !e.getType().equals("fonction") ) {
+					System.out.println(e.getIdf()+" "+e.getType());
+					System.out.println(ee.getIdf()+" "+ee.getType());
+					
+					
+					StockErreur.getInstance().ajouter("ERREUR SEMANTIQUE :Double Declaration : tableau et variable ont le meme nom "+e.getIdf()+"");
+					existedeja=true;
+				}
+				
 			}
 		}
 		//afficher();
@@ -67,11 +75,10 @@ public class Tds {
 		//System.out.println(" essai "+e.getIdf());
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
-			
 			//System.out.print(entree.getIdf()+" "+e.getIdf()+" - ");
 			if(e.getIdf().equals(entree.getIdf()) && e.getType().equals("fonction") 
 			&& e.getType().equals(entree.getType())		
-					
+				
 					) {
 				//System.out.println(e);
 				if(((EntreeFonction)e).getnbParam()==((EntreeFonction)entree).getnbParam()){
@@ -152,8 +159,12 @@ public class Tds {
 		while(lesentrees.hasNext()) {
 			Entree entree=lesentrees.next();
 			if(numR ==entree.getRegion() && entree.getType().equals("variable")) {
-					return true;
+				return true;
 			}
+		if(numR ==entree.getRegion() && entree.getType().equals("tableau")) {
+			return true;
+	}
+			
 		}
 		return false;
 	}
@@ -167,7 +178,18 @@ public class Tds {
 				nombre++;
 			}
 			
-			
+		}
+		return nombre;
+	}
+	public int nbTableauTotal(int numR){
+		Iterator<Entree> lesentrees=hashmap.keySet().iterator();
+		int nombre=0;
+		while(lesentrees.hasNext()) {
+			Entree entree=lesentrees.next();
+			if(numR ==entree.getRegion() && entree.getType().equals("tableau")) {
+				//System.out.println(numR);
+				nombre++;
+			}
 		}
 		return nombre;
 	}

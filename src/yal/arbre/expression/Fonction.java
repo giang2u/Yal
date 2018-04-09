@@ -58,11 +58,16 @@ public class Fonction extends Expression {
 			setType(s.getType());
 		}
 		listeInstruction.verifier();	
-		if(!verifierRetour()) {
+		if(!listeInstruction.toString().contains("retourne")) {
+			StockErreur.getInstance().ajouter(
+					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
+							+nomfonction+ " n a pas de retourner ");			
+		}
+		/*if(!verifierRetour()) {
 			StockErreur.getInstance().ajouter(
 					"ERREUR SEMANTIQUE : ligne "+this.getNoLigne()+" la fonction "
 							+nomfonction+ " n a pas de retourner ");
-		}
+		}*/
 		//Tds.getInstance().afficher();
 	}
 
@@ -93,11 +98,25 @@ public class Fonction extends Expression {
 		s.append("\tsw $v0, ($sp) \n");
 		s.append("\tadd $sp, $sp, -4 \n");
 		
+		s.append("#les parametres de la fonction \n");
+		//System.out.println(Tds.getInstance().avoirParam(numRegion));
+		//System.out.println(numRegion);
+		s.append("\tmove $t3, $zero\n");
+		
 		if(Tds.getInstance().avoirParam(numRegion)){
+			
 			int nb=Tds.getInstance().nbVariableTotal(numRegion);
+			int nbTab=Tds.getInstance().nbTableauTotal(numRegion);
+				
 			s.append("\tmove $s7, $sp\n");
 			s.append("\taddi $sp, $sp,"+nb*-4+" \n");
+			s.append("#les tableaux de la fonction \n");
+
+			s.append("\taddi $sp, $sp,"+nbTab*-8+" \n");
+			
 		}
+		
+		
 		if(nbparam>0){
 			int dep=nbparam*4+12;
 			s.append("\tmove $t8, $s7\n");
@@ -105,7 +124,6 @@ public class Fonction extends Expression {
 			for (int i = 0; i < nbparam; i++) {
 				s.append("\tlw $v0,"+-4*i+"($t8) \n");
 				s.append("\tsw $v0,"+-4*i+"($s7) \n");
-				
 			}
 		}
 		

@@ -58,12 +58,12 @@ public class Idf extends Expression {
 			}
 		}*/
 	}
-	
+
 	public Symbole getSymbole() {
 		return s;
 	}
 	public String toString() {
-		return "entier "+nom;
+		return "idf entier "+nom;
 	}
 	@Override
 	public String toMIPS() {
@@ -90,7 +90,7 @@ public class Idf extends Expression {
 			
 			sb.append("finchain"+ comptCur+":\n");
 			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
-			
+		
 		}
 		else{
 
