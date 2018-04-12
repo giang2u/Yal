@@ -86,7 +86,9 @@ public class Tableau  extends Expression {
 			sb.append("\tlw $t8,"+s.getNombreDeplacement()+"($s7)\n");
 			sb.append("reserve"+ comptCur+":");
 			sb.append("\tbeqz $t8, finreserve"+comptCur + "\n");
+			sb.append("\tsw $zero,($sp)\n");
 			sb.append("\taddi $sp,$sp,-4\n");
+
 			sb.append("\taddi $t3,$t3,4\n");
 			sb.append("\tsub $t8,$t8,1\n");
 			sb.append("\tj reserve"+comptCur+ "\n");
