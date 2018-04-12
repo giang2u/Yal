@@ -66,13 +66,13 @@ public class TableauLongueur extends Expression {
 				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
 				sb.append("\tlw $t8, 8($t7)\n");*/
 
-				sb.append("chain"+ comptCur+":");
-				sb.append("\tbeqz $t7, finchain"+comptCur + "\n");
+				sb.append("chainTabLongueur"+ comptCur+":");
+				sb.append("\tbeqz $t7, finchainTabLongueur"+comptCur + "\n");
 				sb.append("\tlw $t8, 8($t8)\n");
 				sb.append("\tlw $t7, 4($t8) \n");
-				sb.append("\tj chain"+comptCur+ "\n");
+				sb.append("\tj chainTabLongueur"+comptCur+ "\n");
 				
-				sb.append("finchain"+ comptCur+":\n");
+				sb.append("finchainTabLongueur"+ comptCur+":\n");
 				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
 			
 			}

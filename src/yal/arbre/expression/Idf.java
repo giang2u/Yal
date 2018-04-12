@@ -78,9 +78,6 @@ public class Idf extends Expression {
 			sb.append("\t#charger la base courante dans t8\n");
 			
 			sb.append("\tla $t8, 0($s7)\n");
-			/*
-			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
-			sb.append("\tlw $t8, 8($t7)\n");*/
 
 			sb.append("chain"+ comptCur+":");
 			sb.append("\tbeqz $t7, finchain"+comptCur + "\n");

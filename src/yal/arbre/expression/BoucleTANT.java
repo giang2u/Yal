@@ -45,7 +45,7 @@ public class BoucleTANT extends Instruction{
 	public String toMIPS() {
 		int comptCur = compteCondition;
 		StringBuilder sb=new StringBuilder();
-
+		
 		BlocDInstructions.entete = false;
 		sb.append(this.exp.toMIPS());
 		sb.append("tq"+ comptCur+":");
@@ -56,6 +56,7 @@ public class BoucleTANT extends Instruction{
 		sb.append(this.exp.toMIPS());
 		sb.append("\tj tq"+comptCur+ "\n");
 		sb.append("fintq"+ comptCur+":\n");
+		
 		return sb.toString();
 	}
 	

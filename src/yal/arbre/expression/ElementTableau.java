@@ -92,11 +92,12 @@ public class ElementTableau extends Expression {
 			sb.append("\tli $v0, 4\n");		
 			sb.append("\tmult $t5,$v0\n");
 			sb.append("\tmflo $t5\n");
-			sb.append("\taddi $t5,$t5,8\n");
+			//sb.append("\taddi $t5,$t5,8\n");
 			
-			sb.append("\tsub $t8,$t8,$t5\n");
-			sb.append("\tlw $v0,0($t8)\n");
-			sb.append("\tadd $t8,$t8,$t5\n");
+		
+			sb.append("\tlw $t1,"+(s.getNombreDeplacement()+4)+"($t8)\n");
+			sb.append("\tsub $t1,$t1,$t5\n");
+			sb.append("\tlw $v0,0($t1)\n");
 			
 		}
 		else{
