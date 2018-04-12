@@ -10,7 +10,6 @@ public class Affectation extends Instruction {
 
 	private Expression expression;
 	private String idf;
-	private Symbole s;
 	private Idf idf1;
 	private Fonction fonction;
 	public static int comptCur;
@@ -59,7 +58,9 @@ public class Affectation extends Instruction {
 	public String toMIPS() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(expression.toMIPS());
-		sb.append("\tsw $v0,"+idf1.getSymbole().getNombreDeplacement()+"($s7)\n");
+		sb.append("\t#notre qffectation\n");
+
+		//sb.append("\tsw $v0,"+idf1.getSymbole().getNombreDeplacement()+"($s7)\n");
 
 
 		if(idf1.getSymbole().getNumRegion() != idf1.getNumRegion() && idf1.getSymbole().getNumRegion() ==0 ){
