@@ -155,6 +155,7 @@ if(s.getNumRegion() != numRegion && s.getNumRegion() ==0 ){
 			sb.append("\tsw $v0,0($s7)\n");
 			sb.append("\tadd $s7,$s7,$t5\n");
 			
+
 		}
 
 		

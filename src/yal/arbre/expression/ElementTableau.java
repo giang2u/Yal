@@ -130,11 +130,9 @@ public class ElementTableau extends Expression {
 			sb.append("\tmult $t5,$v0\n");
 			sb.append("\tmflo $t5\n");
 			sb.append("\taddi $t5,$t5,8\n");
-			sb.append("\taddi $t5,$t5,4\n");
-			
 			
 			sb.append("\tsub $s7,$s7,$t5\n");
-			sb.append("\tlw $v0,($s7)\n");
+			sb.append("\tlw $v0,0($s7)\n");
 			sb.append("\tadd $s7,$s7,$t5\n");
 			
 

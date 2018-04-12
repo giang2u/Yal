@@ -107,7 +107,7 @@ public class Fonction extends Expression {
 			
 			int nb=Tds.getInstance().nbVariableTotal(numRegion);
 			int nbTab=Tds.getInstance().nbTableauTotal(numRegion);
-				
+			
 			s.append("\tmove $s7, $sp\n");
 			s.append("\taddi $sp, $sp,"+nb*-4+" \n");
 			s.append("#les tableaux de la fonction \n");
