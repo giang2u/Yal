@@ -60,7 +60,7 @@ public class AffectationTableau extends Instruction {
 				sb.append("\tmove $t9,$v0\n");
 
 				sb.append("#fins l operande droite\n");
-
+/*
 			//sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
 			sb.append("#calcul element\n");
 			
@@ -82,9 +82,9 @@ public class AffectationTableau extends Instruction {
 			sb.append("\t#charger la base courante dans t8\n");
 			
 			sb.append("\tla $t8, 0($s7)\n");
-			/*
-			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
-			sb.append("\tlw $t8, 8($t7)\n");*/
+			
+			//sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
+			//sb.append("\tlw $t8, 8($t7)\n");
 
 			sb.append("chainTabAff"+ comptCur+":");
 			sb.append("\tbeqz $t7, finchainTabAff"+comptCur + "\n");
@@ -115,6 +115,61 @@ public class AffectationTableau extends Instruction {
 			sb.append("\tlw $t1,"+(s.getNombreDeplacement()+4)+"($t8)\n");
 			sb.append("\tsub $t1,$t1,$t5\n");
 			sb.append("\tsw $t9,0($t1)\n");
+			*/
+				
+				sb.append("\t#recupere le numero de region courant \n");
+				sb.append("\tlw $t7, 4($s7) \n");
+				
+				sb.append("\t#charger la base courante dans t8\n");
+				
+				sb.append("\tla $t8, 0($s7)\n");
+				/*
+				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
+				sb.append("\tlw $t8, 8($t7)\n");*/
+
+				sb.append("chainTabAff"+ comptCur+":");
+				sb.append("\tbeqz $t7, finchainTabAff"+comptCur + "\n");
+				sb.append("\tlw $t8, 8($t8)\n");
+				sb.append("\tlw $t7, 4($t8) \n");
+				sb.append("\tj chainTabAff"+comptCur+ "\n");
+				
+				sb.append("finchainTabAff"+ comptCur+":\n");
+				//sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
+				sb.append("#calcul element\n");
+				
+				sb.append("#verification indice\n");
+				
+				sb.append(indice.toMIPS());
+				sb.append("\tmove $t5,$v0\n");
+				
+				sb.append("\tbgez $v0, superieur"+compteCondition+"\n");
+				sb.append("\tli $v0, 4\n");
+				sb.append("\tla $a0, indiceenegative\n");
+				sb.append("\tsyscall\n");
+				sb.append("\tj end\n");
+				sb.append("superieur"+compteCondition+":\n");
+				sb.append("\tlw $t1,"+s.getNombreDeplacement()+"($t8)\n");
+				
+				sb.append("\t sub $v0,$t1,$v0\n");
+				
+				compteCondition++;
+					
+				sb.append("\tbgtz $v0, superieur"+compteCondition+"\n");
+				sb.append("\tli $v0, 4\n");
+				sb.append("\tla $a0, indiceout\n");
+				sb.append("\tsyscall\n");
+				sb.append("\tj end\n");
+				sb.append("superieur"+compteCondition+":\n");
+				compteCondition++;
+				sb.append("\tli $v0, 4\n");		
+				sb.append("\tmult $t5,$v0\n");
+				sb.append("\tmflo $t5\n");
+				//sb.append("\taddi $t5,$t5,8\n");
+				
+			
+				sb.append("\tlw $t1,"+(s.getNombreDeplacement()+4)+"($t8)\n");
+				sb.append("\tsub $t1,$t1,$t5\n");
+				sb.append("\tsw $t9,0($t8)\n");
 		
 			
 		}
