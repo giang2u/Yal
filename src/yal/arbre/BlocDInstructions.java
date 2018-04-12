@@ -81,6 +81,8 @@ public class BlocDInstructions extends ArbreAbstrait {
 			
 			string.append("\tmove $s7,$sp\n");
 			string.append("\taddi $sp,$sp,"+-4*Tds.getInstance().nbVariableTotal(0)+"\n");
+			string.append("\t#allouer les tableaux\n");
+
 			string.append("\taddi $sp,$sp,"+-8*Tds.getInstance().nbTableauTotal(0)+"\n");
 			
 			for(ArbreAbstrait a:expr) {

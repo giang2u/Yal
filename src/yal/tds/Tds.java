@@ -61,6 +61,7 @@ public class Tds {
 		//afficher();
 		if(!existedeja) {
 			//System.out.println(" entre " + e.toString() + "   depla   "  + deplacement   );
+			
 			s.setDeplacement(deplacement);
 			hashmap.put(e,s);
 			deplacement++;

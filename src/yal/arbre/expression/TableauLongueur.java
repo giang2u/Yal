@@ -53,8 +53,35 @@ public class TableauLongueur extends Expression {
 			
 			sb.append("\t#longueur du tableau\n");
 
-			sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
 
+			if(s.getNumRegion() != numRegion && s.getNumRegion() ==0 ){
+				
+				sb.append("\t#recupere le numero de region courant \n");
+				sb.append("\tlw $t7, 4($s7) \n");
+				
+				sb.append("\t#charger la base courante dans t8\n");
+				
+				sb.append("\tla $t8, 0($s7)\n");
+				/*
+				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t5)\n");
+				sb.append("\tlw $t8, 8($t7)\n");*/
+
+				sb.append("chain"+ comptCur+":");
+				sb.append("\tbeqz $t7, finchain"+comptCur + "\n");
+				sb.append("\tlw $t8, 8($t8)\n");
+				sb.append("\tlw $t7, 4($t8) \n");
+				sb.append("\tj chain"+comptCur+ "\n");
+				
+				sb.append("finchain"+ comptCur+":\n");
+				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($t8)\n");
+			
+			}
+			else{
+
+				sb.append("\tlw $v0,"+s.getNombreDeplacement()+"($s7)\n");
+
+			}
+			comptCur++;
 			return sb.toString();
 		}
 

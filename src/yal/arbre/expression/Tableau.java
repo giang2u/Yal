@@ -73,7 +73,7 @@ public class Tableau  extends Expression {
 			//System.out.println(nom +" "+s.getNombreDeplacement());
 			sb.append("#declaration tableau\n");
 			sb.append(nombreElement.toMIPS());
-			sb.append("\tbgtz $v0, superieur"+compteCondition+"\n");
+			sb.append("\tbgez $v0, superieur"+compteCondition+"\n");
 			sb.append("\tli $v0, 4\n");
 			sb.append("\tla $a0, taillenegative\n");
 			sb.append("\tsyscall\n");
@@ -82,7 +82,7 @@ public class Tableau  extends Expression {
 			sb.append("superieur"+compteCondition+":\n");
 			//sb.append("\taddi $sp,$sp,-8\n");
 			sb.append("\tsw $v0,"+s.getNombreDeplacement()+"($s7)\n");
-			sb.append("\tsw $sp,"+(s.getNombreDeplacement()-4)+"($s7)\n");
+			sb.append("\tsw $sp,"+(s.getNombreDeplacement()+4)+"($s7)\n");
 			sb.append("\tlw $t8,"+s.getNombreDeplacement()+"($s7)\n");
 			sb.append("reserve"+ comptCur+":");
 			sb.append("\tbeqz $t8, finreserve"+comptCur + "\n");
