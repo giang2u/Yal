@@ -97,7 +97,7 @@ public class ElementTableau extends Expression {
 		
 			sb.append("\tlw $t1,"+(s.getNombreDeplacement()+4)+"($t8)\n");
 			sb.append("\tsub $t1,$t1,$t5\n");
-			sb.append("\tlw $v0,0($t1)\n");
+			sb.append("\tlw $v0,0($t8)\n");
 			
 		}
 		else{
